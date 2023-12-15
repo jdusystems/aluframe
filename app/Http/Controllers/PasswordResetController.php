@@ -25,7 +25,7 @@ class PasswordResetController extends Controller
             ] , 404);
         }
         $token = Str::random(60);
-        PasswordReset::create([
+         PasswordReset::create([
             'email' => $request->email ,
             'token' => $token ,
             'created_at' => Carbon::now() ,
@@ -37,9 +37,14 @@ class PasswordResetController extends Controller
                 $message->subject('Reset Your Password');
                 $message->to($email);
         });
+
         return response([
             'message' => 'Password reset link has been sent to your Email' ,
             'status' => 'success' ,
         ]);
     }
+    public function reset(Request $request , $token){
+        
+    }
+
 }
