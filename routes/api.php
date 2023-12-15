@@ -27,12 +27,8 @@ Route::post('/reset-password/{token}' , [PasswordResetController::class , 'reset
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout' , [UserController::class , 'logOut']);
-    Route::post('/user' , [UserController::class , 'loggedUser']);
+    Route::get('/user' , [UserController::class , 'loggedUser']);
     Route::post('/reset-password' , [UserController::class , 'changePassword']);
-
-    Route::get('/test', function(){
-        return ["message" => "Hello World"];
-    });
 });
 
 
