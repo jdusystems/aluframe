@@ -15,7 +15,6 @@ class PasswordResetController extends Controller
 {
     public function sendResetPasswordEmail(Request $request)
     {
-
         $request->validate([
             'email' => 'required|email'
         ]);
@@ -58,7 +57,6 @@ class PasswordResetController extends Controller
         ]);
         
         $passwordReset = PasswordReset::where('token', $token)->first();
-
         if (!$passwordReset) {
             return response([
                 'message' => 'Token is Invalid or Expired',
@@ -66,8 +64,7 @@ class PasswordResetController extends Controller
             ], 404);
         }
 
-        $user = User::where('email', $passwordReset)->first();
-
+        $user = User::where('email', $passwordReset->email)->first();
         $user->password = Hash::make($request->password);
         $user->save();
 
@@ -76,7 +73,7 @@ class PasswordResetController extends Controller
         PasswordReset::where('email', $user->email)->delete();
 
         return response([
-            'message' => 'Password reset success',
+            'message' => 'Password has been changed successfully',
             'status' => 'success'
         ], 200);
     }

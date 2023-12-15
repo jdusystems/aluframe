@@ -16,7 +16,6 @@ class UserController extends Controller
             'name' => 'required' ,
             'email' => ['required' , 'email' , 'unique:users'],
             'password' => ['required' , 'confirmed' , 'min:8'],
-            'tc' => 'required'
         ]);
         if(User::where('email' , $request->email)->first()){
             return response([
@@ -29,7 +28,6 @@ class UserController extends Controller
             'name' => $request->name ,
             'email' => $request->email ,
             'password' => Hash::make($request->password) ,
-            'tc' => json_decode($request->tc)
         ]);
 
         return response([
