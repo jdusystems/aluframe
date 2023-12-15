@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Mail;
@@ -33,7 +32,10 @@ class PasswordResetController extends Controller
         ]);
 
         $email = $request->email;
-       Mail::to($request->email)->send(new SendMail());
+        Mail::send('reset_password_email' , ['token' => $token] , function(Message $message )use($email){
+                $message->subject('Reset Your Password');
+                $message->to($email);
+        });
         return response([
             'message' => 'Password reset link has been sent to your Email' ,
             'status' => 'success' ,
