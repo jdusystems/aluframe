@@ -33,7 +33,7 @@ class PasswordResetController extends Controller
         ]);
 
         $email = $request->email;
-       Mail::to('jahongir.j@jdu.uz')->send(new SendMail());
+       Mail::to($request->email)->send(new SendMail());
         return response([
             'message' => 'Password reset link has been sent to your Email' ,
             'status' => 'success' ,
