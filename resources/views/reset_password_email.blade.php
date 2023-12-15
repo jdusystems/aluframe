@@ -10,7 +10,7 @@
 <body>
     <h1>Reset Password Link</h1>
 
-    <a href="http://127.0.0.1:8000/api/user/reset/{{$token}}">Click here</a>
+    <a href="http://127.0.0.1:8000/api/user/reset/">Click here</a>
 
 </body>
 </html>
