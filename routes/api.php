@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\PasswordResetController;
-
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,3 +32,5 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 
+// API CRUD for Posts , Just for Fun
+Route::apiResource('posts' , PostController::class);
