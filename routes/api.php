@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProfileColorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
@@ -31,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/change-password' , [UserController::class , 'changePassword']);
 });
 
+Route::apiResource('profile-colors' , ProfileColorController::class);
 
 // API CRUD for Posts , Just for Fun
 Route::apiResource('posts' , PostController::class);

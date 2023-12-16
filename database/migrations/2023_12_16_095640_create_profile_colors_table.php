@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('profile_colors', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('image');
+            $table->integer('sort_index');
+            $table->string('color_from');
+            $table->string('color_to');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

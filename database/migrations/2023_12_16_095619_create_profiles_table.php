@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('profile_type_id');
+            $table->integer('sort_index')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

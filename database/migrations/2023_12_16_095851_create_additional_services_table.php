@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('additional_services', function (Blueprint $table) {
             $table->id();
+            $table->string('image');
+            $table->string('name');
+            $table->string('vendor_code'); // Артикул
+            $table->double('price');
+            $table->integer('sort_index');
             $table->timestamps();
         });
     }
