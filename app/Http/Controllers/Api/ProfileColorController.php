@@ -27,6 +27,7 @@ class ProfileColorController extends Controller
      */
     public function store(StoreProfileColorRequest $request)
     {
+        // Image uploading is not working yet
         return new ShowProfileColorResource(ProfileColor::create($request->all()));
     }
 
