@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ProfileColorCollection extends ResourceCollection
+class WindowColorCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,9 +15,9 @@ class ProfileColorCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'message' => 'Profile colors list',
-            'data' => $this->collection->map(function ($profileColor) {
-                return new ShowProfileColorResource($profileColor);
+            'message' => 'Window colors list',
+            'data' => $this->collection->map(function ($windowColor) {
+                return new ShowWindowColorResource($windowColor);
             }),
         ];
     }

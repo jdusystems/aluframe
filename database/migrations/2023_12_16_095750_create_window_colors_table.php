@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('price');
             $table->integer('sort_index');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

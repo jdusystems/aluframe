@@ -37,11 +37,11 @@ class ProfileColorController extends Controller
     public function show(string $id)
     {
         $profileColor = ProfileColor::find($id);
-        if(!$profileColor) {
-                return new ErrorResource([
-                    'code' => 404,
-                    'message' => 'Record not found.',
-                ]);
+        if (!$profileColor) {
+            return new ErrorResource([
+                'code' => 404,
+                'message' => 'Record not found.',
+            ]);
         }
         return new ShowProfileColorResource($profileColor);
     }
@@ -69,21 +69,20 @@ class ProfileColorController extends Controller
      */
     public function destroy(string $id)
     {
-         $profile_color = ProfileColor::find($id);
+        $profile_color = ProfileColor::find($id);
 
-         if (!$profile_color) {
+        if (!$profile_color) {
             return new ErrorResource([
                 'code' => 404,
                 'message' => 'Record not found.',
             ]);
-         }
- 
-         $profile_color->delete();
- 
-         return new SuccessResource([
+        }
+
+        $profile_color->delete();
+
+        return new SuccessResource([
             'code' => 200,
-            'message' => 'Resource deleted successfully'
-         ]);
-     
+            'message' => 'Profile color deleted successfully'
+        ]);
     }
 }
