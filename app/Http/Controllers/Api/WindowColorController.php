@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWindowColorRequest;
 use App\Http\Requests\UpdateWindowColorRequest;
-use App\Http\Resources\ErrorResource;
+use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowWindowColorResource;
-use App\Http\Resources\SuccessResource;
 use App\Http\Resources\WindowColorCollection;
 use App\Models\WindowColor;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class WindowColorController extends Controller
@@ -39,7 +37,7 @@ class WindowColorController extends Controller
     {
         $windowColor = WindowColor::find($id);
         if (!$windowColor) {
-            return new ErrorResource([
+            return new ReturnResponseResource([
                 'code' => 404,
                 'message' => 'Record not found.',
             ]);
@@ -77,7 +75,7 @@ class WindowColorController extends Controller
         $windowColor = WindowColor::find($id);
 
         if (!$windowColor) {
-            return new ErrorResource([
+            return new ReturnResponseResource([
                 'code' => 404,
                 'message' => 'Record not found.',
             ]);
@@ -85,7 +83,7 @@ class WindowColorController extends Controller
 
         $windowColor->delete();
 
-        return new SuccessResource([
+        return new ReturnResponseResource([
             'code' => 200,
             'message' => 'Window color deleted successfully'
         ]);

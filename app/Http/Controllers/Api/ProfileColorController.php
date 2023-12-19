@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProfileColorRequest;
 use App\Http\Requests\UpdateProfileColorRequest;
-use App\Http\Resources\ErrorResource;
 use App\Http\Resources\ProfileColorCollection;
+use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowProfileColorResource;
-use App\Http\Resources\SuccessResource;
 use App\Models\ProfileColor;
-use Illuminate\Http\Request;
 
 class ProfileColorController extends Controller
 {
@@ -38,7 +36,7 @@ class ProfileColorController extends Controller
     {
         $profileColor = ProfileColor::find($id);
         if (!$profileColor) {
-            return new ErrorResource([
+            return new ReturnResponseResource([
                 'code' => 404,
                 'message' => 'Record not found.',
             ]);
@@ -72,7 +70,7 @@ class ProfileColorController extends Controller
         $profile_color = ProfileColor::find($id);
 
         if (!$profile_color) {
-            return new ErrorResource([
+            return new ReturnResponseResource([
                 'code' => 404,
                 'message' => 'Record not found.',
             ]);
@@ -80,7 +78,7 @@ class ProfileColorController extends Controller
 
         $profile_color->delete();
 
-        return new SuccessResource([
+        return new ReturnResponseResource([
             'code' => 200,
             'message' => 'Profile color deleted successfully'
         ]);
