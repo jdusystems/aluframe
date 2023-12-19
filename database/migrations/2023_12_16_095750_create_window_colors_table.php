@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('image');
             $table->string('name');
-            $table->string('vendor_code'); // Артикул
+            $table->string('vendor_code')->unique(); // Артикул
             $table->double('price');
             $table->integer('sort_index');
             $table->timestamps();

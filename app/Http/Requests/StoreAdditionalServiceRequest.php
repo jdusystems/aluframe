@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateWindowColorRequest extends FormRequest
+class StoreAdditionalServiceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class UpdateWindowColorRequest extends FormRequest
             'name' => ['required'],
             'image' => ['required'],
             'sort_index' => ['required'],
+            'vendor_code' => ['required', 'unique:additional_services'],
             'price' => ['required']
         ];
     }
