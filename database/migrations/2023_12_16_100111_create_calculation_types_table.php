@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('opening_types', function (Blueprint $table) {
+        Schema::create('calculation_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('sort_index');
-            $table->unsignedBigInteger('calculation_type_id')->nullable();
-            $table->foreign('calculation_type_id')->references('id')->on('calculation_types');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('opening_types');
+        Schema::dropIfExists('calculation_types');
     }
 };

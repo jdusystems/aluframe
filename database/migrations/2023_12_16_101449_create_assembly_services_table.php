@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('assembly_services', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('vendor_code');
+            $table->string('condition_operator');
+            $table->double('facade_height');
+            $table->double('price');
             $table->timestamps();
         });
     }

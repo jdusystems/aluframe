@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WindowColorController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Api\OpeningTypeController;
+use App\Http\Controllers\Api\CalculationTypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +39,10 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::apiResource('profile-colors' , ProfileColorController::class);
 Route::apiResource('window-colors' , WindowColorController::class);
 Route::apiResource('additional-services' , AdditionalServiceController::class);
+Route::apiResource('opening-types' , OpeningTypeController::class);
+Route::apiResource('calculation-types' , CalculationTypeController::class);
+
+
 
 // API CRUD for Posts , Just for Fun
 Route::apiResource('posts' , PostController::class);
