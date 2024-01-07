@@ -9,6 +9,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\Api\OpeningTypeController;
 use App\Http\Controllers\Api\CalculationTypeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AssemblyServiceController;
+use App\Http\Controllers\Api\ProfileTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +41,12 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::apiResource('profile-colors' , ProfileColorController::class);
 Route::apiResource('window-colors' , WindowColorController::class);
 Route::apiResource('additional-services' , AdditionalServiceController::class);
+Route::apiResource('assembly-services' , AssemblyServiceController::class);
 Route::apiResource('opening-types' , OpeningTypeController::class);
 Route::apiResource('calculation-types' , CalculationTypeController::class);
+Route::apiResource('profiles' , ProfileTypeController::class);
+
+Route::get('/image/{filename}', [WindowColorController::class, 'getImage'])->name('image.get');
 
 
 

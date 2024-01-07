@@ -10,6 +10,7 @@ use App\Http\Resources\AdditionalServiceResource;
 use App\Http\Resources\ReturnResponseResource;
 use App\Models\AdditionalService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 
@@ -28,8 +29,20 @@ class AdditionalServiceController extends Controller
      */
     public function store(StoreAdditionalServiceRequest $request)
     {
-        // Image uploading is not working yet
-        return new AdditionalServiceResource(AdditionalService::create($request->all()));
+
+        if($request->hasFile('image')){
+            $uploadedFile = $request->file('image');
+
+            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
+        }
+        return new AdditionalServiceResource(AdditionalService::create([
+            'image' => $filePath ,
+            'name' => $request->name ,
+            'vendor_code' => $request->vendor_code ,
+            'price' => $request->price ,
+            'sort_index' => $request->sort_index
+        ]));
     }
 
     /**
@@ -53,14 +66,25 @@ class AdditionalServiceController extends Controller
     public function update(UpdateAdditionalServiceRequest $request, string $id)
     {
         $additionalService = AdditionalService::find($id);
-        
+
         $request->validate([
             'vendor_code' => Rule::unique('additional_services')->ignore($additionalService->id),
         ]);
 
+        if($request->hasFile('image')) {
+            // Delete the old image
+            Storage::disk('uploads')->delete($additionalService->image);
+            // Upload the new image
+            $uploadedFile = $request->file('image');
+            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
+        }else{
+            $filePath = $additionalService->image;
+        }
+
         $additionalService->update([
             'name' => $request->name,
-            'image' => $request->image,
+            'image' => $filePath,
             'sort_index' => $request->sort_index,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price
@@ -82,7 +106,7 @@ class AdditionalServiceController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-
+        Storage::disk('uploads')->delete($additionalService->image);
         $additionalService->delete();
 
         return new ReturnResponseResource([

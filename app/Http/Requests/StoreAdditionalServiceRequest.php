@@ -23,7 +23,7 @@ class StoreAdditionalServiceRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'image' => ['required'],
+            'image' => ['required' ,'file'],
             'sort_index' => ['required'],
             'vendor_code' => ['required', 'unique:additional_services'],
             'price' => ['required']

@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AssemblyService extends Model
+class ProfileType extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'name' , 'condition_operator' , 'facade_height' , 'vendor_code' , 'price'
+        'name' , 'calculation_type' , 'price' , 'sort_index'
     ];
+    protected $table = "profile_types";
+
+
 }

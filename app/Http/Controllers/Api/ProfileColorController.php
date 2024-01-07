@@ -50,7 +50,12 @@ class ProfileColorController extends Controller
     public function update(UpdateProfileColorRequest $request, string $id)
     {
         $profileColor = ProfileColor::find($id);
-
+        if(!$profileColor){
+            return new ReturnResponseResource([
+                'code' => 404,
+                'message' => 'Record not found.',
+            ]);
+        }
         $profileColor->update([
             'name' => $request->name,
             'image' => $request->image,

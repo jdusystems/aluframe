@@ -23,8 +23,10 @@ class UpdateOpeningTypeRequest extends FormRequest
     {
         return [
             'name' => ['required'] ,
-            'calculation_type_id' => ['required'] ,
-            'sort_index' => ['required']
+            'calculation_type' => ['required'] ,
+            'sort_index' => ['required'] ,
+            'price' => ['required' , "numeric" , "min:0"] ,
+            'image' => ['required' , "file"]
         ];
     }
 }

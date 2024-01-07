@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('profile_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('profile_type_id');
-            $table->integer('sort_index')->default(0);
+            $table->string('calculation_type');
+            $table->double('price');
+            $table->integer('sort_index')->default(1);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('profile_types');
     }
 };

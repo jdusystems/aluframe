@@ -10,6 +10,7 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowOpeningTypeResource;
 use App\Models\OpeningType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class OpeningTypeController extends Controller
@@ -25,21 +26,25 @@ class OpeningTypeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreOpeningTypeRequest $request)
     {
+
+        if($request->hasFile('image')){
+            $uploadedFile = $request->file('image');
+
+            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
+        }
         return new ShowOpeningTypeResource(
             OpeningType::create([
                 'name' => $request->name ,
-                'calculation_type_id' => $request->calculation_type_id ,
-                 'sort_index' => $request->sort_index
+                'calculation_type' => $request->calculation_type ,
+                'sort_index' => $request->sort_index ,
+                'image' => $filePath ,
+                'price' => $request->price ,
             ])
         );
     }
@@ -62,11 +67,6 @@ class OpeningTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -79,10 +79,24 @@ class OpeningTypeController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
+
+        if($request->hasFile('image')) {
+            // Delete the old image
+            Storage::disk('uploads')->delete($openingType->image);
+            // Upload the new image
+            $uploadedFile = $request->file('image');
+            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
+        }else{
+            $filePath = $openingType->image;
+        }
+
         $openingType->update([
             'name' => $request->name ,
-            'calculation_type_id' => $request->calculation_type_id ,
-            'sort_index' => $request->sort_index
+            'calculation_type' => $request->calculation_type,
+            'sort_index' => $request->sort_index ,
+            'image' => $filePath ,
+            'price' => $request->price ,
         ]);
 
         return new ShowOpeningTypeResource($openingType);
@@ -100,6 +114,7 @@ class OpeningTypeController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
+        Storage::disk('uploads')->delete($openingType->image);
         if($openingType->delete()){
             return new ReturnResponseResource([
                 'code' => 200,

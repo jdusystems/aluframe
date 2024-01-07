@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdditionalServiceResource extends JsonResource
+class ShowAssemblyServiceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,12 @@ class AdditionalServiceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'image' => route('image.get' , $this->image),
-            'sort_index' => $this->sort_index,
-            'vendor_code' => $this->vendor_code,
-            'price' => $this->price,
+            'name' => $this->name ,
+            'vendor_code' => $this->vendor_code ,
+            'condition_operator' => $this->condition_operator ,
+            'facade_height' => $this->facade_height ,
+            'price' => $this->price
         ];
+
     }
 }

@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('sort_index');
-            $table->unsignedBigInteger('calculation_type_id')->nullable();
-            $table->foreign('calculation_type_id')->references('id')->on('calculation_types');
+            $table->string('calculation_type')->nullable();
+            $table->string('image');
+            $table->double('price');
             $table->timestamps();
         });
     }
