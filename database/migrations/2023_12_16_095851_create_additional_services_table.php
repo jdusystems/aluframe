@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('additional_services', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
+            $table->string('image_name')->nullable();
+            $table->string('image_url')->nullable();
             $table->string('name');
             $table->string('vendor_code')->unique(); // Артикул
             $table->double('price');

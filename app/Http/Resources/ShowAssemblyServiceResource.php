@@ -15,6 +15,7 @@ class ShowAssemblyServiceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name ,
             'vendor_code' => $this->vendor_code ,
             'condition_operator' => $this->condition_operator ,

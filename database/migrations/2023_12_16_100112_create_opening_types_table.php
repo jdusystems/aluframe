@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->integer('sort_index');
             $table->string('calculation_type')->nullable();
-            $table->string('image');
+            $table->string('image_name')->nullable();
+            $table->string('image_url')->nullable();
             $table->double('price');
             $table->timestamps();
         });

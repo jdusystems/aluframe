@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\CalculationTypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AssemblyServiceController;
 use App\Http\Controllers\Api\ProfileTypeController;
-
+use App\Http\Controllers\Api\ImageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,9 +46,10 @@ Route::apiResource('opening-types' , OpeningTypeController::class);
 Route::apiResource('calculation-types' , CalculationTypeController::class);
 Route::apiResource('profiles' , ProfileTypeController::class);
 
-Route::get('/image/{filename}', [WindowColorController::class, 'getImage'])->name('image.get');
+Route::post('/image/{filename}', [WindowColorController::class, 'getImage'])->name('image.get');
 
-
+Route::post('/image-upload', [ImageController::class, 'imageUpload']);
+Route::post('/image-delete', [ImageController::class, 'imageDelete']);
 
 // API CRUD for Posts , Just for Fun
 Route::apiResource('posts' , PostController::class);

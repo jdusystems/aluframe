@@ -15,10 +15,12 @@ class ShowOpeningTypeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name ,
             'calculation_type'  => $this->calculation_type,
             'sort_index' => $this->sort_index ,
-            'image_url' => route('image.get' , $this->image) ,
+            'image_url' => $this->image_url ,
+            'image_name' => $this->image_name ,
             'price' => $this->price ,
         ];
     }

@@ -23,7 +23,8 @@ class UpdateWindowColorRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'image' => ['required' , 'file'],
+            'image_url' => ['required'],
+            'image_name' => ['required'],
             'sort_index' => ['required'],
             'price' => ['required'] ,
             'vendor_code' => ['required']

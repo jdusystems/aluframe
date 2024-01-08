@@ -31,19 +31,13 @@ class OpeningTypeController extends Controller
      */
     public function store(StoreOpeningTypeRequest $request)
     {
-
-        if($request->hasFile('image')){
-            $uploadedFile = $request->file('image');
-
-            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
-        }
         return new ShowOpeningTypeResource(
             OpeningType::create([
                 'name' => $request->name ,
                 'calculation_type' => $request->calculation_type ,
                 'sort_index' => $request->sort_index ,
-                'image' => $filePath ,
+                'image_name' => $request->image_name ,
+                'image_url' => $request->image_url ,
                 'price' => $request->price ,
             ])
         );
@@ -80,22 +74,12 @@ class OpeningTypeController extends Controller
             ]);
         }
 
-        if($request->hasFile('image')) {
-            // Delete the old image
-            Storage::disk('uploads')->delete($openingType->image);
-            // Upload the new image
-            $uploadedFile = $request->file('image');
-            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
-        }else{
-            $filePath = $openingType->image;
-        }
-
         $openingType->update([
             'name' => $request->name ,
             'calculation_type' => $request->calculation_type,
             'sort_index' => $request->sort_index ,
-            'image' => $filePath ,
+            'image_url' => $request->image_url ,
+            'image_name' => $request->image_name ,
             'price' => $request->price ,
         ]);
 
@@ -114,7 +98,7 @@ class OpeningTypeController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        Storage::disk('uploads')->delete($openingType->image);
+        Storage::disk('uploads')->delete($openingType->image_name);
         if($openingType->delete()){
             return new ReturnResponseResource([
                 'code' => 200,

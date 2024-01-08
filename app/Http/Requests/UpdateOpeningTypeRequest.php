@@ -26,7 +26,8 @@ class UpdateOpeningTypeRequest extends FormRequest
             'calculation_type' => ['required'] ,
             'sort_index' => ['required'] ,
             'price' => ['required' , "numeric" , "min:0"] ,
-            'image' => ['required' , "file"]
+            'image_url' => ['required'],
+            'image_name' => ['required'],
         ];
     }
 }

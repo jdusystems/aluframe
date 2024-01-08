@@ -10,5 +10,5 @@ class ProfileColor extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["name", "image", "sort_index", "color_from", "color_to"];
+    protected $fillable = ["name","image_url" ,"image_name", "sort_index", "color_from", "color_to"];
 }

@@ -17,7 +17,8 @@ class ShowProfileColorResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->image,
+            'image_url' => $this->image_url ,
+            'image_name' => $this->image_name ,
             'sort_index' => $this->sort_index,
             'color_from' => $this->color_from,
             'color_to' => $this->color_to,

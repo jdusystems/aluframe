@@ -28,28 +28,16 @@ class WindowColorController extends Controller
     public function store(StoreWindowColorRequest $request)
     {
         // Image uploading is not working yet
-        if($request->hasFile('image')){
-            $uploadedFile = $request->file('image');
-
-            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
-        }
 
         return new ShowWindowColorResource(WindowColor::create([
-            'image' => $filePath ,
+            'image_name' => $request->image_name ,
+            'image_url' => $request->image_url ,
             'name' => $request->name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
             'sort_index' => $request->sort_index
         ]));
     }
-
-    public function getImage($filename)
-    {
-        $file = Storage::disk('uploads')->get($filename);
-        return response($file, 200);
-    }
-
     /**
      * Display the specified resource.
      */
@@ -76,19 +64,10 @@ class WindowColorController extends Controller
             'vendor_code' => Rule::unique('window_colors')->ignore($windowColor->id),
         ]);
 
-        if($request->hasFile('image')) {
-            // Delete the old image
-            Storage::disk('uploads')->delete($windowColor->image);
-            // Upload the new image
-            $uploadedFile = $request->file('image');
-            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
-        }else{
-            $filePath = $windowColor->image;
-        }
         $windowColor->update([
             'name' => $request->name,
-            'image' => $filePath,
+            'image_url' => $request->image_url,
+            'image_name' => $request->image_name,
             'sort_index' => $request->sort_index,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price
@@ -110,7 +89,7 @@ class WindowColorController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        Storage::disk('uploads')->delete($windowColor->image);
+        Storage::disk('uploads')->delete($windowColor->image_name);
         $windowColor->delete();
         return new ReturnResponseResource([
             'code' => 200,

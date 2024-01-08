@@ -15,6 +15,7 @@ class ShowProfileTypeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name ,
             'calculation_type' => $this->calculation_type ,
             'price' => $this->price ,

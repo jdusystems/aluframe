@@ -30,14 +30,9 @@ class AdditionalServiceController extends Controller
     public function store(StoreAdditionalServiceRequest $request)
     {
 
-        if($request->hasFile('image')){
-            $uploadedFile = $request->file('image');
-
-            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
-        }
         return new AdditionalServiceResource(AdditionalService::create([
-            'image' => $filePath ,
+            'image_name' => $request->image_name ,
+            'image_url' => $request->image_url,
             'name' => $request->name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
@@ -66,25 +61,20 @@ class AdditionalServiceController extends Controller
     public function update(UpdateAdditionalServiceRequest $request, string $id)
     {
         $additionalService = AdditionalService::find($id);
-
+        if (!$additionalService) {
+            return new ReturnResponseResource([
+                'code' => 404,
+                'message' => 'Record not found.',
+            ]);
+        }
         $request->validate([
             'vendor_code' => Rule::unique('additional_services')->ignore($additionalService->id),
         ]);
 
-        if($request->hasFile('image')) {
-            // Delete the old image
-            Storage::disk('uploads')->delete($additionalService->image);
-            // Upload the new image
-            $uploadedFile = $request->file('image');
-            $imageName = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-            $filePath = Storage::disk('uploads')->putFileAs('', $uploadedFile, $imageName);
-        }else{
-            $filePath = $additionalService->image;
-        }
-
         $additionalService->update([
             'name' => $request->name,
-            'image' => $filePath,
+            'image_name' => $request->image_name ,
+            'image_url' => $request->image_url,
             'sort_index' => $request->sort_index,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price
@@ -106,7 +96,7 @@ class AdditionalServiceController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        Storage::disk('uploads')->delete($additionalService->image);
+        Storage::disk('uploads')->delete($additionalService->image_name);
         $additionalService->delete();
 
         return new ReturnResponseResource([

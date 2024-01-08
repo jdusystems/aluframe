@@ -9,6 +9,7 @@ use App\Http\Resources\ProfileColorCollection;
 use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowProfileColorResource;
 use App\Models\ProfileColor;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileColorController extends Controller
 {
@@ -58,7 +59,8 @@ class ProfileColorController extends Controller
         }
         $profileColor->update([
             'name' => $request->name,
-            'image' => $request->image,
+            'image_name' => $request->image_name,
+            'image_url' => $request->image_url,
             'sort_index' => $request->sort_index,
             'color_from' => $request->color_from,
             'color_to' => $request->color_to
@@ -80,7 +82,7 @@ class ProfileColorController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-
+        Storage::disk('uploads')->delete($profile_color->image_name);
         $profile_color->delete();
 
         return new ReturnResponseResource([
