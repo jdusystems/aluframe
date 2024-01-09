@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AssemblyServiceController;
 use App\Http\Controllers\Api\ProfileTypeController;
 use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\Api\ClientController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,6 +46,7 @@ Route::apiResource('assembly-services' , AssemblyServiceController::class);
 Route::apiResource('opening-types' , OpeningTypeController::class);
 Route::apiResource('calculation-types' , CalculationTypeController::class);
 Route::apiResource('profiles' , ProfileTypeController::class);
+Route::apiResource('clients' , ClientController::class);
 
 Route::post('/image/{filename}', [WindowColorController::class, 'getImage'])->name('image.get');
 
