@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreImageRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
     //
-    public function imageUpload(Request $request){
-        $request->validate([
-            'image' => "required|image|mimes:jpg,png,jpeg|max:2048"
-        ]);
+    public function imageUpload(StoreImageRequest $request){
+
         if($request->hasFile('image')){
             $uploadedFile = $request->file('image');
 
@@ -22,7 +21,7 @@ class ImageController extends Controller
             $file_url = route('image.get' , $filePath);
 
             return response([
-                'message' => "Image uploaded successfully" ,
+                 'message' => "Image uploaded successfully" ,
                  'image_name' => $filePath ,
                  'image_url' => $file_url
             ]);
