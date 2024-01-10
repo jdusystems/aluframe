@@ -25,7 +25,7 @@ class UpdateAdditionalServiceRequest extends FormRequest
             'name' => ['required'],
             'image_url' => ['required'],
             'image_name' => ['required'],
-            'sort_index' => ['required'],
+            'sort_index' => ['required' , 'integer'],
             'vendor_code' => ['required'],
             'price' => ['required']
         ];

@@ -24,7 +24,7 @@ class UpdateOpeningTypeRequest extends FormRequest
         return [
             'name' => ['required'] ,
             'calculation_type' => ['required'] ,
-            'sort_index' => ['required'] ,
+            'sort_index' => ['required' , 'integer'] ,
             'price' => ['required' , "numeric" , "min:0"] ,
             'image_url' => ['required'],
             'image_name' => ['required'],
