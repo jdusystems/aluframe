@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <img src="http://localhost:8000/uploads/1705034790.jpg" alt="Uploaded Image">
+    <img src="http://aluframe.jdu.uz/uploads/1705040685.jpg" alt="Uploaded Image">
 </body>
 </html>
