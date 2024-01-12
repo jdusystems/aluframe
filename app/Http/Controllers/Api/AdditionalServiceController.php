@@ -83,6 +83,18 @@ class AdditionalServiceController extends Controller
         return new AdditionalServiceResource($additionalService);
     }
 
+    public function deleteMultiple(Request $request){
+        $ids = $request->json('ids');
+
+        if (!empty($ids) && is_array($ids)) {
+            AdditionalService::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -96,7 +108,6 @@ class AdditionalServiceController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        Storage::disk('uploads')->delete($additionalService->image_name);
         $additionalService->delete();
 
         return new ReturnResponseResource([

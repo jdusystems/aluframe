@@ -59,8 +59,6 @@ class ProfileColorController extends Controller
         }
         $profileColor->update([
             'name' => $request->name,
-            'image_name' => $request->image_name,
-            'image_url' => $request->image_url,
             'sort_index' => $request->sort_index,
             'color_from' => $request->color_from,
             'color_to' => $request->color_to
@@ -69,6 +67,18 @@ class ProfileColorController extends Controller
         return new ShowProfileColorResource($profileColor);
     }
 
+
+    public function deleteMultiple(Request $request){
+        $ids = $request->json('ids');
+
+        if (!empty($ids) && is_array($ids)) {
+            ProfileColor::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */

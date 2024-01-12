@@ -72,6 +72,17 @@ class ClientController extends Controller
         return new ShowClientResource($client);
     }
 
+    public function deleteMultiple(Request $request){
+        $ids = $request->json('ids');
+
+        if (!empty($ids) && is_array($ids)) {
+            Client::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */

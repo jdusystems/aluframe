@@ -48,10 +48,22 @@ Route::apiResource('calculation-types' , CalculationTypeController::class);
 Route::apiResource('profiles' , ProfileTypeController::class);
 Route::apiResource('clients' , ClientController::class);
 
-Route::post('/image/{filename}', [WindowColorController::class, 'getImage'])->name('image.get');
+Route::post('/profile-colors/delete-multiple' , [ProfileTypeController::class , 'deleteMultiple']);
+Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);
+Route::post('/additional-services/delete-multiple' , [AdditionalServiceController::class , 'deleteMultiple']);
+Route::post('/assembly-services/delete-multiple' , [AssemblyServiceController::class , 'deleteMultiple']);
+Route::post('/opening-types/delete-multiple' , [OpeningTypeController::class , 'deleteMultiple']);
+Route::post('/profiles/delete-multiple' , [ProfileTypeController::class , 'deleteMultiple']);
+Route::post('/clients/delete-multiple' , [ClientController::class , 'deleteMultiple']);
+Route::post('/calculation-types/delete-multiple' , [CalculationTypeController::class , 'deleteMultiple']);
+
 
 Route::post('/image-upload', [ImageController::class, 'imageUpload']);
 Route::post('/image-delete', [ImageController::class, 'imageDelete']);
+
+Route::get('/image' , function (){
+   return view('image');
+});
 
 // API CRUD for Posts , Just for Fun
 Route::apiResource('posts' , PostController::class);

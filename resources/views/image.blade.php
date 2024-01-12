@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <img src="http://localhost:8000/api/image/659a8b6fce75f.jpg" alt="Uploaded Image">
+    <img src="http://localhost:8000/uploads/1705034790.jpg" alt="Uploaded Image">
 </body>
 </html>

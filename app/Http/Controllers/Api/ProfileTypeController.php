@@ -49,6 +49,8 @@ class ProfileTypeController extends Controller
         return new ShowProfileTypeResource($profileType);
     }
 
+
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -74,6 +76,19 @@ class ProfileTypeController extends Controller
         return new ShowProfileTypeResource($profileType);
     }
 
+
+
+    public function deleteMultiple(Request $request){
+        $ids = $request->json('ids');
+
+        if (!empty($ids) && is_array($ids)) {
+            ProfileType::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
