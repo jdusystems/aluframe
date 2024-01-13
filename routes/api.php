@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Api\AdditionalServiceController;
 use App\Http\Controllers\Api\ProfileColorController;
 use App\Http\Controllers\Api\UserController;
@@ -8,7 +13,6 @@ use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Api\OpeningTypeController;
 use App\Http\Controllers\Api\CalculationTypeController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AssemblyServiceController;
 use App\Http\Controllers\Api\ProfileTypeController;
 use App\Http\Controllers\Api\ImageController;
@@ -24,20 +28,22 @@ use App\Http\Controllers\Api\ClientController;
 |
 */
 
-//Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::middleware(['auth:sanctum'])->group( function () {
+    Route::get('/user' , function (Request $request){
+       return $request->user();
+    });
 
-Route::post('/register' , [UserController::class , 'register']);
-Route::post('/login' , [UserController::class , 'login']);
-Route::post('/forgot-password' , [PasswordResetController::class , 'sendResetPasswordEmail']);
-Route::post('/reset-password/{token}' , [PasswordResetController::class , 'reset']);
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+    Route::post('/change-password', [PasswordResetController::class, 'changePassword'])
+        ->name('change.password');
 
-Route::middleware('auth:sanctum')->group(function(){
-    Route::post('/logout' , [UserController::class , 'logOut']);
-    Route::get('/user' , [UserController::class , 'loggedUser']);
-    Route::post('/change-password' , [UserController::class , 'changePassword']);
+    Route::middleware(['admin'])->group(function () {
+
+    });
+
 });
+
 
 Route::apiResource('profile-colors' , ProfileColorController::class);
 Route::apiResource('window-colors' , WindowColorController::class);
@@ -62,7 +68,7 @@ Route::post('/image-upload', [ImageController::class, 'imageUpload']);
 Route::post('/image-delete', [ImageController::class, 'imageDelete']);
 
 Route::get('/image' , function (){
-   return view('image');
+    return view('image');
 });
 
 // API CRUD for Posts , Just for Fun

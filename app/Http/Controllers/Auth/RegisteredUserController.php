@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -36,11 +35,13 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-        $token = $user->createToken('API TOKEN');
+
+        $token = $user->createToken('api-token');
 
         return response()->json([
-            'user' => $user,
-            'token' => $token->plainTextToken,
+            'user' => $user ,
+            'token' => $token->plainTextToken
         ]);
     }
 }
+//1|3yZKq45IaDGeBwWgjRDgsXxAdJMhiIqaiF6q4t7p2215b13f
