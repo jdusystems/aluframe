@@ -11,7 +11,7 @@ use App\Http\Resources\WindowColorCollection;
 use App\Models\WindowColor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Http\Request;
 class WindowColorController extends Controller
 {
     /**

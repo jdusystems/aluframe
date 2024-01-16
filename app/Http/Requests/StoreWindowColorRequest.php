@@ -27,7 +27,7 @@ class StoreWindowColorRequest extends FormRequest
             'image_name' => ['required'],
             'sort_index' => ['required'],
             'vendor_code' => ['required', 'unique:window_colors'],
-            'price' => ['required']
+            'price' =>  ['required', 'numeric', 'min:0.01'],
         ];
     }
 }

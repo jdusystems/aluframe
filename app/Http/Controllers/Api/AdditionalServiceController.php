@@ -88,7 +88,6 @@ class AdditionalServiceController extends Controller
 
         if (!empty($ids) && is_array($ids)) {
             AdditionalService::whereIn('id', $ids)->delete();
-
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
             return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);

@@ -24,7 +24,7 @@ class StoreProfileTypeRequest extends FormRequest
         return [
             'name' => "required" ,
             'calculation_type' => "required" ,
-            'price' => ['required' , 'numeric' , 'min:0'],
+            'price' =>  ['required', 'numeric', 'min:0.01'],
             'sort_index' => ['required' , 'integer']
         ];
     }

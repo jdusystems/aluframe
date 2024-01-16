@@ -17,6 +17,9 @@ use App\Http\Controllers\Api\AssemblyServiceController;
 use App\Http\Controllers\Api\ProfileTypeController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\CornerController;
+use App\Http\Controllers\Api\WindowHandlerController;
+use App\Http\Controllers\Api\SealantController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,8 +56,11 @@ Route::apiResource('opening-types' , OpeningTypeController::class);
 Route::apiResource('calculation-types' , CalculationTypeController::class);
 Route::apiResource('profiles' , ProfileTypeController::class);
 Route::apiResource('clients' , ClientController::class);
+Route::apiResource('corners' , CornerController::class);
+Route::apiResource('window-handlers' , WindowHandlerController::class);
+Route::apiResource('sealants' , SealantController::class);
 
-Route::post('/profile-colors/delete-multiple' , [ProfileTypeController::class , 'deleteMultiple']);
+Route::post('/profile-colors/delete-multiple' , [ProfileColorController::class , 'deleteMultiple']);
 Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);
 Route::post('/additional-services/delete-multiple' , [AdditionalServiceController::class , 'deleteMultiple']);
 Route::post('/assembly-services/delete-multiple' , [AssemblyServiceController::class , 'deleteMultiple']);
@@ -62,7 +68,9 @@ Route::post('/opening-types/delete-multiple' , [OpeningTypeController::class , '
 Route::post('/profiles/delete-multiple' , [ProfileTypeController::class , 'deleteMultiple']);
 Route::post('/clients/delete-multiple' , [ClientController::class , 'deleteMultiple']);
 Route::post('/calculation-types/delete-multiple' , [CalculationTypeController::class , 'deleteMultiple']);
-
+Route::post('/corners/delete-multiple' , [CornerController::class , 'deleteMultiple']);
+Route::post('/window-handlers/delete-multiple' , [WindowHandlerController::class , 'deleteMultiple']);
+Route::post('/sealants/delete-multiple' , [SealantController::class , 'deleteMultiple']);
 
 Route::post('/image-upload', [ImageController::class, 'imageUpload']);
 Route::post('/image-delete', [ImageController::class, 'imageDelete']);

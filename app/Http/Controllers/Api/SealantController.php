@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSealantRequest;
+use App\Http\Requests\UpdateSealantRequest;
+use App\Http\Resources\ReturnResponseResource;
+use App\Http\Resources\SealantCollection;
+use App\Http\Resources\ShowSealantResource;
+use App\Models\Sealant;
+use Illuminate\Http\Request;
+
+class SealantController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return new SealantCollection(Sealant::paginate(10));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreSealantRequest $request)
+    {
+        return new ShowSealantResource(Sealant::create($request->all()));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $sealant  = Sealant::find($id);
+
+        if(!$sealant){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found'
+            ]);
+        }
+        return new ShowSealantResource($sealant);
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateSealantRequest $request, string $id)
+    {
+        $sealant  = Sealant::find($id);
+
+        if(!$sealant){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found'
+            ]);
+        }
+        $sealant->update([
+            'name' => $request->name ,
+            'vendor_code' => $request->vendor_code ,
+            'price' => $request->price ,
+        ]);
+
+        return new ShowSealantResource($sealant);
+    }
+    public function deleteMultiple(Request $request){
+        $ids = $request->json('ids');
+
+        if (!empty($ids) && is_array($ids)) {
+            Sealant::whereIn('id', $ids)->delete();
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $sealant  = Sealant::find($id);
+
+        if(!$sealant){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found'
+            ]);
+        }
+        $sealant->delete();
+        return new ReturnResponseResource([
+            'code' => 200 ,
+            'message' => 'Sealant has been deleted successfully!'
+        ]);
+
+    }
+}

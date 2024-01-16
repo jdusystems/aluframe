@@ -10,7 +10,7 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowProfileColorResource;
 use App\Models\ProfileColor;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Http\Request;
 class ProfileColorController extends Controller
 {
     /**
@@ -70,7 +70,6 @@ class ProfileColorController extends Controller
 
     public function deleteMultiple(Request $request){
         $ids = $request->json('ids');
-
         if (!empty($ids) && is_array($ids)) {
             ProfileColor::whereIn('id', $ids)->delete();
 

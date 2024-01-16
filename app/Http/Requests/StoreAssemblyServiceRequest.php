@@ -26,7 +26,7 @@ class StoreAssemblyServiceRequest extends FormRequest
             'vendor_code' => "required" ,
             'condition_operator' => "required" ,
             'facade_height' => "required" ,
-            'price' => "required" ,
+            'price' =>  ['required', 'numeric', 'min:0.01'],
         ];
     }
 }

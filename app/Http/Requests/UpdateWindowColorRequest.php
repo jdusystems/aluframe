@@ -26,7 +26,7 @@ class UpdateWindowColorRequest extends FormRequest
             'image_url' => ['required'],
             'image_name' => ['required'],
             'sort_index' => ['required' , 'integer'],
-            'price' => ['required'] ,
+            'price' =>  ['required', 'numeric', 'min:0.01'],
             'vendor_code' => ['required']
         ];
     }

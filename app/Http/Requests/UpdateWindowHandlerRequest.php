@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAdditionalServiceRequest extends FormRequest
+class UpdateWindowHandlerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class StoreAdditionalServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'image_url' => ['required'],
-            'image_name' => ['required'],
-            'sort_index' => ['required' , 'integer'],
-            'vendor_code' => ['required', 'unique:additional_services'],
+            'name' => ['required'] ,
+            'vendor_code' => ['required'] ,
             'price' =>  ['required', 'numeric', 'min:0.01'],
         ];
     }
