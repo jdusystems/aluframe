@@ -34,7 +34,7 @@ class OpeningTypeController extends Controller
         return new ShowOpeningTypeResource(
             OpeningType::create([
                 'name' => $request->name ,
-                'type' => $request->type_id ,
+                'type_id' => $request->type_id ,
                 'sort_index' => $request->sort_index ,
                 'image_name' => $request->image_name ,
                 'image_url' => $request->image_url ,

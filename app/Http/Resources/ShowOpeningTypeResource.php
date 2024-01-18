@@ -21,8 +21,8 @@ class ShowOpeningTypeResource extends JsonResource
             'image_url' => $this->image_url ,
             'image_name' => $this->image_name ,
             'price' => $this->price ,
-            'type_name' => ($this->calcType) ? $this->calType->name : " " ,
-            'type_id' => ($this->calcType) ? $this->calcType->id : " "
+            'type_name' => ($this->type) ? $this->type->name : " " ,
+            'type_id' => ($this->type) ? $this->type->id : " "
         ];
     }
 }

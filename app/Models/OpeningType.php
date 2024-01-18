@@ -12,7 +12,7 @@ class OpeningType extends Model
     protected $fillable = ['name' , 'type_id' , 'sort_index' , "image_url" ,"image_name", 'price'];
 
 
-    public function calcType(){
-        return $this->belongsTo(CalculationType::class);
+    public function type(){
+        return $this->belongsTo(Type::class);
     }
 }
