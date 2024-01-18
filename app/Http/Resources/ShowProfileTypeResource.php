@@ -17,9 +17,10 @@ class ShowProfileTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ,
-            'calculation_type' => $this->calculation_type ,
             'price' => $this->price ,
-            'sort_index' => $this->sort_index
+            'sort_index' => $this->sort_index,
+            'calculation_type_name' => ($this->calculationType) ? $this->calculationType->name :" ",
+            'calculation_type_id' => ($this->calculationType) ? $this->calculationType->id :" ",
         ];
     }
 }

@@ -25,6 +25,7 @@ class StoreSealantRequest extends FormRequest
             'name' => ['required'] ,
             'vendor_code' => ['required'] ,
             'price' =>  ['required', 'numeric', 'min:0.01'],
+            'profile_type_id' => "required|exists:profile_types,id"
         ];
     }
 }

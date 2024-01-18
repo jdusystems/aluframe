@@ -23,7 +23,7 @@ class StoreOpeningTypeRequest extends FormRequest
     {
         return [
             'name' => ['required'] ,
-            'calculation_type' => ['required'] ,
+            'type_id' => ['required' , 'exists:types,id'] ,
             'sort_index' => ['required' , 'integer'] ,
             'price' =>  ['required', 'numeric', 'min:0.01'],
             'image_url' => ['required'],

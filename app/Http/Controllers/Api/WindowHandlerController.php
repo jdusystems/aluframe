@@ -67,6 +67,7 @@ class WindowHandlerController extends Controller
             'name' => $request->name,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price,
+            'profile_type_id' => $request->profile_type_id
         ]);
 
         return new ShowWindowHandlerResource($windowHandler);

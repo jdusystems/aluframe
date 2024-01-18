@@ -9,6 +9,10 @@ class OpeningType extends Model
 {
     use HasFactory;
     protected $table = "opening_types";
-    protected $fillable = ['name' , 'calculation_type' , 'sort_index' , "image_url" ,"image_name", 'price'];
+    protected $fillable = ['name' , 'type_id' , 'sort_index' , "image_url" ,"image_name", 'price'];
 
+
+    public function calcType(){
+        return $this->belongsTo(CalculationType::class);
+    }
 }

@@ -66,7 +66,8 @@ class CornerController extends Controller
         $corner->update([
             'name' => $request->name,
             'price' => $request->price,
-            'vandor_code' => $request->vandor_code,
+            'vendor_code' => $request->vendor_code,
+            'profile_type_id' => $request->profile_type_id
         ]);
         return new ShowCornerResource($corner);
     }

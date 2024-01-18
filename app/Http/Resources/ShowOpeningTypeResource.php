@@ -17,11 +17,12 @@ class ShowOpeningTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ,
-            'calculation_type'  => $this->calculation_type,
             'sort_index' => $this->sort_index ,
             'image_url' => $this->image_url ,
             'image_name' => $this->image_name ,
             'price' => $this->price ,
+            'type_name' => ($this->calcType) ? $this->calType->name : " " ,
+            'type_id' => ($this->calcType) ? $this->calcType->id : " "
         ];
     }
 }

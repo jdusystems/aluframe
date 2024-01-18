@@ -69,7 +69,7 @@ class ProfileTypeController extends Controller
         }
         $profileType->update([
             'name' => $request->name ,
-            'calculation_type' => $request->calculation_type ,
+            'calculation_type_id' => $request->calculation_type_id ,
             'price' => $request->price ,
             'sort_index' => $request->sort_index
         ]);

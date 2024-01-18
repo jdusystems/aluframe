@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sealants', function (Blueprint $table) {
+        Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->string('vendor_code')->nullable();
             $table->string('name')->nullable();
-            $table->double('price')->nullable();
-            $table->unsignedBigInteger('profile_type_id')->nullable();
-            $table->foreign('profile_type_id')->references('id')->on('profile_types');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sealants');
+        Schema::dropIfExists('types');
     }
 };

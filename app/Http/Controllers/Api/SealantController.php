@@ -29,7 +29,13 @@ class SealantController extends Controller
      */
     public function store(StoreSealantRequest $request)
     {
-        return new ShowSealantResource(Sealant::create($request->all()));
+        $sealant = Sealant::create([
+            'name' => $request->name ,
+            'vendor_code' => $request->vendor_code ,
+            'price' => $request->price ,
+            'profile_type_id' => $request->profile_type_id
+        ]);
+        return new ShowSealantResource($sealant);
     }
 
     /**
@@ -71,6 +77,7 @@ class SealantController extends Controller
             'name' => $request->name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
+            'profile_type_id' => $request->profile_type_id
         ]);
 
         return new ShowSealantResource($sealant);

@@ -34,7 +34,7 @@ class OpeningTypeController extends Controller
         return new ShowOpeningTypeResource(
             OpeningType::create([
                 'name' => $request->name ,
-                'calculation_type' => $request->calculation_type ,
+                'type' => $request->type_id ,
                 'sort_index' => $request->sort_index ,
                 'image_name' => $request->image_name ,
                 'image_url' => $request->image_url ,
@@ -76,7 +76,7 @@ class OpeningTypeController extends Controller
 
         $openingType->update([
             'name' => $request->name ,
-            'calculation_type' => $request->calculation_type,
+            'type_id' => $request->type_id,
             'sort_index' => $request->sort_index ,
             'image_url' => $request->image_url ,
             'image_name' => $request->image_name ,

@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\CornerController;
 use App\Http\Controllers\Api\WindowHandlerController;
 use App\Http\Controllers\Api\SealantController;
+use App\Http\Controllers\Api\TypeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -52,6 +53,7 @@ Route::apiResource('profile-colors' , ProfileColorController::class);
 Route::apiResource('window-colors' , WindowColorController::class);
 Route::apiResource('additional-services' , AdditionalServiceController::class);
 Route::apiResource('assembly-services' , AssemblyServiceController::class);
+Route::apiResource('types' , TypeController::class);
 Route::apiResource('opening-types' , OpeningTypeController::class);
 Route::apiResource('calculation-types' , CalculationTypeController::class);
 Route::apiResource('profiles' , ProfileTypeController::class);

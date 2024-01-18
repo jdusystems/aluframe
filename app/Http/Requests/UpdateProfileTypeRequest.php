@@ -23,7 +23,7 @@ class UpdateProfileTypeRequest extends FormRequest
     {
         return [
             'name' => "required" ,
-            'calculation_type' => "required" ,
+            'calculation_type_id' => "required|exists:calculation_types,id",
             'price' =>  ['required', 'numeric', 'min:0.01'],
             'sort_index' => ['required' , 'integer']
         ];

@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('profile_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('calculation_type');
             $table->double('price');
             $table->integer('sort_index')->default(1);
+            $table->unsignedBigInteger('calculation_type_id')->nullable();
+            $table->foreign('calculation_type_id')->references('id')->on('calculation_types');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

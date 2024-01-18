@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\ShowProfileTypeResource;
 class ShowCornerResource extends JsonResource
 {
     /**
@@ -15,11 +15,12 @@ class ShowCornerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
             'id' => $this->id ,
             'name' => $this->name ,
             'vendor_code' => $this->vendor_code ,
-            'price' => $this->price
+            'price' => $this->price ,
+            'profile_type_name' =>($this->profileType) ? $this->profileType->name :" " ,
+            'profile_type_id' =>  ($this->profileType) ? $this->profileType->id : " " ,
         ];
     }
 }
