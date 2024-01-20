@@ -18,6 +18,8 @@ return new class extends Migration
             $table->double('price')->nullable();
             $table->unsignedBigInteger('profile_type_id')->nullable();
             $table->foreign('profile_type_id')->references('id')->on('profile_types');
+            $table->unsignedBigInteger('profile_color_id')->nullable();
+            $table->foreign('profile_color_id')->references('id')->on('profile_colors');
             $table->softDeletes();
             $table->timestamps();
         });

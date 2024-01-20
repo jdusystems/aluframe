@@ -21,6 +21,8 @@ class ShowWindowHandlerResource extends JsonResource
             'price' => $this->price ,
             'profile_type_name' =>($this->profileType) ? $this->profileType->name :" " ,
             'profile_type_id' =>  ($this->profileType) ? $this->profileType->id : " " ,
+            'profile_color_id' =>  ($this->profileColor) ? $this->profileColor->id : " " ,
+            'profile_color_name' =>  ($this->profileColor) ? $this->profileColor->name : " " ,
         ];
     }
 }

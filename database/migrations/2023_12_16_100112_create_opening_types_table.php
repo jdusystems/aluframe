@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('sort_index');
             $table->string('image_name')->nullable();
             $table->string('image_url')->nullable();
-            $table->double('price');
             $table->unsignedBigInteger('type_id')->nullable();
             $table->foreign('type_id')->references('id')->on('types');
             $table->timestamps();

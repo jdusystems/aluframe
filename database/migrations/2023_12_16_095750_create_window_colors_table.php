@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('image_name')->nullable();
             $table->string('image_url')->nullable();
-            $table->string('name');
-            $table->string('vendor_code')->unique(); // Артикул
-            $table->double('price');
-            $table->integer('sort_index');
+            $table->string('name')->nullable();
+            $table->string('vendor_code')->nullable(); // Артикул
+            $table->double('price')->nullable();
+            $table->integer('sort_index')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

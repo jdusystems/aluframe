@@ -105,6 +105,12 @@ class CalculationTypeController extends Controller
                 'message' => 'Record not found'
             ]);
         }
+        if($calculationType->profiles()->count() > 0){
+            return new ReturnResponseResource([
+                'code' => 422 ,
+                'message' => "You can not delete this Item!"
+            ]);
+        }
         if ($calculationType->delete()){
             return new ReturnResponseResource([
                 'code' => 200 ,

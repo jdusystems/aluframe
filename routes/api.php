@@ -21,6 +21,9 @@ use App\Http\Controllers\Api\CornerController;
 use App\Http\Controllers\Api\WindowHandlerController;
 use App\Http\Controllers\Api\SealantController;
 use App\Http\Controllers\Api\TypeController;
+use App\Http\Controllers\Api\HandlerTypeController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\StatusController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -61,6 +64,9 @@ Route::apiResource('clients' , ClientController::class);
 Route::apiResource('corners' , CornerController::class);
 Route::apiResource('window-handlers' , WindowHandlerController::class);
 Route::apiResource('sealants' , SealantController::class);
+Route::apiResource('handler-types' , HandlerTypeController::class);
+Route::apiResource('orders' , OrderController::class);
+Route::apiResource('statuses' , StatusController::class);
 
 Route::post('/profile-colors/delete-multiple' , [ProfileColorController::class , 'deleteMultiple']);
 Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);

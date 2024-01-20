@@ -94,6 +94,12 @@ class AssemblyServiceController extends Controller
                 'message' => 'Record not found'
             ]);
         }
+        if($assemblyService->orderDetails()->count() > 0){
+            return new ReturnResponseResource([
+                'code' => 422 ,
+                'message' => "You can not delete this Item!"
+            ]);
+        }
         if ($assemblyService->delete()){
             return new ReturnResponseResource([
                 'code' => 200 ,

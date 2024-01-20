@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Order;
-
-class Client extends Model
+class Status extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'name' , 'phone_number'
-    ];
-
+          'name' , 'slug'
+        ];
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
 }

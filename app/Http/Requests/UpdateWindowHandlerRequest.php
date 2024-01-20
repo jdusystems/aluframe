@@ -25,7 +25,8 @@ class UpdateWindowHandlerRequest extends FormRequest
             'name' => ['required'] ,
             'vendor_code' => ['required'] ,
             'price' =>  ['required', 'numeric', 'min:0.01'],
-            'profile_type_id' => "required|exists:profile_types,id"
+            'profile_type_id' => "required|exists:profile_types,id",
+            'profile_color_id' => "required|exists:profile_colors,id"
         ];
     }
 }

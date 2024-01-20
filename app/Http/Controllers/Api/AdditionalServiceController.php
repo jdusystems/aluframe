@@ -107,6 +107,12 @@ class AdditionalServiceController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
+        if($additionalService->orderDetails()->count() > 0){
+            return new ReturnResponseResource([
+                'code' => 422 ,
+                'message' => "You can not delete this Item!"
+            ]);
+        }
         $additionalService->delete();
 
         return new ReturnResponseResource([

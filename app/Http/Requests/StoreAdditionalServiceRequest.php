@@ -26,7 +26,7 @@ class StoreAdditionalServiceRequest extends FormRequest
             'image_url' => ['required'],
             'image_name' => ['required'],
             'sort_index' => ['required' , 'integer'],
-            'vendor_code' => ['required', 'unique:additional_services'],
+            'vendor_code' => ['required','string'],
             'price' =>  ['required', 'numeric', 'min:0.01'],
         ];
     }

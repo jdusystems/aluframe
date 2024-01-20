@@ -101,6 +101,12 @@ class ProfileTypeController extends Controller
                 'message' => "Record not found"
             ]);
         }else{
+            if($profileType->window_handler()->count() > 0 || $profileType->orderDetails()->count() > 0){
+                return new ReturnResponseResource([
+                    'code' => 422 ,
+                    'message' => "You can not delete this Item!"
+                ]);
+            }
             $profileType->delete();
 
             return new ReturnResponseResource([

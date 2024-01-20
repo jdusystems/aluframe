@@ -91,6 +91,12 @@ class ProfileColorController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
+        if($profile_color->windowHandlers()->count() > 0 || $profile_color->orderDetails()->count() > 0){
+            return new ReturnResponseResource([
+                'code' => 422 ,
+                'message' => "You can not delete this Item!"
+            ]);
+        }
         Storage::disk('uploads')->delete($profile_color->image_name);
         $profile_color->delete();
 

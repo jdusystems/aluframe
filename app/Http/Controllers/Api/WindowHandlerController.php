@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateWindowHandlerRequest;
 use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowWindowHandlerResource;
 use App\Http\Resources\WindowHandlerCollection;
+use App\Models\ProfileColor;
+use App\Models\ProfileType;
 use App\Models\WindowHandler;
 use Illuminate\Http\Request;
 
@@ -29,6 +31,12 @@ class WindowHandlerController extends Controller
      */
     public function store(StoreWindowHandlerRequest $request)
     {
+        if(ProfileType::find($request->profile_type_id)->window_handler()->exists() && ProfileColor::find($request->profile_color_id)->windowHandlers()->exists()){
+            return new ReturnResponseResource([
+                'code' => 422 ,
+                'message' => "Record already exists!"
+            ]);
+        }
         return new ShowWindowHandlerResource(WindowHandler::create($request->all()));
     }
 
@@ -67,7 +75,8 @@ class WindowHandlerController extends Controller
             'name' => $request->name,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price,
-            'profile_type_id' => $request->profile_type_id
+            'profile_type_id' => $request->profile_type_id,
+            'profile_color_id' => $request->profile_color_id,
         ]);
 
         return new ShowWindowHandlerResource($windowHandler);
