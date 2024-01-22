@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\HandlerTypeController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\StatusController;
+use App\Http\Controllers\Api\PdfController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -67,6 +68,12 @@ Route::apiResource('sealants' , SealantController::class);
 Route::apiResource('handler-types' , HandlerTypeController::class);
 Route::apiResource('orders' , OrderController::class);
 Route::apiResource('statuses' , StatusController::class);
+
+Route::get('/pdf1' , [PdfController::class , 'exportPdf1']);
+Route::get('/pdf2' , [PdfController::class , 'exportPdf2']);
+Route::get('/pdf3' , [PdfController::class , 'exportPdf3']);
+Route::get('/pdf4' , [PdfController::class , 'exportPdf4']);
+
 
 Route::post('/profile-colors/delete-multiple' , [ProfileColorController::class , 'deleteMultiple']);
 Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);

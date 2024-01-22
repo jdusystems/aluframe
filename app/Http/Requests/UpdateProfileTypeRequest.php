@@ -22,6 +22,8 @@ class UpdateProfileTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image_name' => "required" ,
+            'image_url' => "required" ,
             'name' => "required" ,
             'calculation_type_id' => "required|exists:calculation_types,id",
             'price' =>  ['required', 'numeric', 'min:0.01'],

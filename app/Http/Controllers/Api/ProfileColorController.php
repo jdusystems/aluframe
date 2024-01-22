@@ -58,6 +58,8 @@ class ProfileColorController extends Controller
             ]);
         }
         $profileColor->update([
+            'image_name' => $request->image_name,
+            'image_url' => $request->image_url,
             'name' => $request->name,
             'sort_index' => $request->sort_index,
             'color_from' => $request->color_from,

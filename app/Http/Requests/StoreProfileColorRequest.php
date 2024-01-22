@@ -23,6 +23,8 @@ class StoreProfileColorRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'image_name' => ['required'],
+            'image_url' => ['required'],
             'sort_index' => ['required' , 'integer'],
             'color_from' => ['required'],
             'color_to' => ['required']

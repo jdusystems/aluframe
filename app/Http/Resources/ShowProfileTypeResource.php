@@ -16,6 +16,8 @@ class ShowProfileTypeResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'image_name' => $this->image_name ,
+            'image_url' => $this->image_url ,
             'name' => $this->name ,
             'price' => $this->price ,
             'sort_index' => $this->sort_index,

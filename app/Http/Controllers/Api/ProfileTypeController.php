@@ -68,6 +68,8 @@ class ProfileTypeController extends Controller
             ]);
         }
         $profileType->update([
+            'image_name' => $request->image_name ,
+            'image_url' => $request->image_url ,
             'name' => $request->name ,
             'calculation_type_id' => $request->calculation_type_id ,
             'price' => $request->price ,

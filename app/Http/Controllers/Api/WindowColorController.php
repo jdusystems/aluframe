@@ -32,6 +32,8 @@ class WindowColorController extends Controller
         return new ShowWindowColorResource(WindowColor::create([
             'image_name' => $request->image_name ,
             'image_url' => $request->image_url ,
+            'second_image_name' => $request->second_image_name ,
+            'second_image_url' => $request->second_image_url ,
             'name' => $request->name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
@@ -68,6 +70,8 @@ class WindowColorController extends Controller
             'name' => $request->name,
             'image_url' => $request->image_url,
             'image_name' => $request->image_name,
+            'second_image_name' => $request->second_image_name ,
+            'second_image_url' => $request->second_image_url ,
             'sort_index' => $request->sort_index,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price

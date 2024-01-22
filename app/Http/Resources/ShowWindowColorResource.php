@@ -19,6 +19,8 @@ class ShowWindowColorResource extends JsonResource
             'name' => $this->name,
             'image_url' => $this->image_url ,
             'image_name' => $this->image_name ,
+            'second_image_url' => $this->second_image_url ,
+            'second_image_name' => $this->second_image_name ,
             'sort_index' => $this->sort_index,
             'vendor_code' => $this->vendor_code,
             'price' => $this->price,

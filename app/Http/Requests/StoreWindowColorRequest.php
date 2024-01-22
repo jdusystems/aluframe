@@ -25,6 +25,8 @@ class StoreWindowColorRequest extends FormRequest
             'name' => ['required'],
             'image_url' => ['required'],
             'image_name' => ['required'],
+            'second_image_url' => ['required'],
+            'second_image_name' => ['required'],
             'sort_index' => ['required'],
             'vendor_code' => ['required'],
             'price' =>  ['required', 'numeric', 'min:0.01'],

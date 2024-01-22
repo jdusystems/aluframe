@@ -10,7 +10,7 @@ class WindowColor extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["name", "image_url" ,"image_name", "sort_index", "vendor_code", "price"];
+    protected $fillable = ["name", "image_url" ,"image_name", "second_image_url" ,"second_image_name", "sort_index", "vendor_code", "price"];
 
 
     public function orderDetails(){
