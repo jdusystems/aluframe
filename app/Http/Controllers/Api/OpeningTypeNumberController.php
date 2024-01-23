@@ -77,7 +77,7 @@ class OpeningTypeNumberController extends Controller
 
     public function addImage(Request $request){
        $request->validate([
-           'opening_type_number_id' => ['required','integer', 'exists:opening_types,id'] ,
+           'opening_type_number_id' => ['required','integer', 'exists:opening_type_numbers,id'] ,
            'image_name' => ['required' , 'string'],
            'image_url' => ['required' , 'string'],
            'number' => ['required' , 'integer' ,],
