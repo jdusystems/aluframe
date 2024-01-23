@@ -28,6 +28,7 @@ class StoreAdditionalServiceRequest extends FormRequest
             'sort_index' => ['required' , 'integer'],
             'vendor_code' => ['required','string'],
             'price' =>  ['required', 'numeric', 'min:0.01'],
+            'description' => 'string' ,
         ];
     }
 }

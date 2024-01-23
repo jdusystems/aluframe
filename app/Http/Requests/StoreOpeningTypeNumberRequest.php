@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAdditionalServiceRequest extends FormRequest
+class StoreOpeningTypeNumberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,7 @@ class UpdateAdditionalServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'image_url' => ['required'],
-            'image_name' => ['required'],
-            'sort_index' => ['required' , 'integer'],
-            'vendor_code' => ['required'],
-            'price' =>  ['required', 'numeric', 'min:0.01'],
-            'description' => 'string'
+            'opening_type_id' => ['required','integer', 'exists:opening_types,id'] ,
         ];
     }
 }

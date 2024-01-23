@@ -36,7 +36,8 @@ class AdditionalServiceController extends Controller
             'name' => $request->name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
-            'sort_index' => $request->sort_index
+            'sort_index' => $request->sort_index ,
+            'description' => $request->description
         ]));
     }
 
@@ -77,7 +78,8 @@ class AdditionalServiceController extends Controller
             'image_url' => $request->image_url,
             'sort_index' => $request->sort_index,
             'vendor_code' => $request->vendor_code,
-            'price' => $request->price
+            'price' => $request->price,
+            'description' => $request->description
         ]);
 
         return new AdditionalServiceResource($additionalService);
