@@ -5,6 +5,7 @@ use App\Models\CalculationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OrderDetail;
+use App\Models\OpeningTypeNumber;
 class OpeningType extends Model
 {
     use HasFactory;
@@ -18,5 +19,8 @@ class OpeningType extends Model
 
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);
+    }
+    public function openingTypeNumbers(){
+        return $this->hasMany(OpeningTypeNumber::class);
     }
 }

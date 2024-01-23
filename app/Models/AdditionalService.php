@@ -10,7 +10,7 @@ class AdditionalService extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["name", "image_url" ,"image_name", "sort_index", "vendor_code", "price"];
+    protected $fillable = ["name", "image_url" ,"image_name", "sort_index", "vendor_code", "price" ,'description'];
 
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);

@@ -25,6 +25,8 @@ use App\Http\Controllers\Api\HandlerTypeController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\PdfController;
+use App\Http\Controllers\Api\HandlerPositionController;
+use App\Http\Controllers\Api\OpeningTypeNumberController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -68,6 +70,9 @@ Route::apiResource('sealants' , SealantController::class);
 Route::apiResource('handler-types' , HandlerTypeController::class);
 Route::apiResource('orders' , OrderController::class);
 Route::apiResource('statuses' , StatusController::class);
+Route::apiResource('handler-positions' , HandlerPositionController::class);
+Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class);
+Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
 
 Route::get('/pdf1' , [PdfController::class , 'exportPdf1']);
 Route::get('/pdf2' , [PdfController::class , 'exportPdf2']);
