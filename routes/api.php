@@ -74,6 +74,9 @@ Route::apiResource('handler-positions' , HandlerPositionController::class);
 Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class);
 Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
 
+// Get Opening Types by Types
+Route::get('/opening-types/type/{type_id}', [OpeningTypeController::class , 'getByType']);
+
 Route::get('/pdf1' , [PdfController::class , 'exportPdf1']);
 Route::get('/pdf2' , [PdfController::class , 'exportPdf2']);
 Route::get('/pdf3' , [PdfController::class , 'exportPdf3']);
