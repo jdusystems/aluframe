@@ -22,6 +22,10 @@ class WindowHandlerController extends Controller
     {
         return new WindowHandlerCollection(WindowHandler::paginate(10));
     }
+        public function all()
+        {
+            return new WindowHandlerCollection(WindowHandler::all());
+        }
 
     /**
      * Show the form for creating a new resource.

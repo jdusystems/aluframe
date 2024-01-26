@@ -24,7 +24,8 @@ class UpdateHandlerPositionRequest extends FormRequest
         return [
             'name' => ['required' , 'string'] ,
             'image_name' => ['required' , 'string'] ,
-            'image_url' => ['required' , 'string']
+            'image_url' => ['required' , 'string'] ,
+            'sort_index' => ['required' , 'integer']
         ];
     }
 }

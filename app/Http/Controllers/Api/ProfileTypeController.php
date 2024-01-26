@@ -18,7 +18,13 @@ class ProfileTypeController extends Controller
      */
     public function index()
     {
-        $profile_types = ProfileType::paginate(10);
+        $profile_types = ProfileType::orderBy('sort_index')->paginate(10);
+        return new ProfileTypeCollection($profile_types);
+    }
+
+    public function all()
+    {
+        $profile_types = ProfileType::all();
         return new ProfileTypeCollection($profile_types);
     }
 

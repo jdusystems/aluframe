@@ -18,9 +18,12 @@ class HandlerPositionController extends Controller
      */
     public function index()
     {
-        return new HandlerPositionCollection(HandlerPosition::paginate(10));
+        return new HandlerPositionCollection(HandlerPosition::orderBy('sort_index')->paginate(10));
     }
-
+    public function all()
+    {
+        return new HandlerPositionCollection(HandlerPosition::all());
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -72,7 +75,8 @@ class HandlerPositionController extends Controller
         $handlerPosition->update([
             'name' => $request->name ,
             'image_name' => $request->image_name ,
-            'image_url' => $request->image_url
+            'image_url' => $request->image_url ,
+            'sort_index' => $request->sort_index
         ]);
 
         return new ShowHandlerPositionResource($handlerPosition);

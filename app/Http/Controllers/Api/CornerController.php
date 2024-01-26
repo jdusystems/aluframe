@@ -22,6 +22,11 @@ class CornerController extends Controller
         return new CornerCollection(Corner::paginate(10));
     }
 
+    public function all()
+    {
+        return new CornerCollection(Corner::all());
+    }
+
     /**
      * Show the form for creating a new resource.
      */

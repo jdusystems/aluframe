@@ -21,6 +21,11 @@ class AssemblyServiceController extends Controller
         return new AssemblyServiceCollection(AssemblyService::paginate(10));
     }
 
+    public function all()
+    {
+        return new AssemblyServiceCollection(AssemblyService::all());
+    }
+
     /**
      * Show the form for creating a new resource.
      */

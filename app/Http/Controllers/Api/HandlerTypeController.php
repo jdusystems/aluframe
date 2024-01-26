@@ -16,9 +16,12 @@ class HandlerTypeController extends Controller
      */
     public function index()
     {
+        return new HandlerTypeCollection(HandlerType::paginate(10));
+    }
+    public function all()
+    {
         return new HandlerTypeCollection(HandlerType::all());
     }
-
     /**
      * Show the form for creating a new resource.
      */

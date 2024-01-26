@@ -21,7 +21,11 @@ class AdditionalServiceController extends Controller
      */
     public function index()
     {
-        return new AdditionalServiceCollection(AdditionalService::paginate(10));
+        return new AdditionalServiceCollection(AdditionalService::orderBy('sort_index')->paginate(10));
+    }
+    public function all()
+    {
+        return new AdditionalServiceCollection(AdditionalService::all());
     }
 
     /**

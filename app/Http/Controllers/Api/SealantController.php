@@ -20,6 +20,10 @@ class SealantController extends Controller
     {
         return new SealantCollection(Sealant::paginate(10));
     }
+        public function all()
+        {
+            return new SealantCollection(Sealant::all());
+        }
 
     /**
      * Show the form for creating a new resource.

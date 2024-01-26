@@ -21,6 +21,11 @@ class ClientController extends Controller
         return new ClientCollection(Client::paginate(10));
     }
 
+    public function all()
+    {
+        return new ClientCollection(Client::all());
+    }
+
     /**
      * Show the form for creating a new resource.
      */

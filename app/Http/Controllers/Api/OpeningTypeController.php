@@ -22,7 +22,11 @@ class OpeningTypeController extends Controller
      */
     public function index()
     {
-        return new OpeningTypeCollection(OpeningType::paginate(10));
+        return new OpeningTypeCollection(OpeningType::orderBy('sort_index')->paginate(10));
+    }
+    public function all()
+    {
+        return new OpeningTypeCollection(OpeningType::all());
     }
 
     public function getByType(string $type_id){

@@ -21,6 +21,11 @@ class CalculationTypeController extends Controller
         return new CalculationTypeCollection(CalculationType::paginate(10));
     }
 
+    public function all()
+    {
+        return new CalculationTypeCollection(CalculationType::all());
+    }
+
     /**
      * Show the form for creating a new resource.
      */

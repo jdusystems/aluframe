@@ -22,7 +22,10 @@ class OpeningTypeNumberController extends Controller
     {
         return new OpeningTypeNumberCollection(OpeningTypeNumber::paginate(10));
     }
-
+    public function all()
+    {
+        return new OpeningTypeNumberCollection(OpeningTypeNumber::all());
+    }
     /**
      * Show the form for creating a new resource.
      */

@@ -18,7 +18,11 @@ class ProfileColorController extends Controller
      */
     public function index()
     {
-        return new ProfileColorCollection(ProfileColor::paginate(10));
+        return new ProfileColorCollection(ProfileColor::orderBy('sort_index')->paginate(10));
+    }
+    public function all()
+    {
+        return new ProfileColorCollection(ProfileColor::all());
     }
 
     /**

@@ -19,7 +19,11 @@ class WindowColorController extends Controller
      */
     public function index()
     {
-        return new WindowColorCollection(WindowColor::paginate(10));
+        return new WindowColorCollection(WindowColor::orderBy('sort_index')->paginate(10));
+    }
+    public function all()
+    {
+        return new WindowColorCollection(WindowColor::all());
     }
 
     /**
