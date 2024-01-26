@@ -11,6 +11,7 @@ use App\Http\Resources\ShowOpeningTypeNumberResource;
 use App\Models\Image;
 use App\Models\OpeningTypeNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OpeningTypeNumberController extends Controller
 {
@@ -31,10 +32,21 @@ class OpeningTypeNumberController extends Controller
      */
     public function store(StoreOpeningTypeNumberRequest $request)
     {
-        $openingTypNumber = OpeningTypeNumber::create([
-            'opening_type_id' => $request->opening_type_id
+        $openingTypeNumber = OpeningTypeNumber::create([
+            'opening_type_id' => $request->opening_type_id ,
         ]);
-        return new ShowOpeningTypeNumberResource($openingTypNumber);
+        if($request->numbers){
+            foreach ($request->input('numbers') as $number){
+                Image::create([
+                    'opening_type_number_id' => $openingTypeNumber->id ,
+                    'number' => $number['number'],
+                    'image_name' => $number['image_name'] ,
+                    'image_url' => $number['image_url'] ,
+                ]);
+            }
+        }
+
+        return new ShowOpeningTypeNumberResource($openingTypeNumber);
     }
 
 
@@ -69,8 +81,23 @@ class OpeningTypeNumberController extends Controller
                 'message' => "Record not found!"
             ]);
         }
+        if ($openingTypeNumber->images){
+            DB::table('images')->where('opening_type_number_id' , $openingTypeNumber->id)->delete();
+        }
+        $numbers = $request->input('numbers');
+
+        if($numbers){
+            foreach ($numbers as $number){
+                Image::create([
+                    'opening_type_number_id' => $openingTypeNumber->id ,
+                    'number' => $number['number'],
+                    'image_name' => $number['image_name'] ,
+                    'image_url' => $number['image_url'] ,
+                ]);
+            }
+        }
         $openingTypeNumber->update([
-            'opening_type_id' => $request->opening_type_id
+            'opening_type_id' => $request->opening_type_id ,
         ]);
         return new ShowOpeningTypeNumberResource($openingTypeNumber);
     }
@@ -106,16 +133,11 @@ class OpeningTypeNumberController extends Controller
                 'message' => "Record not found!"
             ]);
         }
-        $images = Image::where('opening_type_number_id')->get();
-        if(!$images){
-            foreach ($images as $image){
-                $image->delete();
-            }
-        }
+       DB::table('images')->where('opening_type_number_id' , $openingTypeNumber->id)->delete();
         $openingTypeNumber->delete();
         return new ReturnResponseResource([
             'code' => 200 ,
-            'Record has been deleted successfully!'
+            'message' => 'Record has been deleted successfully!'
         ]);
     }
 }

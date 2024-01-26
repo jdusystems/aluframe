@@ -23,6 +23,7 @@ class ShowProfileTypeResource extends JsonResource
             'sort_index' => $this->sort_index,
             'calculation_type_name' => ($this->calculationType) ? $this->calculationType->name :" ",
             'calculation_type_id' => ($this->calculationType) ? $this->calculationType->id :" ",
+            'profile_colors' => ($this->profileColors) ? ShowProfileColorResource::collection($this->profileColors) : [] ,
         ];
     }
 }

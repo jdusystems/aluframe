@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreWindowColorRequest extends FormRequest
 {
@@ -30,6 +31,9 @@ class StoreWindowColorRequest extends FormRequest
             'sort_index' => ['required'],
             'vendor_code' => ['required'],
             'price' =>  ['required', 'numeric', 'min:0.01'],
+            'profile_color_id' => ['required' , 'integer' ,Rule::exists('profile_colors' ,'id')->where(function($query){
+                $query->whereNull('deleted_at');
+            })] ,
         ];
     }
 }

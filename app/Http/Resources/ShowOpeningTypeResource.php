@@ -21,7 +21,8 @@ class ShowOpeningTypeResource extends JsonResource
             'image_url' => $this->image_url ,
             'image_name' => $this->image_name ,
             'type_name' => ($this->type) ? $this->type->name : " ",
-            'type_id' => ($this->type) ? $this->type->id : " "
+            'type_id' => ($this->type) ? $this->type->id : " " ,
+            'handler_positions' =>  ($this->handlerPositions) ? ShowHandlerPositionResource::collection($this->handlerPositions) : " ",
         ];
     }
 }
