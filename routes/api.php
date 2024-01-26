@@ -56,52 +56,52 @@ Route::middleware(['auth:sanctum'])->group( function () {
 });
 
 Route::apiResource('profile-colors' , ProfileColorController::class);
-Route::get('/profile-colors/all', [ProfileColorController::class , 'all']);
+Route::get('/all-profile-colors', [ProfileColorController::class , 'all']);
 
 Route::apiResource('window-colors' , WindowColorController::class);
-Route::get('/window-colors/all', [WindowColorController::class , 'all']);
+Route::get('/all-window-colors', [WindowColorController::class , 'all']);
 
 Route::apiResource('additional-services' , AdditionalServiceController::class);
-Route::get('/additional-services/all', [AdditionalServiceController::class , 'all']);
+Route::get('/all-additional-services', [AdditionalServiceController::class , 'all']);
 
 Route::apiResource('assembly-services' , AssemblyServiceController::class);
-Route::get('/assembly-services/all', [AssemblyServiceController::class , 'all']);
+Route::get('/all-assembly-services', [AssemblyServiceController::class , 'all']);
 
 Route::apiResource('types' , TypeController::class);
 
 Route::apiResource('opening-types' , OpeningTypeController::class);
-Route::get('/opening-types/all', [OpeningTypeController::class , 'all']);
+Route::get('/all-opening-types', [OpeningTypeController::class , 'all']);
 
 Route::apiResource('calculation-types' , CalculationTypeController::class);
-Route::get('/calculation-types/all', [CalculationTypeController::class , 'all']);
+Route::get('/all-calculation-types', [CalculationTypeController::class , 'all']);
 
 Route::apiResource('profiles' , ProfileTypeController::class);
-Route::get('/profiles/all', [ProfileTypeController::class , 'all']);
+Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
 
 Route::apiResource('clients' , ClientController::class);
-Route::get('/clients/all', [ClientController::class , 'all']);
+Route::get('/all-clients', [ClientController::class , 'all']);
 
 Route::apiResource('corners' , CornerController::class);
-Route::get('/corners/all', [CornerController::class , 'all']);
+Route::get('/all-corners', [CornerController::class , 'all']);
 
 Route::apiResource('window-handlers' , WindowHandlerController::class);
-Route::get('/window-handlers/all', [WindowHandlerController::class , 'all']);
+Route::get('/all-window-handlers', [WindowHandlerController::class , 'all']);
 
 Route::apiResource('sealants' , SealantController::class);
-Route::get('/sealants/all', [SealantController::class , 'all']);
+Route::get('/all-sealants', [SealantController::class , 'all']);
 
 Route::apiResource('handler-types' , HandlerTypeController::class);
-Route::get('/handler-types/all', [HandlerTypeController::class , 'all']);
+Route::get('/all-handler-types', [HandlerTypeController::class , 'all']);
 
 Route::apiResource('orders' , OrderController::class);
 
 Route::apiResource('statuses' , StatusController::class);
 
 Route::apiResource('handler-positions' , HandlerPositionController::class);
-Route::get('/handler-positions/all', [HandlerPositionController::class , 'all']);
+Route::get('/all-handler-positions', [HandlerPositionController::class , 'all']);
 
 Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class);
-Route::get('/opening-type-numbers/all', [OpeningTypeNumberController::class , 'all']);
+Route::get('/all-opening-type-numbers', [OpeningTypeNumberController::class , 'all']);
 
 Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
 
