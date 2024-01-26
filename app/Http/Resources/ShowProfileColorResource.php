@@ -22,6 +22,9 @@ class ShowProfileColorResource extends JsonResource
             'sort_index' => $this->sort_index,
             'color_from' => $this->color_from,
             'color_to' => $this->color_to,
+            'profile_type_name' => $this->profileType->name,
+            'profile_type_id' => $this->profileType->id ,
+            'window_colors' => ($this->windowColors) ? ShowWindowColorResource::collection($this->windowColors) : [] ,
         ];
     }
 }

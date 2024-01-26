@@ -12,6 +12,7 @@ use App\Models\OpeningType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use function PHPUnit\Framework\isEmpty;
 
 class OpeningTypeController extends Controller
 {
@@ -31,16 +32,18 @@ class OpeningTypeController extends Controller
      */
     public function store(StoreOpeningTypeRequest $request)
     {
-        return new ShowOpeningTypeResource(
-            OpeningType::create([
-                'name' => $request->name ,
-                'type_id' => $request->type_id ,
-                'sort_index' => $request->sort_index ,
-                'image_name' => $request->image_name ,
-                'image_url' => $request->image_url ,
-                'price' => $request->price ,
-            ])
-        );
+        $openingType = OpeningType::create([
+            'name' => $request->name ,
+            'type_id' => $request->type_id ,
+            'sort_index' => $request->sort_index ,
+            'image_name' => $request->image_name ,
+            'image_url' => $request->image_url ,
+            'price' => $request->price ,
+        ]);
+        if($request->handler_positions){
+            $openingType->handlerPositions()->attach($request->handler_positions);
+        }
+        return new ShowOpeningTypeResource($openingType);
     }
 
     /**
@@ -73,7 +76,9 @@ class OpeningTypeController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-
+        if($request->handler_positions){
+            $openingType->handlerPositions()->sync($request->handler_positions);
+        }
         $openingType->update([
             'name' => $request->name ,
             'type_id' => $request->type_id,
@@ -111,6 +116,14 @@ class OpeningTypeController extends Controller
             ]);
         }
         Storage::disk('uploads')->delete($openingType->image_name);
+        if($openingType->orderDetails()->count() > 0 || $openingType->openingTypeNumbers()->count() > 0 ){
+            return new ReturnResponseResource([
+                'code' => 422 ,
+                'message' => "You can not delete this Item!"
+            ]);
+        }
+
+        $openingType->handlerPositions()->detach();
         if($openingType->delete()){
             return new ReturnResponseResource([
                 'code' => 200,

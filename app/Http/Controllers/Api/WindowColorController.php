@@ -37,7 +37,8 @@ class WindowColorController extends Controller
             'name' => $request->name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
-            'sort_index' => $request->sort_index
+            'sort_index' => $request->sort_index ,
+            'profile_color_id' => $request->profile_color_id
         ]));
     }
     /**
@@ -74,7 +75,8 @@ class WindowColorController extends Controller
             'second_image_url' => $request->second_image_url ,
             'sort_index' => $request->sort_index,
             'vendor_code' => $request->vendor_code,
-            'price' => $request->price
+            'price' => $request->price,
+            'profile_color_id' => $request->profile_color_id
         ]);
 
         return new ShowWindowColorResource($windowColor);

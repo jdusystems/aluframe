@@ -24,6 +24,8 @@ class ShowWindowColorResource extends JsonResource
             'sort_index' => $this->sort_index,
             'vendor_code' => $this->vendor_code,
             'price' => $this->price,
+            'profile_color_name' => ($this->profileColor) ? $this->profileColor->name : "" ,
+            'profile_color_id' => ($this->profileColor) ? $this->profileColor->id : "" ,
         ];
     }
 }

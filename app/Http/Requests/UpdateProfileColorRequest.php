@@ -25,7 +25,10 @@ class UpdateProfileColorRequest extends FormRequest
             'name' => ['required'],
             'sort_index' => ['required' , 'integer'],
             'color_from' => ['required'],
-            'color_to' => ['required']
+            'color_to' => ['required'],
+            'image_name' => ['required'],
+            'image_url' => ['required'],
+            'profile_type_id' => ['required' , 'integer' , 'exists:profile_types,id'] ,
         ];
     }
 }

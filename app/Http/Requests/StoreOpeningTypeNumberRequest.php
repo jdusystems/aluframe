@@ -20,9 +20,14 @@ class StoreOpeningTypeNumberRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+        {
         return [
             'opening_type_id' => ['required','integer', 'exists:opening_types,id'] ,
+            'numbers' => ['required' , 'array'] ,
+            'numbers.*.number' => ['required' , 'integer'] ,
+            'numbers.*.image_name' => ['required' , 'string'] ,
+            'numbers.*.image_url' => ['required' , 'string'] ,
+
         ];
     }
 }

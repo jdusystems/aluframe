@@ -12,4 +12,8 @@ class HandlerPosition extends Model
     protected $fillable = [
         'name' , 'image_name' , 'image_url'
     ];
+
+    public function openingTypes(){
+        return $this->belongsToMany(OpeningType::class , 'handlerposition_openingtype');
+    }
 }

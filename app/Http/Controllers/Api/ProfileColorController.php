@@ -26,8 +26,17 @@ class ProfileColorController extends Controller
      */
     public function store(StoreProfileColorRequest $request)
     {
+        $profileColor = ProfileColor::create([
+            'image_name' => $request->image_name,
+            'image_url' => $request->image_url,
+            'name' => $request->name,
+            'sort_index' => $request->sort_index,
+            'color_from' => $request->color_from,
+            'color_to' => $request->color_to ,
+            'profile_type_id' => $request->profile_type_id,
+        ]);
         // Image uploading is not working yet
-        return new ShowProfileColorResource(ProfileColor::create($request->all()));
+        return new ShowProfileColorResource($profileColor);
     }
 
     /**
@@ -63,7 +72,8 @@ class ProfileColorController extends Controller
             'name' => $request->name,
             'sort_index' => $request->sort_index,
             'color_from' => $request->color_from,
-            'color_to' => $request->color_to
+            'color_to' => $request->color_to ,
+            'profile_type_id' => $request->profile_type_id,
         ]);
 
         return new ShowProfileColorResource($profileColor);
@@ -93,7 +103,7 @@ class ProfileColorController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        if($profile_color->windowHandlers()->count() > 0 || $profile_color->orderDetails()->count() > 0){
+        if($profile_color->windowHandlers()->count() > 0 || $profile_color->orderDetails()->count() > 0 ){
             return new ReturnResponseResource([
                 'code' => 422 ,
                 'message' => "You can not delete this Item!"

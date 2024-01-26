@@ -23,6 +23,10 @@ class UpdateOpeningTypeNumberRequest extends FormRequest
     {
         return [
             'opening_type_id' => ['required','integer', 'exists:opening_types,id'] ,
+            'numbers' => ['required' , 'array'] ,
+            'numbers.*.number' => ['required' , 'integer'] ,
+            'numbers.*.image_name' => ['required' , 'string'] ,
+            'numbers.*.image_url' => ['required' , 'string'] ,
         ];
     }
 }
