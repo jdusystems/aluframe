@@ -9,6 +9,7 @@ use App\Http\Resources\OpeningTypeCollection;
 use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowOpeningTypeResource;
 use App\Models\OpeningType;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -22,6 +23,18 @@ class OpeningTypeController extends Controller
     public function index()
     {
         return new OpeningTypeCollection(OpeningType::paginate(10));
+    }
+
+    public function getByType(string $type_id){
+        $type = Type::find($type_id);
+        if(!$type){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found!'
+            ] , 404);
+        }
+        $openingTypes = OpeningType::where('type_id' , $type_id)->get();
+        return new OpeningTypeCollection($openingTypes);
     }
 
     /**
