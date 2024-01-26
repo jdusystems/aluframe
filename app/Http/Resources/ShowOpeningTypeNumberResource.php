@@ -17,6 +17,7 @@ class ShowOpeningTypeNumberResource extends JsonResource
         return [
             'id' => $this->id ,
             'opening_type_name' => ($this->openingType) ? $this->openingType->name : " " ,
+            'opening_type_id' => ($this->openingType) ? $this->openingType->id : " " ,
             'numbers' =>  ($this->images) ? ShowImageResource::collection($this->images) : " ",
         ];
     }
