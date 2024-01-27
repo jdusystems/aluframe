@@ -37,7 +37,13 @@ class HandlerPositionController extends Controller
      */
     public function store(StoreHandlerPositionRequest $request)
     {
-        return new ShowHandlerPositionResource(HandlerPosition::create($request->all()));
+        $handlerPosition = HandlerPosition::create([
+            'name' => $request->name ,
+            'image_name' => $request->image_name ,
+            'image_url' => $request->image_url ,
+            'sort_index' => $request->sort_index
+        ]);
+        return new ShowHandlerPositionResource($handlerPosition);
     }
 
     /**
