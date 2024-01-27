@@ -9,6 +9,7 @@ use App\Http\Resources\OpeningTypeNumberCollection;
 use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowOpeningTypeNumberResource;
 use App\Models\Image;
+use App\Models\OpeningType;
 use App\Models\OpeningTypeNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,18 @@ class OpeningTypeNumberController extends Controller
     public function all()
     {
         return new OpeningTypeNumberCollection(OpeningTypeNumber::all());
+    }
+
+    public function getByOpeningType(string $type_id){
+        $openingType = OpeningType::find($type_id);
+        if(!$openingType){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found!'
+            ] , 404);
+        }
+        $openingTypeNumbers = OpeningTypeNumber::where('opening_type_id' , $openingType->id)->get();
+        return new OpeningTypeNumberCollection($openingTypeNumbers);
     }
     /**
      * Show the form for creating a new resource.
