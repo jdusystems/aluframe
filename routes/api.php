@@ -57,9 +57,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
 Route::apiResource('profile-colors' , ProfileColorController::class);
 Route::get('/all-profile-colors', [ProfileColorController::class , 'all']);
+Route::get('/profile-colors/profile/{type_id}', [ProfileColorController::class , 'getByType']);
 
 Route::apiResource('window-colors' , WindowColorController::class);
 Route::get('/all-window-colors', [WindowColorController::class , 'all']);
+Route::get('/window-colors/profile-color/{type_id}', [WindowColorController::class , 'getByType']);
 
 Route::apiResource('additional-services' , AdditionalServiceController::class);
 Route::get('/all-additional-services', [AdditionalServiceController::class , 'all']);
@@ -71,6 +73,8 @@ Route::apiResource('types' , TypeController::class);
 
 Route::apiResource('opening-types' , OpeningTypeController::class);
 Route::get('/all-opening-types', [OpeningTypeController::class , 'all']);
+// Get Opening Types by Types
+Route::get('/opening-types/type/{type_id}', [OpeningTypeController::class , 'getByType']);
 
 Route::apiResource('calculation-types' , CalculationTypeController::class);
 Route::get('/all-calculation-types', [CalculationTypeController::class , 'all']);
@@ -105,8 +109,7 @@ Route::get('/all-opening-type-numbers', [OpeningTypeNumberController::class , 'a
 
 Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
 
-// Get Opening Types by Types
-Route::get('/opening-types/type/{type_id}', [OpeningTypeController::class , 'getByType']);
+
 
 Route::get('/pdf1' , [PdfController::class , 'exportPdf1']);
 Route::get('/pdf2' , [PdfController::class , 'exportPdf2']);

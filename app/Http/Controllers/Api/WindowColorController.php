@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWindowColorRequest;
 use App\Http\Requests\UpdateWindowColorRequest;
+use App\Http\Resources\ProfileColorCollection;
 use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowWindowColorResource;
 use App\Http\Resources\WindowColorCollection;
+use App\Models\ProfileColor;
 use App\Models\WindowColor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -60,6 +62,18 @@ class WindowColorController extends Controller
         return new ShowWindowColorResource($windowColor);
     }
 
+
+    public function getByType(string $type_id){
+        $profileColor = ProfileColor::find($type_id);
+        if(!$profileColor){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found!'
+            ] , 404);
+        }
+        $windowColors = WindowColor::where('profile_color_id' , $profileColor->id)->get();
+        return new WindowColorCollection($windowColors);
+    }
     /**
      * Update the specified resource in storage.
      */
