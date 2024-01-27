@@ -106,7 +106,7 @@ Route::get('/all-handler-positions', [HandlerPositionController::class , 'all'])
 
 Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class);
 Route::get('/all-opening-type-numbers', [OpeningTypeNumberController::class , 'all']);
-Route::get('/opening-type-numbers/opening-types/opening_type_id', [OpeningTypeNumberController::class , 'getByOpeningType']);
+Route::get('/opening-type-numbers/opening-types/{opening_type_id}', [OpeningTypeNumberController::class , 'getByOpeningType']);
 
 Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
 
