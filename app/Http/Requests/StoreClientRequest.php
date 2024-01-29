@@ -23,7 +23,7 @@ class StoreClientRequest extends FormRequest
     {
         return [
             'name' => 'required' ,
-            'phone_number'  => "required"
+            'phone_number'  => ['required', 'regex:/^(\998)?[0-9]{9}$/' , 'unique:clients,phone_number']
         ];
     }
 }

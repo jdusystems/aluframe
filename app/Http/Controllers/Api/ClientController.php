@@ -34,9 +34,10 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $client = Client::firstOrNew(['phone_number' => $request->phone_number]);
-        $client->name = $request->name;
-        $client->save();
+        $client = Client::create([
+            'phone_number' => $request->phone_number ,
+            'name' => $request->name
+        ]);
         return new ShowClientResource($client);
     }
 
