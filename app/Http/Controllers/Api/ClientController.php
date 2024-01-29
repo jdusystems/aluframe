@@ -36,7 +36,7 @@ class ClientController extends Controller
     {
         $client = Client::create([
             'phone_number' => $request->phone_number ,
-            'name' => $request->name
+            'name' => $request->name ,
         ]);
         return new ShowClientResource($client);
     }
