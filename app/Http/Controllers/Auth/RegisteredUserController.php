@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -22,14 +23,16 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone_number' => ['required'],
+            'password' => ['required' ,'min:8' , 'confirmed' ]
         ]);
-
+        $password = Str::random(10);
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
+            'parol' => $request->password,
+            'registered' => true
         ]);
 
         event(new Registered($user));
@@ -42,6 +45,37 @@ class RegisteredUserController extends Controller
             'user' => $user ,
             'token' => $token->plainTextToken
         ]);
+    }
+
+    public function loginOrRegister(Request $request) {
+
+        $request->validate([
+            'name' => ['required'] ,
+            'phone_number' => ['required']
+        ]);
+        $user = User::where('phone_number' , $request->phone_number)->first();
+        if($user && $user->registered){
+            $user->tokens()->delete();
+            $token = $user->createToken('api-token');
+            return response()->json([
+                'user' => $user ,
+                'token' => $token->plainTextToken
+            ]);
+        }else{
+            $password = Str::random(10);
+            $user = User::create([
+                'name' => $request->name ,
+                'phone_number' => $request->phone_number ,
+                'password' => $password ,
+                'registered' => true ,
+                'parol' => $password
+            ]);
+            $token = $user->createToken('api-token');
+            return response()->json([
+                'user' => $user ,
+                'token' => $token->plainTextToken
+            ]);
+        }
     }
 }
 //1|3yZKq45IaDGeBwWgjRDgsXxAdJMhiIqaiF6q4t7p2215b13f
