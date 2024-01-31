@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
            TypeSeeder::class,
            HandlerTypeSeeder::class,
            StatusSeeder::class,
+           AdminSeeder::class
        ]);
 //        Post::factory(20)->create();
         // \App\Models\User::factory(10)->create();
