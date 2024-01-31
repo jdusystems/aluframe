@@ -23,7 +23,7 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'orders' => 'required|array|min:1' ,
-            'client_id' => ['required' ,'integer', 'exists:clients,id'] ,
+            'user_id' => ['required' ,'integer', 'exists:users,id'] ,
             'orders.*.profile_type_id' => ['required' ,'integer', 'exists:profile_types,id'] ,
             'orders.*.window_color_id' => ['required' ,'integer', 'exists:window_colors,id'] ,
             'orders.*.profile_color_id' => ['required' ,'integer', 'exists:profile_colors,id'] ,
@@ -31,8 +31,8 @@ class StoreOrderRequest extends FormRequest
             'orders.*.handler_type_id' => ['required' ,'integer', 'exists:handler_types,id'] ,
             'orders.*.additional_service_id' => ['integer', 'exists:additional_services,id'] ,
             'orders.*.assembly_service_id' => ['integer', 'exists:assembly_services,id'] ,
-            'orders.*.width' => ['required' , 'numeric' ],
-            'orders.*.height' => ['required' , 'numeric' ],
+            'orders.*.width' => ['required' , 'numeric' , 'min:1' ],
+            'orders.*.height' => ['required' , 'numeric' , 'min:1' ],
             'orders.*.X1' => ['numeric' ],
             'orders.*.X2' => ['numeric' ],
             'orders.*.Y1' => ['numeric' ],

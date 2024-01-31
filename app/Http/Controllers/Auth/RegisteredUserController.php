@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required'],
+            'phone_number' => ['required' , 'unique:users'],
             'password' => ['required' ,'min:8' , 'confirmed' ]
         ]);
         $password = Str::random(10);
