@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreOrderRequest extends FormRequest
 {
@@ -24,12 +25,20 @@ class StoreOrderRequest extends FormRequest
         return [
             'orders' => 'required|array|min:1' ,
             'user_id' => ['required' ,'integer', 'exists:users,id'] ,
-            'orders.*.profile_type_id' => ['required' ,'integer', 'exists:profile_types,id'] ,
-            'orders.*.window_color_id' => ['required' ,'integer', 'exists:window_colors,id'] ,
-            'orders.*.profile_color_id' => ['required' ,'integer', 'exists:profile_colors,id'] ,
+            'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types')->where(function($query){
+                $query->whereNull('deleted_at');
+            })] ,
+            'orders.*.window_color_id' => ['required' ,'integer', Rule::exists('window_colors')->where(function($query){
+                $query->whereNull('deleted_at');
+            })] ,
+            'orders.*.profile_color_id' => ['required' ,'integer', Rule::exists('profile_colors')->where(function($query){
+                $query->whereNull('deleted_at');
+            })] ,
             'orders.*.opening_type_id' => ['required' ,'integer', 'exists:opening_types,id'] ,
             'orders.*.handler_type_id' => ['required' ,'integer', 'exists:handler_types,id'] ,
-            'orders.*.additional_service_id' => ['integer', 'exists:additional_services,id'] ,
+            'orders.*.additional_service_id' => ['integer', Rule::exists('additional_services')->where(function($query){
+                $query->whereNull('deleted_at');
+            })] ,
             'orders.*.assembly_service_id' => ['integer', 'exists:assembly_services,id'] ,
             'orders.*.width' => ['required' , 'numeric' , 'min:1' ],
             'orders.*.height' => ['required' , 'numeric' , 'min:1' ],

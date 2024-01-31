@@ -117,17 +117,23 @@ class OrderController extends Controller
                     }
                     if($profileType->corner){
                         $corner = Corner::where('profile_type_id' , $profileType->id)->first();
+                        if($corner){
                         $price += 4 * $profileNumber * $corner->price;
+                        }
                     }
                     $price += $profileNumber*$profilePeremetr*$profileType->price;
                 }
                 if($detail['window_color_id']){
                     $windowColor = WindowColor::find($detail['window_color_id']);
+                    if($windowColor){
                     $price += $surface * $windowColor->price;
+                    }
                 }
                 if(array_key_exists('additional_service_id' ,$detail)){
                     $additionalService = AdditionalService::find($detail['additional_service_id']);
+                    if($additionalService){
                     $price += $additionalService->price ;
+                    }
                 }
                 if($height < 1.8){
                     $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
