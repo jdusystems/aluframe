@@ -77,7 +77,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::apiResource('profiles' , ProfileTypeController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
-        Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
+
 
         Route::apiResource('clients' , ClientController::class);
         Route::get('/all-clients', [ClientController::class , 'all']);
@@ -128,6 +128,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
 Route::apiResource('profiles' , ProfileTypeController::class , [
     'only' => ['index' , 'show']
 ]);
+Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
+//
 
 
 
