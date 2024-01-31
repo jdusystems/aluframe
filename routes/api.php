@@ -56,7 +56,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::apiResource('window-colors' , WindowColorController::class);
 
 
-        Route::apiResource('additional-services' , AdditionalServiceController::class);
+        Route::apiResource('additional-services' , AdditionalServiceController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
 
         Route::apiResource('assembly-services' , AssemblyServiceController::class);
 
@@ -65,7 +67,6 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::apiResource('opening-types' , OpeningTypeController::class);
 
 // Get Opening Types by Types
-
 
         Route::apiResource('calculation-types' , CalculationTypeController::class);
 
@@ -126,6 +127,9 @@ Route::get('/all-window-colors', [WindowColorController::class , 'all']);
 Route::get('/window-colors/profile-color/{type_id}', [WindowColorController::class , 'getByType']);
 //additional-services
 Route::get('/all-additional-services', [AdditionalServiceController::class , 'all']);
+Route::apiResource('additional-services' , AdditionalServiceController::class , [
+    'only' => ['show' , 'index']
+]);
 //assembly-services
 Route::get('/all-assembly-services', [AssemblyServiceController::class , 'all']);
 //opening-types
