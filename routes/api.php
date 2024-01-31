@@ -74,7 +74,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::apiResource('calculation-types' , CalculationTypeController::class);
         Route::get('/all-calculation-types', [CalculationTypeController::class , 'all']);
 
-        Route::apiResource('profiles' , ProfileTypeController::class);
+        Route::apiResource('profiles' , ProfileTypeController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
         Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
 
         Route::apiResource('clients' , ClientController::class);
@@ -122,7 +124,10 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::apiResource('orders' , OrderController::class);
 
 });
-
+//profiles
+Route::apiResource('profiles' , ProfileTypeController::class , [
+    'only' => ['index' , 'show']
+]);
 
 
 
