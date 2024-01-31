@@ -64,7 +64,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
         Route::apiResource('types' , TypeController::class);
 
-        Route::apiResource('opening-types' , OpeningTypeController::class);
+        Route::apiResource('opening-types' , OpeningTypeController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
 
 // Get Opening Types by Types
 
@@ -135,6 +137,9 @@ Route::get('/all-assembly-services', [AssemblyServiceController::class , 'all'])
 //opening-types
 Route::get('/all-opening-types', [OpeningTypeController::class , 'all']);
 Route::get('/opening-types/type/{type_id}', [OpeningTypeController::class , 'getByType']);
+Route::apiResource('opening-types' , OpeningTypeController::class , [
+    'only' => ['index' , 'show']
+]);
 //calculation-types
 Route::get('/all-calculation-types', [CalculationTypeController::class , 'all']);
 //corners
