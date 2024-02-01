@@ -46,8 +46,8 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-     DB::beginTransaction();
-        try{
+//     DB::beginTransaction();
+//        try{
             $startingOrderId = 1000;
             $lastOrderId = Order::max('order_id');
             $nextOrderId = $lastOrderId ? $lastOrderId + 1 : $startingOrderId;
@@ -185,12 +185,12 @@ class OrderController extends Controller
                 ]);
             }
             return new ShowOrderResource($order);
-        }catch (\Exception $e){
-            DB::rollBack();
-            return response()->json([
-                'error' => 'Error creating order and details: ' . $e->getMessage()
-            ] , 500);
-        }
+//        }catch (\Exception $e){
+//            DB::rollBack();
+//            return response()->json([
+//                'error' => 'Error creating order and details: ' . $e->getMessage()
+//            ] , 500);
+//        }
 
     }
 
