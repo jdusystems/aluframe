@@ -50,16 +50,15 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     Route::middleware(['admin'])->group(function () {
 
-        Route::apiResource('profile-colors' , ProfileColorController::class);
-
-
-        Route::apiResource('window-colors' , WindowColorController::class);
-
-
+        Route::apiResource('profile-colors' , ProfileColorController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
+        Route::apiResource('window-colors' , WindowColorController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
         Route::apiResource('additional-services' , AdditionalServiceController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
-
         Route::apiResource('assembly-services' , AssemblyServiceController::class);
 
         Route::apiResource('types' , TypeController::class);
@@ -71,22 +70,34 @@ Route::middleware(['auth:sanctum'])->group( function () {
 // Get Opening Types by Types
 
         Route::apiResource('calculation-types' , CalculationTypeController::class);
-        Route::apiResource('profiles' , ProfileTypeController::class);
+
+        Route::apiResource('profiles' , ProfileTypeController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
+
         Route::apiResource('clients' , ClientController::class);
         Route::get('/all-clients', [ClientController::class , 'all']);
+
+
         Route::apiResource('corners' , CornerController::class);
         Route::apiResource('window-handlers' , WindowHandlerController::class);
         Route::apiResource('sealants' , SealantController::class);
         Route::get('/all-sealants', [SealantController::class , 'all']);
 
-        Route::apiResource('handler-types' , HandlerTypeController::class);
-        Route::get('/all-handler-types', [HandlerTypeController::class , 'all']);
+
+        Route::apiResource('handler-types' , HandlerTypeController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
 
         Route::apiResource('statuses' , StatusController::class);
+        Route::apiResource('handler-positions' , HandlerPositionController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
 
-        Route::apiResource('handler-positions' , HandlerPositionController::class);
+        Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
 
-        Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class) ;
         Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
         Route::post('/profile-colors/delete-multiple' , [ProfileColorController::class , 'deleteMultiple']);
         Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);
@@ -112,9 +123,15 @@ Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
 //profile-colors
 Route::get('/all-profile-colors', [ProfileColorController::class , 'all']);
 Route::get('/profile-colors/profile/{type_id}', [ProfileColorController::class , 'getByType']);
+Route::apiResource('profile-colors' , ProfileColorController::class , [
+    'only' => ['show' , 'index']
+]);
 //window-colors
 Route::get('/all-window-colors', [WindowColorController::class , 'all']);
 Route::get('/window-colors/profile-color/{type_id}', [WindowColorController::class , 'getByType']);
+Route::apiResource('window-colors' , WindowColorController::class , [
+    'only' => ['show' , 'index']
+]);
 //additional-services
 Route::get('/all-additional-services', [AdditionalServiceController::class , 'all']);
 Route::apiResource('additional-services' , AdditionalServiceController::class , [
@@ -128,6 +145,11 @@ Route::get('/opening-types/type/{type_id}', [OpeningTypeController::class , 'get
 Route::apiResource('opening-types' , OpeningTypeController::class , [
     'only' => ['index' , 'show']
 ]);
+// handler types
+Route::apiResource('handler-types' , HandlerTypeController::class , [
+    'only' => ['show' , 'index']
+]);
+Route::get('/all-handler-types', [HandlerTypeController::class , 'all']);
 //calculation-types
 Route::get('/all-calculation-types', [CalculationTypeController::class , 'all']);
 //corners
@@ -139,6 +161,14 @@ Route::get('/all-handler-positions', [HandlerPositionController::class , 'all'])
 //opening-type-numbers
 Route::get('/all-opening-type-numbers', [OpeningTypeNumberController::class , 'all']);
 Route::get('/opening-type-numbers/opening-types/{opening_type_id}', [OpeningTypeNumberController::class , 'getByOpeningType']);
+//handler-positions
+Route::apiResource('handler-positions' , HandlerPositionController::class , [
+    'only' => ['show' , 'index']
+]);
+//opening-type-numbers
+Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class , [
+    'only' => ['show' , 'index']
+]);
 
 Route::get('/pdf1' , [PdfController::class , 'exportPdf1']);
 Route::get('/pdf2' , [PdfController::class , 'exportPdf2']);
