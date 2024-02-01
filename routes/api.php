@@ -41,7 +41,6 @@ use App\Http\Controllers\Api\OpeningTypeNumberController;
 Route::middleware(['auth:sanctum'])->group( function () {
     Route::get('/user' , function (Request $request){
        $user = \Illuminate\Support\Facades\Auth::user();
-
        return response()->json([
            'user' => $user ,
            'user_role' => ($user->is_admin) ? "admin" : "user" ,

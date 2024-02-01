@@ -19,6 +19,7 @@ use App\Models\Sealant;
 use App\Models\WindowColor;
 use App\Models\WindowHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -28,9 +29,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return new OrderCollection(Order::latest()->paginate(10));
+        $user = Auth::user();
+        if(auth()->user()->check() && $user->is_admin == 1){
+            $orders = Order::latest()->paginate(10);
+        }else{
+            $orders = Order::where('user_id' , $user->id)->latest()->paginate(10);
+        }
+        return new OrderCollection($orders);
     }
-
     /**
      * Show the form for creating a new resource.
      */
