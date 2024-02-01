@@ -25,18 +25,18 @@ class StoreOrderRequest extends FormRequest
         return [
             'orders' => 'required|array|min:1' ,
             'user_id' => ['required' ,'integer', 'exists:users,id'] ,
-            'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types')->where(function($query){
+            'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
-            'orders.*.window_color_id' => ['required' ,'integer', Rule::exists('window_colors')->where(function($query){
+            'orders.*.window_color_id' => ['required' ,'integer', Rule::exists('window_colors' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
-            'orders.*.profile_color_id' => ['required' ,'integer', Rule::exists('profile_colors')->where(function($query){
+            'orders.*.profile_color_id' => ['required' ,'integer', Rule::exists('profile_colors' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
             'orders.*.opening_type_id' => ['required' ,'integer', 'exists:opening_types,id'] ,
             'orders.*.handler_type_id' => ['required' ,'integer', 'exists:handler_types,id'] ,
-            'orders.*.additional_service_id' => ['integer', Rule::exists('additional_services')->where(function($query){
+            'orders.*.additional_service_id' => ['integer', Rule::exists('additional_services' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
             'orders.*.assembly_service_id' => ['integer', 'exists:assembly_services,id'] ,
