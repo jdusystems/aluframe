@@ -66,7 +66,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
         ]);
         Route::apiResource('assembly-services' , AssemblyServiceController::class);
 
-        Route::apiResource('types' , TypeController::class);
+        Route::apiResource('types' , TypeController::class , [
+            'only' => ['update' , 'store' , 'destroy']
+        ]);
 
         Route::apiResource('opening-types' , OpeningTypeController::class , [
             'only' => ['store' , 'update' , 'destroy']
@@ -178,6 +180,10 @@ Route::apiResource('handler-positions' , HandlerPositionController::class , [
 Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class , [
     'only' => ['show' , 'index']
 ]);
+Route::apiResource('types' , TypeController::class , [
+    'only' => ['show' , 'index']
+]);
+
 
 Route::get('/pdf1' , [PdfController::class , 'exportPdf1']);
 Route::get('/pdf2' , [PdfController::class , 'exportPdf2']);
