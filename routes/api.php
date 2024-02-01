@@ -40,7 +40,13 @@ use App\Http\Controllers\Api\OpeningTypeNumberController;
 
 Route::middleware(['auth:sanctum'])->group( function () {
     Route::get('/user' , function (Request $request){
-       return $request->user();
+       $user = \Illuminate\Support\Facades\Auth::user();
+
+       return response()->json([
+           'user' => $user ,
+           'user_role' => ($user->is_admin) ? "admin" : "user" ,
+       ]);
+
     });
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
