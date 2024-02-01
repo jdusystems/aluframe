@@ -120,6 +120,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
 });
 //profiles
 Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
+Route::apiResource('profiles' , ProfileTypeController::class , [
+    'only' => ['show' , 'index']
+]);
 //profile-colors
 Route::get('/all-profile-colors', [ProfileColorController::class , 'all']);
 Route::get('/profile-colors/profile/{type_id}', [ProfileColorController::class , 'getByType']);
@@ -142,6 +145,7 @@ Route::get('/all-assembly-services', [AssemblyServiceController::class , 'all'])
 //opening-types
 Route::get('/all-opening-types', [OpeningTypeController::class , 'all']);
 Route::get('/opening-types/type/{type_id}', [OpeningTypeController::class , 'getByType']);
+
 Route::apiResource('opening-types' , OpeningTypeController::class , [
     'only' => ['index' , 'show']
 ]);
