@@ -94,7 +94,7 @@ class OrderController extends Controller
                     }
                     if($profileType->window_handler){
                         $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->first();
-                        $handlerPosition = HandlerPosition::find($detail['handler_type_id']);
+                        $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
 
                         if($handlerPosition->slug == "no_handler"){
                             $windowHandlerQuantity += 0;
