@@ -71,19 +71,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
 // Get Opening Types by Types
 
         Route::apiResource('calculation-types' , CalculationTypeController::class);
-
         Route::apiResource('profiles' , ProfileTypeController::class);
-
-
         Route::apiResource('clients' , ClientController::class);
         Route::get('/all-clients', [ClientController::class , 'all']);
-
         Route::apiResource('corners' , CornerController::class);
-
-
         Route::apiResource('window-handlers' , WindowHandlerController::class);
-
-
         Route::apiResource('sealants' , SealantController::class);
         Route::get('/all-sealants', [SealantController::class , 'all']);
 
@@ -94,12 +86,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
         Route::apiResource('handler-positions' , HandlerPositionController::class);
 
-
         Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class) ;
-
         Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
-
-
         Route::post('/profile-colors/delete-multiple' , [ProfileColorController::class , 'deleteMultiple']);
         Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);
         Route::post('/additional-services/delete-multiple' , [AdditionalServiceController::class , 'deleteMultiple']);
