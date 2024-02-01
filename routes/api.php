@@ -38,7 +38,7 @@ use App\Http\Controllers\Api\OpeningTypeNumberController;
 |
 */
 
-//Route::middleware(['auth:sanctum'])->group( function () {
+Route::middleware(['auth:sanctum'])->group( function () {
     Route::get('/user' , function (Request $request){
        return $request->user();
     });
@@ -48,7 +48,7 @@ use App\Http\Controllers\Api\OpeningTypeNumberController;
     Route::post('/change-password', [PasswordResetController::class, 'changePassword'])
         ->name('change.password');
 
-//    Route::middleware(['admin'])->group(function () {
+    Route::middleware(['admin'])->group(function () {
 
         Route::apiResource('profile-colors' , ProfileColorController::class);
 
@@ -115,10 +115,10 @@ use App\Http\Controllers\Api\OpeningTypeNumberController;
         Route::post('/image-upload', [ImageController::class, 'imageUpload']);
         Route::post('/image-delete', [ImageController::class, 'imageDelete']);
 
-//    });
+    });
     Route::apiResource('orders' , OrderController::class);
 
-//});
+});
 //profiles
 Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
 //profile-colors
