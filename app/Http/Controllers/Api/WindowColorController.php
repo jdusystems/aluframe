@@ -21,10 +21,11 @@ class WindowColorController extends Controller
      */
     public function index(Request $request)
     {
-        $request->validate([
-            'per_page' => ['required','numeric']
-        ]);
-        $itemsPerPage = $request->per_page;
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
         return new WindowColorCollection(WindowColor::orderBy('sort_index')->paginate($itemsPerPage));
     }
     public function all()

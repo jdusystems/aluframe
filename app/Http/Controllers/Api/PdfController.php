@@ -46,7 +46,6 @@ class PdfController extends Controller
         return $pdf->stream('document2.pdf');
     }
     public function exportPdf3(string $id){
-
         $order = Order::find($id);
         if(!$order){
             return  new ReturnResponseResource([
@@ -55,7 +54,6 @@ class PdfController extends Controller
             ] , 404);
         }
         $orderDetails = $order->orderDetails;
-
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
@@ -72,14 +70,13 @@ class PdfController extends Controller
             DB::raw('SUM(quantity_left) as quantity_left'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order , 'profiles' => $profiles , 'windowColors' => $windowColors]);
+        $pdf = PDF::loadView('pdf.pdf3' , ['orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
 
         return $pdf->stream('document3.pdf');
     }
     public function exportPdf4(){
 
         $orders = [1 , 2 , 3 , 4 ,5 , 6 ,7,8 ,9 ,10];
-
         $pdf = PDF::loadView('pdf.pdf4'  , ['orders' => $orders]);
         return $pdf->stream('document4.pdf');
     }

@@ -18,10 +18,11 @@ class ProfileTypeController extends Controller
      */
     public function index(Request $request)
     {
-        $request->validate([
-            'per_page' => ['required','numeric']
-        ]);
-        $itemsPerPage = $request->per_page;
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
         $profile_types = ProfileType::orderBy('sort_index')->paginate($itemsPerPage);
         return new ProfileTypeCollection($profile_types);
     }
