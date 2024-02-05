@@ -64,7 +64,6 @@ class PdfController extends Controller
         $windowColors = OrderDetail::select('window_color_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
-            DB::raw('SUM(quantity) as total_quantity') ,
             DB::raw('SUM(quantity_right) as quantity_right') ,
             DB::raw('SUM(quantity_left) as quantity_left'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
