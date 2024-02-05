@@ -19,9 +19,13 @@ class OpeningTypeNumberController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new OpeningTypeNumberCollection(OpeningTypeNumber::paginate(10));
+        $request->validate([
+            'per_page' => ['required','numeric']
+        ]);
+        $itemsPerPage = $request->per_page;
+        return new OpeningTypeNumberCollection(OpeningTypeNumber::paginate($itemsPerPage));
     }
     public function all()
     {

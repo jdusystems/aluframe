@@ -39,6 +39,11 @@ use App\Http\Controllers\Api\OpeningTypeNumberController;
 */
 
 Route::middleware(['auth:sanctum'])->group( function () {
+    Route::get('/orders/pdf1/{order_id}' , [PdfController::class , 'exportPdf1']);
+    Route::get('/orders/pdf2/{order_id}' , [PdfController::class , 'exportPdf2']);
+    Route::get('/orders/pdf3/{order_id}' , [PdfController::class , 'exportPdf3']);
+    Route::get('/orders/pdf4/{order_id}' , [PdfController::class , 'exportPdf4']);
+
     Route::get('/user' , function (Request $request){
        $user = \Illuminate\Support\Facades\Auth::user();
        return response()->json([
@@ -185,10 +190,7 @@ Route::apiResource('types' , TypeController::class , [
 ]);
 
 
-Route::get('/pdf1' , [PdfController::class , 'exportPdf1']);
-Route::get('/pdf2' , [PdfController::class , 'exportPdf2']);
-Route::get('/pdf3' , [PdfController::class , 'exportPdf3']);
-Route::get('/pdf4' , [PdfController::class , 'exportPdf4']);
+
 
 Route::get('/image' , function (){
     return view('image');
