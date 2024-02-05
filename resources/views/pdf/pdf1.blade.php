@@ -254,21 +254,21 @@
         @endforeach
         @foreach($profiles as $profile)
             <tr class="list-item">
-                <th class="list-text1">{{$profile->sealant->vendor_code}}</th>
-                <th class="list-text1">{{$profile->sealant->name}}</th>
-                <th class="list-text1">{{$profile->sealant->price}}</th>
+                <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
+                <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
+                <th class="list-text1">{{$profile->profileType->sealant->price}}</th>
                 <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->sealant->price}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->profileType->sealant->price}}</th>
             </tr>
         @endforeach
 
         @foreach($profiles as $profile)
             <tr class="list-item">
-                <th class="list-text1">{{$profile->corner->vendor_code}}</th>
-                <th class="list-text1">{{$profile->corner->name}}</th>
-                <th class="list-text1">{{$profile->corner->price}}</th>
+                <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
+                <th class="list-text1">{{$profile->profileType->corner->name}}</th>
+                <th class="list-text1">{{$profile->profileType->corner->price}}</th>
                 <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 4}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 4 * $profile->corner->price}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 4 * $profile->profileType->corner->price}}</th>
             </tr>
         @endforeach
         @foreach($windowColors as $windowColor)
