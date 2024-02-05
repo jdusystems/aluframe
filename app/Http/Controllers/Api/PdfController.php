@@ -43,7 +43,10 @@ class PdfController extends Controller
 
         $user = User::find($order->user_id);
 
-        $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user]);
+        $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
+            'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
+            'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
+        ]);
 
         return $pdf->stream('invoice.pdf');
     }
