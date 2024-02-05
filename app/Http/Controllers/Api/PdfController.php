@@ -60,7 +60,7 @@ class PdfController extends Controller
         }
         $orderDetails = $order->orderDetails;
 
-        $profiles = OrderDetail::select('profile_type_id' ,
+        $profiles = OrderDetail::select('profile_type_id' , 'profile_color_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width'),
             DB::raw('SUM(quantity_right) as quantity_right'),

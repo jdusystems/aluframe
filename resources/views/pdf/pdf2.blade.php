@@ -322,20 +322,19 @@
         @endforeach
         @foreach($profiles as $profile)
                 <?php
-                $windowHandler = \App\Models\WindowHandler::where('profile_type_id' ,'=', $profile->profile_type_id)->where('profile_color_id', '=' ,$profile->profile_color_id)->get();
+                $windowHandlers = \App\Models\WindowHandler::where('profile_type_id' , $profile->profile_type_id)->get();
                 ?>
-                {{$windowHandler}}
 
-            @if($windowHandler)
-{{--                @foreach($windowHandlers as $windowHandler)--}}
-{{--                    <tr class="list-item">--}}
-{{--                        <th class="list-text1">{{$windowHandler->vendor_code}}</th>--}}
-{{--                        <th class="list-text1">{{$windowHandler->name}}</th>--}}
-{{--                        <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>--}}
-{{--                    </tr>--}}
-{{--                @endforeach--}}
+                @foreach($windowHandlers as $windowHandler)
+                    @if($windowHandler->profile_color_id == $profile->profile_color_id)
+                    <tr class="list-item">
+                        <th class="list-text1">{{$windowHandler->vendor_code}}</th>
+                        <th class="list-text1">{{$windowHandler->name}}</th>
+                        <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>
+                    </tr>
+                    @endif
 
-            @endif
+                @endforeach
         @endforeach
     </table>
     <div class="pdf">
