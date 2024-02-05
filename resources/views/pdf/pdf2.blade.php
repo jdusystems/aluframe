@@ -327,13 +327,13 @@
                 {{$windowHandler}}
 
             @if($windowHandler)
-                @foreach($windowHandlers as $windowHandler)
-                    <tr class="list-item">
-                        <th class="list-text1">{{$windowHandler->vendor_code}}</th>
-                        <th class="list-text1">{{$windowHandler->name}}</th>
-                        <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>
-                    </tr>
-                @endforeach
+{{--                @foreach($windowHandlers as $windowHandler)--}}
+{{--                    <tr class="list-item">--}}
+{{--                        <th class="list-text1">{{$windowHandler->vendor_code}}</th>--}}
+{{--                        <th class="list-text1">{{$windowHandler->name}}</th>--}}
+{{--                        <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>--}}
+{{--                    </tr>--}}
+{{--                @endforeach--}}
 
             @endif
         @endforeach
