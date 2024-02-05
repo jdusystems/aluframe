@@ -280,6 +280,30 @@
                 <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * ($windowColor->width*$windowColor->height) * $windowColor->windowColor->price}}</th>
             </tr>
         @endforeach
+        @foreach($additionalServices as $additionalService)
+                <?php
+                    $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();
+                ?>
+            <tr class="list-item">
+                <th class="list-text1">{{$additionalService->additionalService->vendor_code}}</th>
+                <th class="list-text1">{{$additionalService->additionalService->name}}</th>
+                <th class="list-text1">{{$additionalService->additionalService->price}}</th>
+                <th class="list-text1">{{$services->count()}}</th>
+                <th class="list-text1">{{$services->count() * $additionalService->additionalService->price}}</th>
+            </tr>
+        @endforeach
+        @foreach($assemblyServices as $assemblyService)
+                <?php
+                    $services = \App\Models\OrderDetail::where('additional_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
+                ?>
+            <tr class="list-item">
+                <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
+                <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
+                <th class="list-text1">{{$assemblyService->assemblyService->price}}</th>
+                <th class="list-text1">{{$services->count()}}</th>
+                <th class="list-text1">{{$services->count() * $assemblyService->assemblyService->price}}</th>
+            </tr>
+        @endforeach
 
         @foreach($profiles as $profile)
                 <?php

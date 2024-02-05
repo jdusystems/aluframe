@@ -38,6 +38,9 @@ class PdfController extends Controller
             DB::raw('SUM(quantity_left) as quantity_left'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
+        $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
+        $assemblyServices = OrderDetail::select('assembly_service_id')->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
+
         $user = User::find($order->user_id);
 
         $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user]);
