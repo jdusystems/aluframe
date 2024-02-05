@@ -195,18 +195,23 @@
                     <td class="text">Ручка:</td>
                     <td class="title">{{$windowHandler->name}}</td>
                 </tr>
-                <tr class="list-item">
-                    <td class="list-text">Присака станд.?:</td>
-                    <td class="list-text">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </td>
+                <tr class="card-item">
+                    <td class="text">Присака станд.?:</td>
+                    <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </td>
                 </tr>
-                <tr class="list-item">
-                    <td class="list-text">Комментарий:</td>
-                    <td class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</td>
+                <tr class="card-item">
+                    <td class="text">Комментарий:</td>
+                    <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</td>
                 </tr>
             </table>
         @endforeach
     </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
