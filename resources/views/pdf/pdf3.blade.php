@@ -141,10 +141,11 @@
 </style>
 
 <body>
+<?php
+$i = 1;
+?>
 <div class="wrap" style="width: 100%;">
-    <?php
-    $i = 1;
-    ?>
+
         @foreach($orderDetails as $orderDetail)
            <?php $i++; ?>
         <table class="card">
@@ -197,9 +198,6 @@
                 <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</td>
             </tr>
         </table>
-            @if($i%2 == 0)
-                <br>
-            @endif
         @endforeach
 </div>
 <br>
