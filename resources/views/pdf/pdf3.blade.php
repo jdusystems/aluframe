@@ -193,15 +193,15 @@
                             $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
                         ?>
                     <td class="text">Ручка:</td>
-                    <td class="title">{{$orderDetail->}}</td>
+                    <td class="title">{{$windowHandler->name}}</td>
                 </tr>
-                <tr class="card-item">
-                    <td class="text">Присака станд.?:</td>
-                    <td class="title">Узкий (19 мм), Черный</td>
+                <tr class="list-item">
+                    <th class="list-text">Присака станд.?:</th>
+                    <th class="list-text">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </th>
                 </tr>
-                <tr class="card-item">
-                    <td class="text">Комментарий:</td>
-                    <td class="title">Узкий (19 мм), Черный</td>
+                <tr class="list-item">
+                    <th class="list-text">Комментарий:</th>
+                    <th class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</th>
                 </tr>
             </table>
         @endforeach
@@ -210,61 +210,56 @@
 
 <div class="wrap" style="margin-bottom: 20px;">
     <div class="card1">
-        <table class="card-item1">
-            <tr class="card-title">
-                <td>Профиль</td>
-                <td>#1401</td>
-                <td>28.12.2023 18:53</td>
-            </tr>
-            <tr class="card-top">
-                <td>Код товара</td>
-                <td>Высота</td>
-                <td>Кол-во</td>
-            </tr>
-            <tr class="card-list">
-                <td>2110 Black</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Gold Aluminy</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Glass1</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-        </table>
+
+            <table class="card-item1">
+                <tr class="card-title">
+                    <td>Профиль</td>
+                    <td>{{$order->order_id}}</td>
+                    <td>{{$order->created_at}}</td>
+                </tr>
+                <tr class="card-top">
+                    <td>Код товара</td>
+                    <td>Высота</td>
+                    <td>Кол-во</td>
+                </tr>
+             @foreach($profiles as $profile)
+                <tr class="card-list">
+                    <?php
+                        $profiles = \App\Models\OrderDetail::where('profile_type_id' , $profile->profile_type_id)->where('order_id' , $order->id)->get(); ?>
+                    <td>{{$profile->profileType->name}}</td>
+                    <td>{{2*($profile->total_height + $profile->total_width + ($profile->quantity_right_height + $profile->quantity_left_height))}}</td>
+                    <td>{{$profile->total_quantity_left + $profile->total_quantity_right + $profiles->count()}}</td>
+                </tr>
+                 @endforeach
+            </table>
+
     </div>
     <div class="card1">
         <table class="card-item1">
             <tr class="card-title">
-                <td>Профиль</td>
-                <td>#1401</td>
-                <td>28.12.2023 18:53</td>
+                <td>Стекло</td>
+                <td>{{$order->order_id}}</td>
+                <td>{{$order->created_at}}</td>
             </tr>
             <tr class="card-top">
                 <td>Код товара</td>
                 <td>Высота</td>
+                <td>Ширина</td>
                 <td>Кол-во</td>
             </tr>
-            <tr class="card-list">
-                <td>2110 Black</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Gold Aluminy</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Glass1</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
+            @foreach($windowColors as $windowColor)
+                    <?php
+                    $profiles = \App\Models\OrderDetail::where('window_color_id' , $windowColor->window_color_id)->where('order_id' , $order->id)->get();
+                    ?>
+                <tr class="card-list">
+                    <td>{{$windowColor->windowColor->name}}</td>
+                    <td>{{$windowColor->height}}</td>
+                    <td>{{$windowColor->width}}</td>
+                    <td>{{$profiles->count() + $windowColor->total_quantity_left + $windowColor->total_quantity_right}}</td>
+                </tr>
+            @endforeach
+
+
         </table>
     </div>
 </div>

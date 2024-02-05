@@ -98,20 +98,23 @@ class PdfController extends Controller
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
-            DB::raw('SUM(quantity_right) as quantity_right') ,
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(quantity_right) as total_quantity_right'),
+            DB::raw('SUM(quantity_left) as total_quantity_left') ,
+            DB::raw('SUM(quantity_right*height) as quantity_right_height') ,
+            DB::raw('SUM(quantity_right*width) as quantity_right_width') ,
+            DB::raw('SUM(quantity_left*height) as quantity_left_height'),
+            DB::raw('SUM(quantity_left*width) as quantity_left_width'),
         )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
 
         $windowColors = OrderDetail::select('window_color_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
-            DB::raw('SUM(quantity_right) as quantity_right') ,
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(quantity_right) as total_quantity_right') ,
+            DB::raw('SUM(quantity_left) as total_quantity_left'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
 
-        $pdf = PDF::loadView('pdf.pdf3' , ['orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
-
+        $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
         return $pdf->stream('document3.pdf');
     }
 
