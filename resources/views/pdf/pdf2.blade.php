@@ -324,8 +324,9 @@
                 <?php
                 $windowHandler = \App\Models\WindowHandler::where('profile_type_id' ,'=', $profile->profile_type_id)->where('profile_color_id', '=' ,$profile->profile_color_id)->first();
                 ?>
+                {{$windowHandler}}
+
             @if($windowHandler)
-                kdsjkdsjkdsjkdsjkdsj
                 @foreach($windowHandlers as $windowHandler)
                     <tr class="list-item">
                         <th class="list-text1">{{$windowHandler->vendor_code}}</th>
