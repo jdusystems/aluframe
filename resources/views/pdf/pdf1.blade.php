@@ -307,7 +307,7 @@
 
         @foreach($profiles as $profile)
                 <?php
-                    $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $profile->profile_type_id)->where('profile_color_id' , $profile->profile_color_id)->first();
+                    $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $profile->profile_type_id)->first();
                 ?>
           @if($windowHandler)
             <tr class="list-item">
