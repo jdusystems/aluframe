@@ -146,7 +146,7 @@
     $i = 1;
     ?>
         @foreach($orderDetails as $orderDetail)
-            {{$i ++}}
+           <?php $i++; ?>
         <table class="card">
             <tr class="card-item">
                 <td class="text">Профиль:</td>
