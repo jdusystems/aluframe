@@ -248,8 +248,8 @@
                 <th class="list-text1">{{$profile->profileType->vendor_code}}</th>
                 <th class="list-text1">{{$profile->profileType->name}}</th>
                 <th class="list-text1">{{$profile->profileType->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * 2*($profile->total_height+$profile->total_width)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->profileType->price}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->profileType->price}}</th>
             </tr>
         @endforeach
         @foreach($profiles as $profile)
@@ -257,8 +257,8 @@
                 <th class="list-text1">{{$profile->sealant->vendor_code}}</th>
                 <th class="list-text1">{{$profile->sealant->name}}</th>
                 <th class="list-text1">{{$profile->sealant->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * 2*($profile->total_height+$profile->total_width)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->sealant->price}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->sealant->price}}</th>
             </tr>
         @endforeach
 
@@ -267,8 +267,8 @@
                 <th class="list-text1">{{$profile->corner->vendor_code}}</th>
                 <th class="list-text1">{{$profile->corner->name}}</th>
                 <th class="list-text1">{{$profile->corner->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * 4}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * 4 * $profile->corner->price}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 4}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 4 * $profile->corner->price}}</th>
             </tr>
         @endforeach
         @foreach($windowColors as $windowColor)
@@ -276,14 +276,14 @@
                 <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
                 <th class="list-text1">{{$windowColor->windowColor->name}}</th>
                 <th class="list-text1">{{$windowColor->windowColor->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * ($windowColor->width*$windowColor->height)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity->right + 1) * ($windowColor->width*$windowColor->height) * $windowColor->windowColor->price}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * ($windowColor->width*$windowColor->height)}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * ($windowColor->width*$windowColor->height) * $windowColor->windowColor->price}}</th>
             </tr>
         @endforeach
 
         @foreach($profiles as $profile)
                 <?php
-                    $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $profile->profile_typeid)->where('profile_color_id' , $profile->profile_color_id)->first();
+                    $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $profile->profile_type_id)->where('profile_color_id' , $profile->profile_color_id)->first();
                 ?>
             <tr class="list-item">
                 <th class="list-text1">{{$windowHandler->vendor_code}}</th>
