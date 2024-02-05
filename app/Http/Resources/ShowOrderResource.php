@@ -22,6 +22,7 @@ class ShowOrderResource extends JsonResource
             'status' => ($this->status) ? $this->status->name : " ",
             'status_id' => ($this->status) ? $this->status->id : " ",
             'total_price' => $this->total_price ,
+            'ordered_time' => $this->created_at,
             'order_details' => OrderDetailResource::collection($this->orderDetails) ,
         ];
     }
