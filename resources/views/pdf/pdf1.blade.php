@@ -169,7 +169,7 @@
 <div class="container">
     <header class="header">
         <h2 class="title">Накладная</h2>
-        <div class="header-left">
+        <div class="header-left" style="margin-right: 200px">
             <span class="text">{{$order->order_id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
@@ -229,7 +229,7 @@
     @endforeach
     <div class="wrap">
         <h3 class="wrap-tile">Спецификация</h3>
-        <div class="header-left">
+        <div class="header-left" style="margin-right: 200px">
             <span class="text">{{$order->order_id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>

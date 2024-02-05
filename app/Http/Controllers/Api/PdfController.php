@@ -47,14 +47,12 @@ class PdfController extends Controller
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
         ]);
-
         return $pdf->stream('invoice.pdf');
     }
 
-
     public function exportPdf2(string $id){
         $order = Order::find($id);
-        if(!$order){
+        if(!$order || $order->orderDetails()->count()  == 0){
             return  new ReturnResponseResource([
                 'code' => 404 ,
                 'message' => "Record not found!"
@@ -62,9 +60,29 @@ class PdfController extends Controller
         }
         $orderDetails = $order->orderDetails;
 
+        $profiles = OrderDetail::select('profile_type_id' ,
+            DB::raw('SUM(height) as total_height') ,
+            DB::raw('SUM(width) as total_width'),
+            DB::raw('SUM(quantity_right) as quantity_right'),
+            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity'),
+        )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
 
+        $windowColors = OrderDetail::select('window_color_id' ,
+            DB::raw('SUM(width*height) as total_surface'),
+            DB::raw('SUM(quantity_right) as quantity_right'),
+            DB::raw('SUM(quantity_left) as quantity_left'),
+        )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $pdf = PDF::loadView('pdf.pdf2');
+        $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
+        $assemblyServices = OrderDetail::select('assembly_service_id')->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
+
+        $user = User::find($order->user_id);
+
+        $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
+            'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
+            'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
+        ]);
         return $pdf->stream('document2.pdf');
     }
     public function exportPdf3(string $id){
@@ -94,6 +112,8 @@ class PdfController extends Controller
 
         return $pdf->stream('document3.pdf');
     }
+
+
     public function exportPdf4(){
 
         $orders = [1 , 2 , 3 , 4 ,5 , 6 ,7,8 ,9 ,10];
