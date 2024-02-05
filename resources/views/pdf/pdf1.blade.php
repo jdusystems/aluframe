@@ -294,7 +294,7 @@
         @endforeach
         @foreach($assemblyServices as $assemblyService)
                 <?php
-                    $services = \App\Models\OrderDetail::where('additional_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
+                    $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
                 ?>
             <tr class="list-item">
                 <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
