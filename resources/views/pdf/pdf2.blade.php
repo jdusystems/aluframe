@@ -322,7 +322,7 @@
         @endforeach
         @foreach($profiles as $profile)
                 <?php
-                $windowHandlers = \App\Models\WindowHandler::where('profile_type_id' ,'=', $profile->profile_type_id)->where('profile_color_id', '=' ,$profile->profile_color_id)->first();
+                $windowHandler = \App\Models\WindowHandler::where('profile_type_id' ,'=', $profile->profile_type_id)->where('profile_color_id', '=' ,$profile->profile_color_id)->first();
                 ?>
             @if($windowHandler)
                 kdsjkdsjkdsjkdsjkdsj
