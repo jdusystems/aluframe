@@ -111,10 +111,8 @@
 
     .card-top{
         width: 100%;
-
     }
     .card-top td{
-
         color: #4B3E32;
         font-family: Inter;
         font-size: 11px;
@@ -143,7 +141,7 @@
 </style>
 
 <body>
-<div class="wrap">
+<div class="wrap" style="width: 100%;">
     <?php
     $i = 1;
     ?>
@@ -208,7 +206,7 @@
 <br>
 <br>
 <br>
-<div class="wrap" style="margin-bottom: 20px;">
+<div class="wrap" style="width: 100%;margin-bottom: 20px;">
     <div class="card1">
         <table class="card-item1">
             <tr class="card-title">
