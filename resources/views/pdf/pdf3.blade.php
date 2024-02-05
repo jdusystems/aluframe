@@ -206,66 +206,66 @@
 <br>
 <br>
 <br>
-<div class="wrap" style="width: 100%;margin-bottom: 20px;">
-    <div class="card1">
-        <table class="card-item1">
-            <tr class="card-title">
-                <td>Профиль</td>
-                <td>#1401</td>
-                <td>28.12.2023 18:53</td>
-            </tr>
-            <tr class="card-top">
-                <td>Код товара</td>
-                <td>Высота</td>
-                <td>Кол-во</td>
-            </tr>
-            <tr class="card-list">
-                <td>2110 Black</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Gold Aluminy</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Glass1</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-        </table>
-    </div>
-    <div class="card1">
-        <table class="card-item1">
-            <tr class="card-title">
-                <td>Профиль</td>
-                <td>#1401</td>
-                <td>28.12.2023 18:53</td>
-            </tr>
-            <tr class="card-top">
-                <td>Код товара</td>
-                <td>Высота</td>
-                <td>Кол-во</td>
-            </tr>
-            <tr class="card-list">
-                <td>2110 Black</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Gold Aluminy</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-            <tr class="card-list">
-                <td>Glass1</td>
-                <td>2800</td>
-                <td>10</td>
-            </tr>
-        </table>
-    </div>
-</div>
+{{--<div class="wrap" style="width: 100%;margin-bottom: 20px;">--}}
+{{--    <div class="card1">--}}
+{{--        <table class="card-item1">--}}
+{{--            <tr class="card-title">--}}
+{{--                <td>Профиль</td>--}}
+{{--                <td>#1401</td>--}}
+{{--                <td>28.12.2023 18:53</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-top">--}}
+{{--                <td>Код товара</td>--}}
+{{--                <td>Высота</td>--}}
+{{--                <td>Кол-во</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-list">--}}
+{{--                <td>2110 Black</td>--}}
+{{--                <td>2800</td>--}}
+{{--                <td>10</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-list">--}}
+{{--                <td>Gold Aluminy</td>--}}
+{{--                <td>2800</td>--}}
+{{--                <td>10</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-list">--}}
+{{--                <td>Glass1</td>--}}
+{{--                <td>2800</td>--}}
+{{--                <td>10</td>--}}
+{{--            </tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--    <div class="card1">--}}
+{{--        <table class="card-item1">--}}
+{{--            <tr class="card-title">--}}
+{{--                <td>Профиль</td>--}}
+{{--                <td>#1401</td>--}}
+{{--                <td>28.12.2023 18:53</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-top">--}}
+{{--                <td>Код товара</td>--}}
+{{--                <td>Высота</td>--}}
+{{--                <td>Кол-во</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-list">--}}
+{{--                <td>2110 Black</td>--}}
+{{--                <td>2800</td>--}}
+{{--                <td>10</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-list">--}}
+{{--                <td>Gold Aluminy</td>--}}
+{{--                <td>2800</td>--}}
+{{--                <td>10</td>--}}
+{{--            </tr>--}}
+{{--            <tr class="card-list">--}}
+{{--                <td>Glass1</td>--}}
+{{--                <td>2800</td>--}}
+{{--                <td>10</td>--}}
+{{--            </tr>--}}
+{{--        </table>--}}
+{{--    </div>--}}
+{{--</div>--}}
 </body>
 
 </html>
