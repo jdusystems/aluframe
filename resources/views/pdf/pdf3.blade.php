@@ -196,18 +196,33 @@
                     <td class="title">{{$windowHandler->name}}</td>
                 </tr>
                 <tr class="list-item">
-                    <th class="list-text">Присака станд.?:</th>
-                    <th class="list-text">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </th>
+                    <td class="list-text">Присака станд.?:</td>
+                    <td class="list-text">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </td>
                 </tr>
                 <tr class="list-item">
-                    <th class="list-text">Комментарий:</th>
-                    <th class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</th>
+                    <td class="list-text">Комментарий:</td>
+                    <td class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</td>
                 </tr>
             </table>
         @endforeach
     </div>
 </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="wrap" style="margin-bottom: 20px;">
     <div class="card1">
 
