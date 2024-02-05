@@ -172,6 +172,7 @@ class OrderController extends Controller
                        'quantity_right' => (array_key_exists('quantity_right', $detail)) ? $detail['quantity_right'] : 0 ,
                        'quantity_left' => (array_key_exists('quantity_left' , $detail)) ? $detail['quantity_left'] : 0 ,
                        'number_of_loops' => ($detail['number_of_loops']) ? $detail['number_of_loops'] : 0 ,
+                       'comment' => ($detail['comment']) ? $detail['comment'] : " " ,
                        'corner_quantity' =>  $cornerQuantity,
                        'sealant_quantity' =>  $sealantQuantity,
                        'window_handler_quantity' =>  $windowHandlerQuantity,
