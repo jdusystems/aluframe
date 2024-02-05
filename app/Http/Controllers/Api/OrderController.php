@@ -51,7 +51,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-           DB::transaction(function () use ($request){
+//           DB::transaction(function () use ($request){
 
                $startingOrderId = 1000;
                $lastOrderId = Order::max('order_id');
@@ -190,7 +190,7 @@ class OrderController extends Controller
                    ]);
                }
                return new ShowOrderResource($order);
-           });
+//           });
     }
 
     /**

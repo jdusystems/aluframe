@@ -182,7 +182,7 @@
             </tr>
             <tr class="card-item">
                 <td class="text">Кол-во R:</td>
-                <td class="title">$orderDetail->quantity_right</td>
+                <td class="title">{{$orderDetail->quantity_right}}</td>
             </tr>
             <tr class="card-item">
                 <td class="text">Ручка:</td>
@@ -190,7 +190,7 @@
             </tr>
             <tr class="card-item">
                 <td class="text">Присака станд.?:</td>
-                <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}}mm, X1 = {{$orderDetail->X2}} Y1 = {{$orderDetail->Y1}} </td>
+                <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </td>
             </tr>
             <tr class="card-item">
                 <td class="text">Комментарий:</td>
