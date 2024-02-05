@@ -190,7 +190,7 @@
             </tr>
             <tr class="card-item">
                 <td class="text">Присака станд.?:</td>
-                <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1}}mm, X1 = {{$orderDetail->X2}} Y1 = {{$orderDetail->Y1}} </td>
+                <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}}mm, X1 = {{$orderDetail->X2}} Y1 = {{$orderDetail->Y1}} </td>
             </tr>
             <tr class="card-item">
                 <td class="text">Комментарий:</td>
