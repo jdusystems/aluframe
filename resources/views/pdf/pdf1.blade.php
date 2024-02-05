@@ -213,8 +213,11 @@
                 <th class="list-text">{{$orderDetail->quantity_right}}</th>
             </tr>
             <tr class="list-item">
+                    <?php
+                    $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
+                    ?>
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{$orderDetail->handlerType->name}}</th>
+                <th class="list-text">{{$windowHandler->name}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
@@ -307,19 +310,13 @@
 
         @foreach($profiles as $profile)
                 <?php
-                $windowHandlers = \App\Models\WindowHandler::where('profile_type_id' , $profile->profile_type_id)->get();
+                $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
                 ?>
-
-            @foreach($windowHandlers as $windowHandler)
-                @if($windowHandler->profile_color_id == $profile->profile_color_id)
                     <tr class="list-item">
                         <th class="list-text1">{{$windowHandler->vendor_code}}</th>
                         <th class="list-text1">{{$windowHandler->name}}</th>
                         <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>
                     </tr>
-                @endif
-
-            @endforeach
         @endforeach
     </table>
     <p class="pdf-text" style="margin-top: 50px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в

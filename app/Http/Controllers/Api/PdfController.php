@@ -93,6 +93,7 @@ class PdfController extends Controller
                 'message' => "Record not found!"
             ] , 404);
         }
+
         $orderDetails = $order->orderDetails;
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
@@ -107,6 +108,7 @@ class PdfController extends Controller
             DB::raw('SUM(quantity_right) as quantity_right') ,
             DB::raw('SUM(quantity_left) as quantity_left'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
+
 
         $pdf = PDF::loadView('pdf.pdf3' , ['orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
 
