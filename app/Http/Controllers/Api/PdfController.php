@@ -324,7 +324,7 @@ class PdfController extends Controller
                 $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
             }
 
-            $data = [
+            $data[] = [
                 'profile_type_name' => $profileType->name ,
                 'profile_type_price' => $profileType->price ,
                 'profile_quantity' => 2*($width+$height)*($detail['quantity_left'] + $detail['quantity_right']+1) ,
