@@ -52,6 +52,7 @@
             font-weight: 400;
             line-height: normal;
             padding-bottom: 22px;
+            padding-right: 10px;
         }
         .card-top td:last-child{
             margin-left: auto;
@@ -137,6 +138,7 @@
         <br>
         <br>
         <br>
+        <hr>
     @endforeach
 </div>
 </body>
