@@ -189,7 +189,7 @@ Route::apiResource('types' , TypeController::class , [
     'only' => ['show' , 'index']
 ]);
 
-Route::get('/order-details' , [PdfController::class , 'orderDetails']);
+Route::post('/order-details' , [PdfController::class , 'orderDetails']);
 
 
 
