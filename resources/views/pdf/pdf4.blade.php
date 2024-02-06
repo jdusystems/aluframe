@@ -100,7 +100,7 @@
                 </tr>
                 <tr class="card-item">
                     <td>Ширина:</td>
-                    <td>{{$orderDetail->width*1000}}mm</td>
+                    <td>{{$orderDetail->width*1000}} mm</td>
                 </tr>
                 <tr class="card-item">
                     <td>Профиль:</td>

@@ -47,7 +47,7 @@ class PdfController extends Controller
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
         ]);
-        return $pdf->stream('invoice.pdf');
+        return $pdf->download('invoice.pdf');
     }
 
     public function exportPdf2(string $id){
@@ -83,7 +83,7 @@ class PdfController extends Controller
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
         ]);
-        return $pdf->stream('document2.pdf');
+        return $pdf->download('document2.pdf');
     }
     public function exportPdf3(string $id){
         $order = Order::find($id);
@@ -115,7 +115,7 @@ class PdfController extends Controller
 
 
         $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
-        return $pdf->stream('document3.pdf');
+        return $pdf->download('document3.pdf');
     }
     public function exportPdf4(string $id){
 
@@ -134,7 +134,7 @@ class PdfController extends Controller
        $options->nl2br = true; // Enable the nl2br option
 
         $pdf->setOption($options->nl2br);
-        return $pdf->stream('document4.pdf');
+        return $pdf->download('document4.pdf');
     }
 
 }

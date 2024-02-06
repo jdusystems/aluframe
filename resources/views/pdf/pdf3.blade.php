@@ -148,7 +148,6 @@
 
 <body>
 <div class="full">
-
     <div class="wrap">
         @foreach($orderDetails as $orderDetail)
             <table class="card">
@@ -230,7 +229,6 @@
 <br>
 <div class="wrap" style="margin-bottom: 20px; margin-left: 50px;">
     <div class="card1">
-
             <table class="card-item1">
                 <tr class="card-title">
                     <td>Профиль</td>
