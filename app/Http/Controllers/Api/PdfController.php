@@ -117,12 +117,18 @@ class PdfController extends Controller
         $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
         return $pdf->stream('document3.pdf');
     }
+    public function exportPdf4(string $id){
 
+        $order = Order::find($id);
+        if(!$order){
+            return  new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => "Record not found!"
+            ] , 404);
+        }
 
-    public function exportPdf4(){
-
-        $orders = [1 , 2 , 3 , 4 ,5 , 6 ,7,8 ,9 ,10];
-        $pdf = PDF::loadView('pdf.pdf4'  , ['orders' => $orders]);
+        $orderDetails = $order->orderDetails;
+        $pdf = PDF::loadView('pdf.pdf4'  , ['order' => $order , 'orderDetails' => $orderDetails]);
         return $pdf->stream('document4.pdf');
     }
 

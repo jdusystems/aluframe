@@ -228,7 +228,7 @@
 <br>
 <br>
 <br>
-<div class="wrap" style="margin-bottom: 20px;">
+<div class="wrap" style="margin-bottom: 20px; margin-left: 50px;">
     <div class="card1">
 
             <table class="card-item1">
@@ -252,7 +252,6 @@
                 </tr>
                  @endforeach
             </table>
-
     </div>
     <div class="card1">
         <table class="card-item1">
@@ -278,8 +277,6 @@
                     <td>{{$profiles->count() + $windowColor->total_quantity_left + $windowColor->total_quantity_right}}</td>
                 </tr>
             @endforeach
-
-
         </table>
     </div>
 </div>

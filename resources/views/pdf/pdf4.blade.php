@@ -83,46 +83,37 @@
 <body>
 
 <div class="wrap">
-    @foreach($orders as $order)
-
+    @foreach($orderDetails as $orderDetail)
+            <?php
+               $facades = $orderDetail->quantity_left + $orderDetail->quantity_right  + 1;
+            ?>
+         @for($i = 1;$i <= $facades;$i++)
         <table class="card">
-            <tr class="card-top">
-                <td>#1401 28.12.2023 18:53</td>
-                <td>Фасад 1/12</td>
-            </tr>
-            <tr class="card-item">
-                <td>Высота:</td>
-                <td>Узкий (19 мм), Черный</td>
-            </tr>
-            <tr class="card-item">
-                <td>Ширина:</td>
-                <td>Узкий (19 мм), Черный</td>
-            </tr>
-            <tr class="card-item">
-                <td>Профиль:</td>
-                <td>Узкий (19 мм), Черный</td>
-            </tr>
-            <tr class="card-item">
-                <td>Cтекло:</td>
-                <td>Узкий (19 мм), Черный</td>
-            </tr>
+                <tr class="card-top">
+                    <td>{{$orderDetail->id}} {{$order->created_at}}</td>
+                    <td>Фасад {{$i}}/{{$facades}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Высота:</td>
+                    <td>{{$orderDetail->height}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Ширина:</td>
+                    <td>{{$orderDetail->width}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Профиль:</td>
+                    <td>{{$orderDetail->profileType->name}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Cтекло:</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
+                </tr>
         </table>
-        @if($order % 2 == 0 )
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        @endif
+         @endfor
+        <br>
+        <hr>
     @endforeach
-
 </div>
 </body>
 
