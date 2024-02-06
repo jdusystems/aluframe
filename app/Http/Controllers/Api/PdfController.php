@@ -44,7 +44,7 @@ class PdfController extends Controller
 
         $user = User::find($order->user_id);
 
-        $filename = 'invoice_' . $order->order_id . '.pdf';
+        $filename = 'invoice1_' . $order->order_id . '.pdf';
 
         if (Storage::disk('pdf')->exists($filename)) {
             // If the file exists, return its URL
@@ -94,7 +94,7 @@ class PdfController extends Controller
 
         $user = User::find($order->user_id);
 
-        $filename = 'invoice_' . $order->order_id . '.pdf';
+        $filename = 'invoice2_' . $order->order_id . '.pdf';
 
         if (Storage::disk('pdf')->exists($filename)) {
             // If the file exists, return its URL
@@ -142,7 +142,7 @@ class PdfController extends Controller
             DB::raw('SUM(quantity_left) as total_quantity_left'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $filename = 'invoice_' . $order->order_id . '.pdf';
+        $filename = 'invoice3_' . $order->order_id . '.pdf';
 
         if (Storage::disk('pdf')->exists($filename)) {
             // If the file exists, return its URL
@@ -171,7 +171,7 @@ class PdfController extends Controller
         }
 
         $orderDetails = $order->orderDetails;
-        $filename = 'invoice_' . $order->order_id . '.pdf';
+        $filename = 'invoice4_' . $order->order_id . '.pdf';
 
         if (Storage::disk('pdf')->exists($filename)) {
             // If the file exists, return its URL
