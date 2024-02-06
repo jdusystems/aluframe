@@ -10,6 +10,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PdfController extends Controller
 {
@@ -47,7 +48,15 @@ class PdfController extends Controller
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
         ]);
-        return $pdf->download('invoice.pdf');
+
+        $pdfContents = $pdf->output();
+        $filename = 'invoice_' . $order->order_id . '.pdf';
+        Storage::disk('pdf')->put($filename , $pdfContents);
+        $url = url(Storage::url($filename));
+        return response()->json(
+            [
+                'pdf_url' => $url ,
+            ]);
     }
 
     public function exportPdf2(string $id){
