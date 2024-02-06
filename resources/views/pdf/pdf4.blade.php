@@ -110,6 +110,9 @@
                     <td>{{$orderDetail->windowColor->name}}</td>
                 </tr>
         </table>
+             @if($i%2==0)
+                    <br>
+             @endif
          @endfor
         <br>
         <hr>
