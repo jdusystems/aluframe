@@ -323,10 +323,11 @@ class PdfController extends Controller
             if($profileType->corner){
                 $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
             }
+
             $data = [
                 'profile_type_name' => $profileType->name ,
                 'profile_type_price' => $profileType->price ,
-                'profile_quantity' => 2*($width+$height)*($detail['quantity_left'] + $detail['quantity_right']+1) ,
+                'profile_quantity' => 2*($width+$height)*( + $detail['quantity_right']+1) ,
                 'window_color_name' => $windowColor1->name ,
                 'window_color_price' => $windowColor1->price ,
                 'window_color_surface' => ($width*$height)*($detail['quantity_left'] + $detail['quantity_right']+1) ,
