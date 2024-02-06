@@ -91,25 +91,24 @@
          @for($i = 1;$i <= $facades;$i++)
         <table class="card">
                 <tr class="card-top">
-                    <td style="padding-right: 30px">{{$orderDetail->id}} </td>
-                    <td style="padding-right: 30px">{{$order->created_at}}</td>
+                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
                     <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Высота:</td>
-                    <td colspan="2">{{$orderDetail->height}}</td>
+                    <td>{{$orderDetail->height}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Ширина:</td>
-                    <td colspan="2">{{$orderDetail->width}}</td>
+                    <td>{{$orderDetail->width}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Профиль:</td>
-                    <td colspan="2">{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Cтекло:</td>
-                    <td colspan="2">{{$orderDetail->windowColor->name}}</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
                 </tr>
         </table>
             @if($i%2==0)
