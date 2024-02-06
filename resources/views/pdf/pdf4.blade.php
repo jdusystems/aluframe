@@ -109,8 +109,8 @@
                     <td>Cтекло:</td>
                     <td>{{$orderDetail->windowColor->name}}</td>
                 </tr>
-            @endfor
         </table>
+        @endfor
              @if($i%2==0)
                     <br>
                     <br>
