@@ -96,11 +96,11 @@
                 </tr>
                 <tr class="card-item">
                     <td>Высота:</td>
-                    <td>{{$orderDetail->height}}</td>
+                    <td>{{$orderDetail->height*1000}} mm</td>
                 </tr>
                 <tr class="card-item">
                     <td>Ширина:</td>
-                    <td>{{$orderDetail->width}}</td>
+                    <td>{{$orderDetail->width*1000}}mm</td>
                 </tr>
                 <tr class="card-item">
                     <td>Профиль:</td>
