@@ -44,13 +44,20 @@ class PdfController extends Controller
 
         $user = User::find($order->user_id);
 
+        $filename = 'invoice_' . $order->order_id . '.pdf';
+
+        if (Storage::disk('pdf')->exists($filename)) {
+            // If the file exists, return its URL
+            $url = url(Storage::url($filename));
+            return response()->json(['pdf' => $url]);
+        }
+
         $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
         ]);
-
         $pdfContents = $pdf->output();
-        $filename = 'invoice_' . $order->order_id . '.pdf';
+
         Storage::disk('pdf')->put($filename , $pdfContents);
         $url = url(Storage::url($filename));
         return response()->json(
