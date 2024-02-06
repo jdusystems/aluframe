@@ -159,14 +159,13 @@ class OrderController extends Controller
                            $price += $assemblyService->price ;
                        }
                    }
-
                    OrderDetail::create([
                        'order_id' => $order->id ,
                        'profile_type_id' => $detail['profile_type_id'] ,
                        'window_color_id' => $detail['window_color_id'] ,
                        'profile_color_id' => $detail['profile_color_id'] ,
                        'opening_type_id' => $detail['opening_type_id'] ,
-                       'handler_type_id' => $detail['opening_type_id'] ,
+                       'handler_position_id' => $detail['handler_position_id'] ,
                        'additional_service_id' => (array_key_exists('additional_service_id' ,$detail)) ? $detail['additional_service_id'] : null ,
                        'assembly_service_id' => ($assemblyService) ? $assemblyService->id : null ,
                        'width' => $width ,

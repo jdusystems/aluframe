@@ -16,4 +16,10 @@ class HandlerPosition extends Model
     public function openingTypes(){
         return $this->belongsToMany(OpeningType::class , 'handlerposition_openingtype');
     }
+
+    public function orderDetails(){
+        return $this->hasMany(OrderDetail::class);
+    }
+
+
 }

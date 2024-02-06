@@ -24,7 +24,7 @@ class OrderDetailResource extends JsonResource
             'additional_service' => ($this->additionalService) ? $this->additionalService->name : " ",
             'assembly_service' => ($this->assemblyService) ? $this->assemblyService->name : " ",
             'opening_type' => ($this->openingType) ? $this->openingType->name : " ",
-            'handler_type' => ($this->handlerType) ? $this->handlerType->name : " ",
+            'handler_type' => ($this->handlerPosition) ? $this->handlerPosition->name : " ",
             'width' => $this->width,
             'height' => $this->height,
             'quantity_right' => $this->quantity_right ,
