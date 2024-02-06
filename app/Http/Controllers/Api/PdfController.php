@@ -364,6 +364,109 @@ class PdfController extends Controller
         return response()->json([
             'data' => $data ,
         ]);
+    }public function totalPrice(GetOrderDetailRequest $request){
+        $details = $request->input('orders');
+        $totalPrice = 0;
+        $data =  [];
+        foreach ($details as $detail){
+            $price = 0;
+            $profileNumber = 0;
+            if($detail['profile_type_id']){
+                $profileType = ProfileType::find($detail['profile_type_id']);
+                $profileNumber += 1;
+
+                if(array_key_exists('quantity_right' , $detail) && $detail['quantity_right'] > 0){
+                    $profileNumber += $detail['quantity_right'];
+                }
+                if(array_key_exists('quantity_left' , $detail) && $detail['quantity_left'] > 0){
+                    $profileNumber += $detail['quantity_left'];
+                }
+
+                $width = $detail['width']/1000;
+                $height = $detail['height']/1000;
+
+                $peremetr = 2*($width + $height) * $profileNumber;
+
+                $cornerQuantity = 4*$profileNumber;
+                $profilePeremetr = 0;
+
+                $sealantQuantity = $peremetr;
+                //
+                $windowHandlerQuantity = 0;
+
+                //
+                $surface = $profileNumber * ($width * $height);
+
+                if($profileType->sealant){
+                    $sealant = Sealant::where('profile_type_id' , $profileType->id)->first();
+                    $price += $peremetr*$sealant->price;
+                }
+                if($profileType->window_handler){
+                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->first();
+                    $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
+                    if($handlerPosition->slug == "no_handler"){
+                        $windowHandlerQuantity += 0;
+                        $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                    }
+                    if($handlerPosition->slug == "opposite"){
+                        $price += $height*$windowHandler->price;
+                        $windowHandlerQuantity = $height;
+                        $profilePeremetr = $profilePeremetr + 2*$width + $height;
+                    }
+                    if($handlerPosition->slug == "top"){
+                        $price += $width*$windowHandler->price;
+                        $windowHandlerQuantity = $width;
+                        $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                    }
+                    if($handlerPosition->slug == "below"){
+                        $price += $width*$windowHandler->price;
+                        $windowHandlerQuantity = $width;
+                        $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                    }
+                    if($handlerPosition->slug == "round"){
+                        $price += $peremetr*$windowHandler->price;
+                        $windowHandlerQuantity = $peremetr;
+                        $profilePeremetr += 0;
+                    }
+                }
+                if($profileType->corner){
+                    $corner = Corner::where('profile_type_id' , $profileType->id)->first();
+                    if($corner){
+                        $price += 4 * $profileNumber * $corner->price;
+                    }
+                }
+                $price += $profileNumber*$profilePeremetr*$profileType->price;
+            }
+            if($detail['window_color_id']){
+                $windowColor = WindowColor::find($detail['window_color_id']);
+                if($windowColor){
+                    $price += $surface * $windowColor->price;
+                }
+            }
+            if(array_key_exists('additional_service_id' ,$detail)){
+                $additionalService = AdditionalService::find($detail['additional_service_id']);
+                if($additionalService){
+                    $price += $additionalService->price ;
+                }
+            }
+            if($height < 1.8){
+                $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+                if($assemblyService){
+                    $price += $assemblyService->price ;
+                }
+            }elseif($height > 1.8){
+                $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+                if($assemblyService){
+                    $price += $assemblyService->price ;
+                }
+            }
+
+            $totalPrice += $price;
+        }
+
+        return response()->json([
+            'totalPrice' => $totalPrice ,
+        ]);
     }
 
 }
