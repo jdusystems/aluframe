@@ -91,7 +91,8 @@
          @for($i = 1;$i <= $facades;$i++)
         <table class="card">
                 <tr class="card-top">
-                    <td style="padding-right: 30px">{{$orderDetail->id}} --- {{$order->created_at}}</td>
+                    <td style="padding-right: 30px">{{$orderDetail->id}} </td>
+                    <td style="padding-right: 30px">{{$order->created_at}}</td>
                     <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
                 </tr>
                 <tr class="card-item">
@@ -138,7 +139,6 @@
         <br>
         <br>
         <br>
-        <hr>
     @endforeach
 </div>
 </body>
