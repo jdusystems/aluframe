@@ -51,7 +51,6 @@ class PdfController extends Controller
             $url = url(Storage::url($filename));
             return response()->json(['pdf' => $url]);
         }
-
         $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
@@ -95,11 +94,25 @@ class PdfController extends Controller
 
         $user = User::find($order->user_id);
 
+        $filename = 'invoice_' . $order->order_id . '.pdf';
+
+        if (Storage::disk('pdf')->exists($filename)) {
+            // If the file exists, return its URL
+            $url = url(Storage::url($filename));
+            return response()->json(['pdf' => $url]);
+        }
         $pdf = Pdf::loadView('pdf.pdf2' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
         ]);
-        return $pdf->download('document2.pdf');
+        $pdfContents = $pdf->output();
+
+        Storage::disk('pdf')->put($filename , $pdfContents);
+        $url = url(Storage::url($filename));
+        return response()->json(
+            [
+                'pdf_url' => $url ,
+            ]);
     }
     public function exportPdf3(string $id){
         $order = Order::find($id);
@@ -129,9 +142,23 @@ class PdfController extends Controller
             DB::raw('SUM(quantity_left) as total_quantity_left'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
+        $filename = 'invoice_' . $order->order_id . '.pdf';
+
+        if (Storage::disk('pdf')->exists($filename)) {
+            // If the file exists, return its URL
+            $url = url(Storage::url($filename));
+            return response()->json(['pdf' => $url]);
+        }
 
         $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
-        return $pdf->download('document3.pdf');
+        $pdfContents = $pdf->output();
+
+        Storage::disk('pdf')->put($filename , $pdfContents);
+        $url = url(Storage::url($filename));
+        return response()->json(
+            [
+                'pdf_url' => $url ,
+            ]);
     }
     public function exportPdf4(string $id){
 
@@ -144,13 +171,24 @@ class PdfController extends Controller
         }
 
         $orderDetails = $order->orderDetails;
+        $filename = 'invoice_' . $order->order_id . '.pdf';
+
+        if (Storage::disk('pdf')->exists($filename)) {
+            // If the file exists, return its URL
+            $url = url(Storage::url($filename));
+            return response()->json(['pdf' => $url]);
+        }
+
+
         $pdf = PDF::loadView('pdf.pdf4'  , ['order' => $order , 'orderDetails' => $orderDetails]);
-        $options = $pdf->getOptions();
+        $pdfContents = $pdf->output();
 
-       $options->nl2br = true; // Enable the nl2br option
-
-        $pdf->setOption($options->nl2br);
-        return $pdf->download('document4.pdf');
+        Storage::disk('pdf')->put($filename , $pdfContents);
+        $url = url(Storage::url($filename));
+        return response()->json(
+            [
+                'pdf_url' => $url ,
+            ]);
     }
 
 }
