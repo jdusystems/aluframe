@@ -91,7 +91,7 @@
          @for($i = 1;$i <= $facades;$i++)
         <table class="card">
                 <tr class="card-top">
-                    <td style="padding-right: 30px">{{$orderDetail->id}} {{$order->created_at}}</td>
+                    <td style="padding-right: 30px">{{$orderDetail->id}} --- {{$order->created_at}}</td>
                     <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
                 </tr>
                 <tr class="card-item">
@@ -111,34 +111,7 @@
                     <td>{{$orderDetail->windowColor->name}}</td>
                 </tr>
         </table>
-            @if($i%2==0)
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-            @endif
         @endfor
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <hr>
     @endforeach
 </div>
 </body>

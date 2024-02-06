@@ -129,6 +129,11 @@ class PdfController extends Controller
 
         $orderDetails = $order->orderDetails;
         $pdf = PDF::loadView('pdf.pdf4'  , ['order' => $order , 'orderDetails' => $orderDetails]);
+        $options = $pdf->getOptions();
+
+        $option = $options['nl2br'] = true; // Enable the nl2br option
+
+        $pdf->setOption($option);
         return $pdf->stream('document4.pdf');
     }
 
