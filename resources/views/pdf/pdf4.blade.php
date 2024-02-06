@@ -97,19 +97,19 @@
                 </tr>
                 <tr class="card-item">
                     <td>Высота:</td>
-                    <td>{{$orderDetail->height}}</td>
+                    <td colspan="2">{{$orderDetail->height}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Ширина:</td>
-                    <td>{{$orderDetail->width}}</td>
+                    <td colspan="2">{{$orderDetail->width}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Профиль:</td>
-                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                    <td colspan="2">{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Cтекло:</td>
-                    <td>{{$orderDetail->windowColor->name}}</td>
+                    <td colspan="2">{{$orderDetail->windowColor->name}}</td>
                 </tr>
         </table>
             @if($i%2==0)
