@@ -16,6 +16,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\ProfileType;
 use App\Models\Sealant;
+use App\Models\Status;
 use App\Models\WindowColor;
 use App\Models\WindowHandler;
 use Illuminate\Http\Request;
@@ -55,10 +56,11 @@ class OrderController extends Controller
                $startingOrderId = 1000;
                $lastOrderId = Order::max('order_id');
                $nextOrderId = $lastOrderId ? $lastOrderId + 1 : $startingOrderId;
-
+                $status = Status::where('slug' , 'pending')->first();
                $order = Order::create([
                    'order_id' => $nextOrderId,
-                   'user_id' => $request->user_id
+                   'user_id' => $request->user_id ,
+                   'status_id' => $status->id
                ]);
                $details = $request->input('orders');
                $totalPrice = 0;
