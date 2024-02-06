@@ -121,8 +121,6 @@
                     <br>
              @endif
          @endfor
-        <br>
-        <hr>
     @endforeach
 </div>
 </body>
