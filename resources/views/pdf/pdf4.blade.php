@@ -90,8 +90,8 @@
          @for($i = 1;$i <= $facades;$i++)
         <table class="card">
                 <tr class="card-top">
-                    <td>{{$orderDetail->id}} {{$order->created_at}}</td>
-                    <td>Фасад {{$i}}/{{$facades}}</td>
+                    <td style="margin-right: 30px">{{$orderDetail->id}} {{$order->created_at}}</td>
+                    <td style="margin-left: 30px">Фасад {{$i}}/{{$facades}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Высота:</td>
@@ -103,7 +103,7 @@
                 </tr>
                 <tr class="card-item">
                     <td>Профиль:</td>
-                    <td>{{$orderDetail->profileType->name}}</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
                 </tr>
                 <tr class="card-item">
                     <td>Cтекло:</td>
