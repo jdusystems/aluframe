@@ -101,31 +101,32 @@ class OrderController extends Controller
                        if($profileType->window_handler){
                            $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->first();
                            $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
-
-                           if($handlerPosition->slug == "no_handler"){
-                               $windowHandlerQuantity += 0;
-                               $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
-                           }
-                           if($handlerPosition->slug == "opposite"){
-                               $price += $height*$windowHandler->price;
-                               $windowHandlerQuantity = $height;
-                               $profilePeremetr = $profilePeremetr + 2*$width + $height;
-                           }
-                           if($handlerPosition->slug == "top"){
-                               $price += $width*$windowHandler->price;
-                               $windowHandlerQuantity = $width;
-                               $profilePeremetr = $profilePeremetr + 2*$height + $width;
-                           }
-                           if($handlerPosition->slug == "below"){
-                               $price += $width*$windowHandler->price;
-                               $windowHandlerQuantity = $width;
-                               $profilePeremetr = $profilePeremetr + 2*$height + $width;
-                           }
-                           if($handlerPosition->slug == "round"){
-                               $price += $peremetr*$windowHandler->price;
-                               $windowHandlerQuantity = $peremetr;
-                               $profilePeremetr += 0;
-                           }
+                            if($windowHandler){
+                                if($handlerPosition->slug == "no_handler"){
+                                    $windowHandlerQuantity += 0;
+                                    $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                                }
+                                if($handlerPosition->slug == "opposite"){
+                                    $price += $height*$windowHandler->price;
+                                    $windowHandlerQuantity = $height;
+                                    $profilePeremetr = $profilePeremetr + 2*$width + $height;
+                                }
+                                if($handlerPosition->slug == "top"){
+                                    $price += $width*$windowHandler->price;
+                                    $windowHandlerQuantity = $width;
+                                    $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                                }
+                                if($handlerPosition->slug == "below"){
+                                    $price += $width*$windowHandler->price;
+                                    $windowHandlerQuantity = $width;
+                                    $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                                }
+                                if($handlerPosition->slug == "round"){
+                                    $price += $peremetr*$windowHandler->price;
+                                    $windowHandlerQuantity = $peremetr;
+                                    $profilePeremetr += 0;
+                                }
+                            }
                        }
                        if($profileType->corner){
                            $corner = Corner::where('profile_type_id' , $profileType->id)->first();
