@@ -241,7 +241,7 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{$orderDetail->handlerType->name}}</th>
+                <th class="list-text">{{$orderDetail->handlerPosition->name}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
