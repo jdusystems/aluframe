@@ -16,10 +16,19 @@ class SealantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new SealantCollection(Sealant::paginate(10));
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new SealantCollection(Sealant::paginate($itemsPerPage));
     }
+        public function all()
+        {
+            return new SealantCollection(Sealant::all());
+        }
 
     /**
      * Show the form for creating a new resource.

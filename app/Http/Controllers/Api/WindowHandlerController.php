@@ -18,10 +18,19 @@ class WindowHandlerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new WindowHandlerCollection(WindowHandler::paginate(10));
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new WindowHandlerCollection(WindowHandler::paginate($itemsPerPage));
     }
+        public function all()
+        {
+            return new WindowHandlerCollection(WindowHandler::all());
+        }
 
     /**
      * Show the form for creating a new resource.

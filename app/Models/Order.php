@@ -7,17 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Client;
 use App\Models\OrderDetail;
 use App\Models\Status;
+use App\Models\User;
 class Order extends Model
 {
     use HasFactory;
 
     protected $table = 'orders';
     protected $fillable = [
-        'ordered_date' , 'order_id' , 'client_id' , 'status_id' , 'total_price' ,
+        'ordered_date' , 'order_id' , 'user_id' , 'status_id' , 'total_price' ,
     ];
 
-    public function client(){
-        return $this->belongsTo(Client::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);

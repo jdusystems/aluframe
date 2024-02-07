@@ -19,6 +19,7 @@ class ShowHandlerPositionResource extends JsonResource
             'name' => $this->name ,
             'image_name' => $this->image_name ,
             'image_url' => $this->image_url ,
+            'sort_index' => $this->sort_index
         ];
     }
 }

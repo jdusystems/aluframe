@@ -14,11 +14,19 @@ class HandlerTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
+    {
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new HandlerTypeCollection(HandlerType::paginate($itemsPerPage));
+    }
+    public function all()
     {
         return new HandlerTypeCollection(HandlerType::all());
     }
-
     /**
      * Show the form for creating a new resource.
      */

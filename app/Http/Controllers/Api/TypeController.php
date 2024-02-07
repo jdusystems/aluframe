@@ -9,15 +9,22 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowTypeResource;
 use App\Http\Resources\TypeCollection;
 use App\Models\Type;
+use Illuminate\Http\Request;
+
 
 class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new TypeCollection(Type::paginate(10));
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new TypeCollection(Type::paginate($itemsPerPage));
     }
 
     /**

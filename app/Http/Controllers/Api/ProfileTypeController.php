@@ -16,9 +16,20 @@ class ProfileTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $profile_types = ProfileType::paginate(10);
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        $profile_types = ProfileType::orderBy('sort_index')->paginate($itemsPerPage);
+        return new ProfileTypeCollection($profile_types);
+    }
+
+    public function all()
+    {
+        $profile_types = ProfileType::all();
         return new ProfileTypeCollection($profile_types);
     }
 

@@ -21,17 +21,13 @@
 
         body{
             font-family: "Inter";
-
         }
         .wrap{
             width: 100%;
             max-width: 716px;
             gap: 21px;
             margin: 80px auto;
-            display: flex;
-            flex-wrap: wrap;
         }
-
         .card{
             width:calc((100% - 21px) / 2);
             list-style: none;
@@ -39,46 +35,47 @@
             padding-bottom: 37px;
             border-top: 1px dotted black;
             border-bottom: 1px dotted black;
+            float: right;
+        }
+        .card:nth-child(2n-1){
+            float: left;
         }
         .card-top{
-            display: flex;
-            align-items: center;
-            margin-bottom: 22px;
-            gap: 22px;
+            width: 100%;
+            padding-bottom: 22px;
         }
-        .card-top p {
+        .card-top td {
             color: #4B3E32;
             font-family: Inter;
             font-size: 13px;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
+            padding-bottom: 22px;
+            /*padding-right: 10px;*/
         }
-        .card-top p:last-child{
+        .card-top td:last-child{
             margin-left: auto;
         }
         .card-item{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 22px;
-            gap: 22px;
+            width: 100%;
         }
-        .card-item p {
+        .card-item td {
             color: #4B3E32;
             font-family: Inter;
             font-size: 14px;
             font-style: normal;
             font-weight: 500;
             line-height: normal;
+            padding-bottom: 12px;
         }
-        .card-item p:last-child{
+        .card-item td:last-child{
             text-align: end;
         }
-        .card-item:nth-child(5) p:first-child {
+        .card-item:nth-child(5) td:first-child {
             font-weight: 700;
         }
-        .card-item:nth-child(4) p:first-child {
+        .card-item:nth-child(4) td:first-child {
             font-weight: 700;
         }
     </style>
@@ -87,75 +84,61 @@
 <body>
 
 <div class="wrap">
-    <ui class="card">
-        <li class="card-top">
-            <p>#1401</p>
-            <p>28.12.2023 18:53</p>
-            <p>Фасад 1/12</p>
-        </li>
-        <li class="card-item">
-            <p>Высота:</p>
-            <p>2470</p>
-        </li>
-        <li class="card-item">
-            <p>Ширина:</p>
-            <p>2470</p>
-        </li>
-        <li class="card-item">
-            <p>Профиль:</p>
-            <p>Узкий (19 мм), Черный</p>
-        </li>
-        <li class="card-item">
-            <p>Cтекло:</p>
-            <p>Прозрачное</p>
-        </li>
-    </ui>
-    <ui class="card">
-        <li class="card-top">
-            <p>#1401</p>
-            <p>28.12.2023 18:53</p>
-            <p>Фасад 1/12</p>
-        </li>
-        <li class="card-item">
-            <p>Высота:</p>
-            <p>2470</p>
-        </li>
-        <li class="card-item">
-            <p>Ширина:</p>
-            <p>2470</p>
-        </li>
-        <li class="card-item">
-            <p>Профиль:</p>
-            <p>Узкий (19 мм), Черный</p>
-        </li>
-        <li class="card-item">
-            <p>Cтекло:</p>
-            <p>Прозрачное</p>
-        </li>
-    </ui>
-    <ui class="card">
-        <li class="card-top">
-            <p>#1401</p>
-            <p>28.12.2023 18:53</p>
-            <p>Фасад 1/12</p>
-        </li>
-        <li class="card-item">
-            <p>Высота:</p>
-            <p>2470</p>
-        </li>
-        <li class="card-item">
-            <p>Ширина:</p>
-            <p>2470</p>
-        </li>
-        <li class="card-item">
-            <p>Профиль:</p>
-            <p>Узкий (19 мм), Черный</p>
-        </li>
-        <li class="card-item">
-            <p>Cтекло:</p>
-            <p>Прозрачное</p>
-        </li>
-    </ui>
+    @foreach($orderDetails as $orderDetail)
+            <?php
+               $facades = $orderDetail->quantity_left + $orderDetail->quantity_right  + 1;
+            ?>
+         @for($i = 1;$i <= $facades;$i++)
+        <table class="card">
+                <tr class="card-top">
+                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
+                    <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Высота:</td>
+                    <td>{{$orderDetail->height*1000}} mm</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Ширина:</td>
+                    <td>{{$orderDetail->width*1000}} mm</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Профиль:</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td>Cтекло:</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
+                </tr>
+        </table>
+            @if($i%2==0)
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            @endif
+        @endfor
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    @endforeach
 </div>
 </body>
 

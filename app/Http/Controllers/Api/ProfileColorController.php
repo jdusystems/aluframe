@@ -9,6 +9,7 @@ use App\Http\Resources\ProfileColorCollection;
 use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowProfileColorResource;
 use App\Models\ProfileColor;
+use App\Models\ProfileType;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 class ProfileColorController extends Controller
@@ -16,9 +17,18 @@ class ProfileColorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new ProfileColorCollection(ProfileColor::paginate(10));
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new ProfileColorCollection(ProfileColor::orderBy('sort_index')->paginate($itemsPerPage));
+    }
+    public function all()
+    {
+        return new ProfileColorCollection(ProfileColor::all());
     }
 
     /**
@@ -52,6 +62,18 @@ class ProfileColorController extends Controller
             ]);
         }
         return new ShowProfileColorResource($profileColor);
+    }
+
+    public function getByType(string $type_id){
+       $profile =  ProfileType::find($type_id);
+        if(!$profile){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found!'
+            ] , 404);
+        }
+        $profileColors = ProfileColor::where('profile_type_id' , $profile->id)->get();
+        return new ProfileColorCollection($profileColors);
     }
 
     /**

@@ -17,11 +17,12 @@ class ShowOrderResource extends JsonResource
         return [
             'id' => $this->id,
             'order_id' => $this->order_id ,
-            'client_name' => ($this->client) ? $this->client->name : " " ,
-            'client_phone_number' => ($this->client) ? $this->client->phone_number : " " ,
+            'client_name' => ($this->user) ? $this->user->name : " " ,
+            'client_phone_number' => ($this->user) ? $this->user->phone_number : " " ,
             'status' => ($this->status) ? $this->status->name : " ",
             'status_id' => ($this->status) ? $this->status->id : " ",
             'total_price' => $this->total_price ,
+            'ordered_time' => $this->created_at,
             'order_details' => OrderDetailResource::collection($this->orderDetails) ,
         ];
     }

@@ -17,9 +17,19 @@ class CornerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new CornerCollection(Corner::paginate(10));
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new CornerCollection(Corner::paginate($itemsPerPage));
+    }
+
+    public function all()
+    {
+        return new CornerCollection(Corner::all());
     }
 
     /**

@@ -19,9 +19,19 @@ class AdditionalServiceController extends Controller
      /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new AdditionalServiceCollection(AdditionalService::paginate(10));
+       if($request->exists('per_page')){
+           $itemsPerPage = $request->per_page;
+       }else{
+           $itemsPerPage = 10;
+       }
+
+        return new AdditionalServiceCollection(AdditionalService::orderBy('sort_index')->paginate($itemsPerPage));
+    }
+    public function all()
+    {
+        return new AdditionalServiceCollection(AdditionalService::all());
     }
 
     /**

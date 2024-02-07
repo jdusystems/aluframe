@@ -27,5 +27,4 @@ class OpeningType extends Model
         return $this->belongsToMany(HandlerPosition::class , 'handlerposition_openingtype' , );
     }
 
-
 }

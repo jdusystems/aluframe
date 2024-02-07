@@ -10,350 +10,272 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet">
-    <style>
-        *,
-        *::after,
-        *::before{
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
+  <style>
+      *,
+      *::after,
+      *::before{
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+      }
 
-        body{
-            font-family: "Inter";
+      body{
+          font-family: "Inter";
+          text-align: center;
+      }
+      .full{
+          width: 100%;
 
-        }
-        .wrap{
-            width: 100%;
-            max-width: 876px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            /* border-bottom: 1px dotted #121212; */
-        }
+      }
+      .wrap{
+          width: 100%;
+          max-width: 876px;
+          margin: 0 auto;
+          display: inline-block;
+          text-align: left;
+      }
 
-        .card{
-            width: 50%;
-            padding: 55px 40px;
-            border-bottom: 1px dotted #121212;
-        }
-        .card:nth-child(2n-1){
-            border-right: 1px dotted #121212;
-        }
-        .card1{
-            width: 50%;
-            padding: 55px 40px;
-            border-top: 1px dotted #121212;
-            border-bottom: 1px dotted #121212;
-        }
-        .card1:nth-child(2n-1){
-            border-right: 1px dotted #121212;
-        }
-        .card-item{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        .card-item:last-child{
-            margin-top: 0;
-        }
-        .text{
-            width: 100%;
-            color: #121212;
-            font-family: Inter;
-            font-size: 11px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-        .title{
-            width: 100%;
-            color: #121212;
-            font-family: Inter;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-        }
+      .card{
+          width: 50%;
+          padding: 55px 40px;
+          border-bottom: 1px dotted #121212;
+          float: right;
+      }
+      .card:nth-child(2n-1){
+          border-right: 1px dotted #121212;
+          float: left;
+      }
+      .card1{
+          width: 50%;
+          padding: 55px 40px;
+          border-top: 1px dotted #121212;
+          border-bottom: 1px dotted #121212;
+          float: right;
+      }
+      .card1:nth-child(2n-1){
+          border-right: 1px dotted #121212;
+          float: left;
+      }
+      .card-item{
+          width: 100%;
 
-        .card-title{
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+      }
+      .card-item:last-child{
+          margin-top: 0;
+      }
+      .text{
+          display: inline-block;
+          width: 50%;
+          color: #121212;
+          font-family: Inter;
+          font-size: 11px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          margin-bottom: 12px;
+      }
+      .title{
+          display: inline-block;
+          width: 50%;
+          color: #121212;
+          font-family: Inter;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          margin-bottom: 12px;
+      }
 
-        .card-title h3{
-            width:100%;
-            color: #4B3E32;
-            font-family: Inter;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            max-width: 107px;
-        }
-        .card-title p{
-            width: 100%;
-            color: #4B3E32;
+      .card-title{
+          width: 100%;
+      }
 
-            font-family: Inter;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-        .card-title p:nth-child(2){
-            width: 100%;
-            max-width: 54px;
-        }
-        .card-top{
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 11px 0;
-        }
-        .card-top p{
-            width: 100%;
-            color: #4B3E32;
-            font-family: Inter;
-            font-size: 11px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-        .card-list{
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 4px;
-        }
-        .card-list p{
-            width: 100%;
-            color: #4B3E32;
-            font-family: Inter;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-    </style>
+      .card-title td:nth-child(1){
+
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+          max-width: 107px;
+      }
+      .card-title td{
+          width: 33%;
+
+          color: #4B3E32;
+
+          font-family: Inter;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+      }
+
+      .card-top{
+          width: 100%;
+
+      }
+      .card-top td{
+
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 11px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+      }
+      .card-list{
+          width: 100%;
+
+      }
+      .card-list1{
+          width: 100%;
+
+      }
+      .card-list td{
+
+          margin-bottom: 4px;
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+      }
+  </style>
 </head>
 
 <body>
-
-<div class="wrap">
-    <div class="card">
-        <div class="card-item">
-            <p class="text">Профиль:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Цвет стекла:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Доп-услуги для стекла:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Тип открывания:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Количество петель:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Высота:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Ширина:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Кол-во L:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Кол-во R:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Ручка:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Присака станд.?:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Комментарий:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-item">
-            <p class="text">Профиль:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Цвет стекла:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Доп-услуги для стекла:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Тип открывания:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Количество петель:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Высота:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Ширина:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Кол-во L:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Кол-во R:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Ручка:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Присака станд.?:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Комментарий:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-item">
-            <p class="text">Профиль:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Цвет стекла:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Доп-услуги для стекла:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Тип открывания:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Количество петель:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Высота:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Ширина:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Кол-во L:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Кол-во R:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Ручка:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Присака станд.?:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
-        <div class="card-item">
-            <p class="text">Комментарий:</p>
-            <p class="title">Узкий (19 мм), Черный</p>
-        </div>
+<div class="full">
+    <div class="wrap">
+        @foreach($orderDetails as $orderDetail)
+            <table class="card">
+                <tr class="card-item">
+                    <td class="text">Профиль:</td>
+                    <td class="title">{{$orderDetail->profileType->name}}, {{$orderDetail->profileColor->name}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Цвет стекла:</td>
+                    <td class="title">{{$orderDetail->windowColor->name}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Доп-услуги для стекла:</td>
+                    <td class="title">{{$orderDetail->additionalService->name}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Тип открывания:</td>
+                    <td class="title">{{$orderDetail->openingType->name}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Количество петель:</td>
+                    <td class="title">{{$orderDetail->number_of_loops}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Высота:</td>
+                    <td class="title">{{$orderDetail->height}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Ширина:</td>
+                    <td class="title">{{$orderDetail->width}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Кол-во L:</td>
+                    <td class="title">{{$orderDetail->quantity_left}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Кол-во R:</td>
+                    <td class="title">{{$orderDetail->quantity_right}}</td>
+                </tr>
+                <tr class="card-item">
+                        <?php
+                            $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
+                        ?>
+                    <td class="text">Ручка:</td>
+                    <td class="title">{{$windowHandler->name}}</td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Присака станд.?:</td>
+                    <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </td>
+                </tr>
+                <tr class="card-item">
+                    <td class="text">Комментарий:</td>
+                    <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</td>
+                </tr>
+            </table>
+        @endforeach
     </div>
 </div>
-
-<div class="wrap" style="margin-bottom: 20px;">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="wrap" style="margin-bottom: 20px; margin-left: 50px;">
     <div class="card1">
-        <ul class="card-item1">
-            <li class="card-title">
-                <h3>Профиль</h3>
-                <p>#1401</p>
-                <p>28.12.2023 18:53</p>
-            </li>
-            <li class="card-top">
-                <p>Код товара</p>
-                <p>Высота</p>
-                <p>Кол-во</p>
-            </li>
-            <li class="card-list">
-                <p>2110 Black</p>
-                <p>2800</p>
-                <p>10</p>
-            </li>
-            <li class="card-list">
-                <p>Gold Aluminy</p>
-                <p>2800</p>
-                <p>10</p>
-            </li>
-            <li class="card-list">
-                <p>Glass1</p>
-                <p>2800</p>
-                <p>10</p>
-            </li>
-        </ul>
+            <table class="card-item1">
+                <tr class="card-title">
+                    <td>Профиль</td>
+                    <td>{{$order->order_id}}</td>
+                    <td>{{$order->created_at}}</td>
+                </tr>
+                <tr class="card-top">
+                    <td>Код товара</td>
+                    <td>Высота</td>
+                    <td>Кол-во</td>
+                </tr>
+             @foreach($profiles as $profile)
+                <tr class="card-list">
+                    <?php
+                        $profiles = \App\Models\OrderDetail::where('profile_type_id' , $profile->profile_type_id)->where('order_id' , $order->id)->get(); ?>
+                    <td>{{$profile->profileType->name}}</td>
+                    <td>{{2*($profile->total_height + $profile->total_width + ($profile->quantity_right_height + $profile->quantity_left_height))}}</td>
+                    <td>{{$profile->total_quantity_left + $profile->total_quantity_right + $profiles->count()}}</td>
+                </tr>
+                 @endforeach
+            </table>
     </div>
     <div class="card1">
-        <ul class="card-item1">
-            <li class="card-title">
-                <h3>Профиль</h3>
-                <p>#1401</p>
-                <p>28.12.2023 18:53</p>
-            </li>
-            <li class="card-top">
-                <p>Код товара</p>
-                <p>Высота</p>
-                <p>Кол-во</p>
-            </li>
-            <li class="card-list">
-                <p>2110 Black</p>
-                <p>2800</p>
-                <p>10</p>
-            </li>
-            <li class="card-list">
-                <p>Gold Aluminy</p>
-                <p>2800</p>
-                <p>10</p>
-            </li>
-            <li class="card-list">
-                <p>Glass1</p>
-                <p>2800</p>
-                <p>10</p>
-            </li>
-        </ul>
+        <table class="card-item1">
+            <tr class="card-title">
+                <td>Стекло</td>
+                <td>{{$order->order_id}}</td>
+                <td>{{$order->created_at}}</td>
+            </tr>
+            <tr class="card-top">
+                <td>Код товара</td>
+                <td>Высота</td>
+                <td>Ширина</td>
+                <td>Кол-во</td>
+            </tr>
+            @foreach($windowColors as $windowColor)
+                    <?php
+                    $profiles = \App\Models\OrderDetail::where('window_color_id' , $windowColor->window_color_id)->where('order_id' , $order->id)->get();
+                    ?>
+                <tr class="card-list">
+                    <td>{{$windowColor->windowColor->name}}</td>
+                    <td>{{$windowColor->height}}</td>
+                    <td>{{$windowColor->width}}</td>
+                    <td>{{$profiles->count() + $windowColor->total_quantity_left + $windowColor->total_quantity_right}}</td>
+                </tr>
+            @endforeach
+        </table>
     </div>
 </div>
 </body>

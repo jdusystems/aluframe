@@ -16,9 +16,19 @@ class AssemblyServiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new AssemblyServiceCollection(AssemblyService::paginate(10));
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new AssemblyServiceCollection(AssemblyService::paginate($itemsPerPage));
+    }
+
+    public function all()
+    {
+        return new AssemblyServiceCollection(AssemblyService::all());
     }
 
     /**

@@ -20,9 +20,18 @@ class OpeningTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new OpeningTypeCollection(OpeningType::paginate(10));
+        if($request->exists('per_page')){
+            $itemsPerPage = $request->per_page;
+        }else{
+            $itemsPerPage = 10;
+        }
+        return new OpeningTypeCollection(OpeningType::orderBy('sort_index')->paginate($itemsPerPage));
+    }
+    public function all()
+    {
+        return new OpeningTypeCollection(OpeningType::all());
     }
 
     public function getByType(string $type_id){
