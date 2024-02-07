@@ -324,11 +324,14 @@
                 <?php
                 $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
                 ?>
+        @if($windowHandler)
+
             <tr class="list-item">
                 <th class="list-text1">{{$windowHandler->vendor_code}}</th>
                 <th class="list-text1">{{$windowHandler->name}}</th>
                 <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>
             </tr>
+            @endif
         @endforeach
     </table>
     <div class="pdf">
