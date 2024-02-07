@@ -317,16 +317,9 @@ class PdfController extends Controller
              if(array_key_exists('handler_position_id' ,$detail)){
                 $handlerPosition1 = HandlerPosition::find($detail['handler_position_id']);
             }
-            if($profileType->sealant){
-                $sealant1 = Sealant::where('profile_type_id' , $profileType->id)->first();
-            }
-            if($profileType->window_handler) {
-                $windowHandler1 = WindowHandler::where('profile_type_id', $profileType->id)->where('profile_color_id', $detail['profile_color_id'])->first();
-            }
-            if($profileType->corner){
-                $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
-            }
-
+             $sealant1 = Sealant::where('profile_type_id' , $profileType->id)->first();
+            $windowHandler1 = WindowHandler::where('profile_type_id', $profileType->id)->where('profile_color_id', $detail['profile_color_id'])->first();
+            $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
             $data[] = [
                 'profile_type_name' => $profileType->name ,
                 'profile_type_price' => $profileType->price ,

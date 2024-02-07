@@ -68,7 +68,6 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     // Super Admin
     Route::middleware(['superadmin'])->group(function (){
-
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
