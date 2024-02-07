@@ -46,9 +46,17 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     Route::get('/user' , function (Request $request){
        $user = \Illuminate\Support\Facades\Auth::user();
+       $role = "user";
+       if($user->is_admin==1){
+           $role = "admin";
+       }elseif($user->superadmin){
+           $role = "superadmin";
+       }else{
+           $role = "user";
+       }
        return response()->json([
            'user' => $user ,
-           'user_role' => ($user->is_admin) ? "admin" : "user" ,
+           'user_role' => $role ,
        ]);
 
     });
@@ -58,7 +66,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::post('/change-password', [PasswordResetController::class, 'changePassword'])
         ->name('change.password');
 
-    Route::middleware(['admin'])->group(function () {
+    // Super Admin
+    Route::middleware(['superadmin'])->group(function (){
 
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
@@ -86,10 +95,6 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::apiResource('profiles' , ProfileTypeController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
-
-        Route::apiResource('clients' , ClientController::class);
-        Route::get('/all-clients', [ClientController::class , 'all']);
-
 
         Route::apiResource('corners' , CornerController::class);
         Route::apiResource('window-handlers' , WindowHandlerController::class);
@@ -127,6 +132,13 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::post('/image-delete', [ImageController::class, 'imageDelete']);
 
     });
+
+    // Admin
+    Route::middleware(['admin'])->group(function () {
+        Route::apiResource('clients' , ClientController::class);
+        Route::get('/all-clients', [ClientController::class , 'all']);
+    });
+
     Route::apiResource('orders' , OrderController::class);
 
 });
