@@ -257,17 +257,17 @@ class PdfController extends Controller
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                         }
                         if($handlerPosition->slug == "opposite"){
-                            $price += $height*$windowHandler->price;
+                            $price += $height*$windowHandler->price*$profileNumber;
                             $windowHandlerQuantity = $height;
                             $profilePeremetr = $profilePeremetr + 2*$width + $height;
                         }
                         if($handlerPosition->slug == "top"){
-                            $price += $width*$windowHandler->price;
+                            $price += $width*$windowHandler->price*$profileNumber;
                             $windowHandlerQuantity = $width;
                             $profilePeremetr = $profilePeremetr + 2*$height + $width;
                         }
                         if($handlerPosition->slug == "below"){
-                            $price += $width*$windowHandler->price;
+                            $price += $width*$windowHandler->price*$profileNumber;
                             $windowHandlerQuantity = $width;
                             $profilePeremetr = $profilePeremetr + 2*$height + $width;
                         }
@@ -290,25 +290,25 @@ class PdfController extends Controller
             if($detail['window_color_id']){
                 $windowColor = WindowColor::find($detail['window_color_id']);
                 if($windowColor){
-                    $price += $surface * $windowColor->price;
+                    $price += $surface * $windowColor->price*$profileNumber;
                 }
             }
             if(array_key_exists('additional_service_id' ,$detail)){
                 $additionalService = AdditionalService::find($detail['additional_service_id']);
                 if($additionalService){
-                    $price += $additionalService->price ;
+                    $price += $additionalService->price; // Har bitta rom uchun alohida qo'shimcha xizmat xaqi mi yoki hammasiga bittami
                 }
             }
             if($height < 1.8){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price*$profileNumber ;
                 }
 
             }elseif($height > 1.8){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price*$profileNumber;
                 }
             }
             $windowColor1 = WindowColor::find($detail['window_color_id']);
@@ -373,7 +373,6 @@ class PdfController extends Controller
             if($detail['profile_type_id']){
                 $profileType = ProfileType::find($detail['profile_type_id']);
                 $profileNumber += 1;
-
                 if(array_key_exists('quantity_right' , $detail) && $detail['quantity_right'] > 0){
                     $profileNumber += $detail['quantity_right'];
                 }
@@ -407,26 +406,28 @@ class PdfController extends Controller
                         $windowHandlerQuantity += 0;
                         $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                     }
-                    if($handlerPosition->slug == "opposite"){
-                        $price += $height*$windowHandler->price;
-                        $windowHandlerQuantity = $height;
-                        $profilePeremetr = $profilePeremetr + 2*$width + $height;
-                    }
-                    if($handlerPosition->slug == "top"){
-                        $price += $width*$windowHandler->price;
-                        $windowHandlerQuantity = $width;
-                        $profilePeremetr = $profilePeremetr + 2*$height + $width;
-                    }
-                    if($handlerPosition->slug == "below"){
-                        $price += $width*$windowHandler->price;
-                        $windowHandlerQuantity = $width;
-                        $profilePeremetr = $profilePeremetr + 2*$height + $width;
-                    }
-                    if($handlerPosition->slug == "round"){
-                        $price += $peremetr*$windowHandler->price;
-                        $windowHandlerQuantity = $peremetr;
-                        $profilePeremetr += 0;
-                    }
+                   if($windowHandler){
+                       if($handlerPosition->slug == "opposite"){
+                           $price += $height*$windowHandler->price*$profileNumber;
+                           $windowHandlerQuantity = $height;
+                           $profilePeremetr = $profilePeremetr + 2*$width + $height;
+                       }
+                       if($handlerPosition->slug == "top"){
+                           $price += $width*$windowHandler->price*$profileNumber;
+                           $windowHandlerQuantity = $width;
+                           $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                       }
+                       if($handlerPosition->slug == "below"){
+                           $price += $width*$windowHandler->price*$profileNumber;
+                           $windowHandlerQuantity = $width;
+                           $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                       }
+                       if($handlerPosition->slug == "round"){
+                           $price += $peremetr*$windowHandler->price;
+                           $windowHandlerQuantity = $peremetr;
+                           $profilePeremetr += 0;
+                       }
+                   }
                 }
                 if($profileType->corner){
                     $corner = Corner::where('profile_type_id' , $profileType->id)->first();
@@ -439,24 +440,24 @@ class PdfController extends Controller
             if($detail['window_color_id']){
                 $windowColor = WindowColor::find($detail['window_color_id']);
                 if($windowColor){
-                    $price += $surface * $windowColor->price;
+                    $price += $surface * $windowColor->price * $profileNumber;
                 }
             }
             if(array_key_exists('additional_service_id' ,$detail)){
                 $additionalService = AdditionalService::find($detail['additional_service_id']);
                 if($additionalService){
-                    $price += $additionalService->price ;
+                    $price += $additionalService->price;
                 }
             }
             if($height < 1.8){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price * $profileNumber;
                 }
             }elseif($height > 1.8){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price*$profileNumber;
                 }
             }
 

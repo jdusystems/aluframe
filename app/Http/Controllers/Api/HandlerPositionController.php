@@ -27,7 +27,8 @@ class HandlerPositionController extends Controller
     }
     public function all()
     {
-        return new HandlerPositionCollection(HandlerPosition::all());
+        $handlerPositions = HandlerPosition::orderBy('sort_index')->get();
+        return new HandlerPositionCollection($handlerPositions);
     }
     /**
      * Show the form for creating a new resource.
