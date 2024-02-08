@@ -20,8 +20,6 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
-        $user->tokens()->delete();
-
         $token = $user->createToken('api-token');
 
         return response()->json([
@@ -38,7 +36,6 @@ class AuthenticatedSessionController extends Controller
         $user = $request->user();
 
         $user->tokens()->delete();
-
        return response()->json([
            'message' => 'Logged Out'
        ]);
