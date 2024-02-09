@@ -449,12 +449,13 @@ class PdfController extends Controller
                     $price += $additionalService->price;
                 }
             }
-            if($height < 1.8){
+            $p = 2*($width + $height);
+            if($p >= 1.8 && $p < 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
                     $price += $assemblyService->price * $profileNumber;
                 }
-            }elseif($height > 1.8){
+            }elseif($height >= 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;

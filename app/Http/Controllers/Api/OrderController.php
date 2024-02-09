@@ -14,6 +14,7 @@ use App\Models\HandlerPosition;
 use App\Models\HandlerType;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\ProfileColor;
 use App\Models\ProfileType;
 use App\Models\Sealant;
 use App\Models\Status;
@@ -80,6 +81,8 @@ class OrderController extends Controller
                     $width = $detail['width']/1000;
                     $height = $detail['height']/1000;
 
+
+
                     $peremetr = 2*($width + $height) * $profileNumber;
 
                     $cornerQuantity = 4*$profileNumber;
@@ -93,11 +96,11 @@ class OrderController extends Controller
                     $surface = $profileNumber * ($width * $height);
 
                     if($profileType->sealant){
-                        $sealant = Sealant::where('profile_type_id' , $profileType->id)->first();
+                        $sealant = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                         $price += $peremetr*$sealant->price;
                     }
                     if($profileType->window_handler){
-                        $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->first();
+                        $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
                         $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
                         if($handlerPosition->slug == "no_handler"){
                             $windowHandlerQuantity += 0;
@@ -132,7 +135,7 @@ class OrderController extends Controller
                         }
                     }
                     if($profileType->corner){
-                        $corner = Corner::where('profile_type_id' , $profileType->id)->first();
+                        $corner = Corner::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                         if($corner){
                             $price += 4 * $profileNumber * $corner->price;
                         }
@@ -151,13 +154,14 @@ class OrderController extends Controller
                         $price += $additionalService->price ;
                     }
                 }
-                if($height < 1.8){
+                // Mana shu joyini ko'rish kerak balandlik yoki peremetr assembly service
+                $p = 2*($width + $height);
+                if($p >= 1.8 && $p < 2.4){
                     $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                     if($assemblyService){
                         $price += $assemblyService->price*$profileNumber;
                     }
-
-                }elseif($height > 1.8){
+                }elseif($p >=2.4){
                     $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                     if($assemblyService){
                         $price += $assemblyService->price*$profileNumber;
@@ -182,9 +186,9 @@ class OrderController extends Controller
                     'sealant_quantity' =>  $sealantQuantity,
                     'window_handler_quantity' =>  $windowHandlerQuantity,
                     'status_id' =>  1,
-                    'X1' => (array_key_exists('X1' , $detail)) ? $detail['X1'] : null ,
-                    'X2' => (array_key_exists('X2' , $detail)) ? $detail['X2'] : null ,
-                    'Y1' => (array_key_exists('Y1' , $detail)) ? $detail['Y1'] : null ,
+                    'X1' => (array_key_exists('X1' , $detail)) ? $detail['X1'] : 100 ,
+                    'X2' => (array_key_exists('X2' , $detail)) ? $detail['X2'] : 100 ,
+                    'Y1' => (array_key_exists('Y1' , $detail)) ? $detail['Y1'] : 100 ,
                     'price' => $price
                 ]);
                 $totalPrice += $price;
@@ -267,4 +271,117 @@ class OrderController extends Controller
             'message' => "Order and associated details deleted successfully."
         ]);
     }
+
+    public function getOrderPrice(Request $request){
+        $totalPrice = 0;
+        $profilePrice = 0;
+        $windowPrice = 0;
+        $cornerPrice = 0;
+        $sealantPrice = 0;
+        $windowHandlerPrice = 0;
+        $additionalServicePrice = 0;
+        $assemblyServicePrice = 0;
+        $profilePerimeter = 0;
+
+
+        $width = 1;
+        $height = 1;
+        if($request->has('width') && $request->has('height')){
+            $width = $request->width/1000;
+            $height = $request->height/1000;
+        }
+        $profileNumber = 1;
+        if($request->has('quantity_left')){
+            $profileNumber += $request->quantity_left;
+        }
+        if($request->has('quantity_right')){
+            $profileNumber += $request->quantity_right;
+        }
+        $perimeter = 2*($width + $height);
+
+        if($request->has('profile_type_id')){
+            $profileType = ProfileType::where('profile_type_id' , $request->profile_type_id)->whereNull('deleted_at')->first();
+            if($profileType){
+                if($profileType->selant){
+                    $sealant  = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
+                    if($sealant){
+                        $sealantPrice += 2*($height + $width)*$sealant->price*$profileNumber;
+                    }
+                }
+                if($profileType->corner){
+                    $corner = Corner::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
+                    if($corner){
+                        $cornerPrice += $corner->price*4*$profileNumber;
+                    }
+                }
+                if($request->has('handler_position_id')){
+                    if($profileType->window_handler){
+                            if($request->has('profile_color_id')){
+                                $profileColor = ProfileColor::where('id',$request->profile_color_id)->whereNull('deleted_at')->first();
+                                if($profileColor){
+                                    $handlerPosition = HandlerPosition::find($request->handler_position_id);
+                                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , )->whereNull('deleted_at')->first();
+                                    if($handlerPosition && $windowHandler){
+                                        if($handlerPosition->slug =="no_handler"){
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
+                                        }
+                                        if($handlerPosition->slug =="opposite"){
+                                         $profilePerimeter = $profilePerimeter + 2*$width + $height;
+                                         $windowHandlerPrice += $height*$windowHandler->price*$profileNumber;
+                                        }
+                                        if($handlerPosition->slug=="top"){
+                                            $profilePerimeter = $profilePerimeter + 2*$height + $width;
+                                            $windowHandlerPrice =+ $width*$windowHandler->price*$profileNumber;
+                                        }
+                                        if($handlerPosition->slug == "below"){
+                                            $profilePerimeter = $profilePerimeter +  2*$height + $width;
+                                            $windowHandlerPrice += $width*$windowHandler->price*$profileNumber;
+                                        }
+                                        if($handlerPosition->slug=="round"){
+                                            $profilePerimeter += 0;
+                                            $windowHandlerPrice += 2*($width + $height)*$profileNumber*$windowHandler->price;
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                }
+                else{
+                    $profilePerimeter = 2*($width + $height);
+                }
+            }
+                $profilePrice = $profileNumber * $profileType->price*$profilePerimeter;
+                $profilePrice = $profilePrice + $sealantPrice + $cornerPrice + $windowHandlerPrice;
+        }
+        if($request->has('window_color_id')){
+            $windowColor = WindowColor::find($request->window_color_id);
+            if($windowColor){
+                $windowPrice = $windowPrice + $profileNumber*$width*$height*$windowHandler->price;
+            }
+        }
+        if($request->has('additional_service_id')){
+            $additionalService = AdditionalService::find($request->additional_service_id);
+            if($additionalService){
+                $additionalServicePrice += $additionalService->price;
+            }
+        }
+        if($perimeter >= 1.8 && $perimeter < 2.4){
+            $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+            if($assemblyService){
+                $assemblyServicePrice += $assemblyService->price*$profileNumber;
+            }
+        }elseif($perimeter >=2.4){
+            $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+            if($assemblyService){
+                $assemblyServicePrice += $assemblyService->price*$profileNumber;
+            }
+        }
+
+        $totalPrice += $sealantPrice + $cornerPrice+$windowHandlerPrice+$profilePrice+$windowPrice+$additionalServicePrice+$assemblyServicePrice;
+
+        return response()->json([
+            'totalPrice' => $totalPrice
+        ]);
+    }
+
 }
