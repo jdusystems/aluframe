@@ -202,7 +202,7 @@ Route::apiResource('types' , TypeController::class , [
 
 Route::post('/order-details' , [PdfController::class , 'orderDetails']);
 Route::post('/total-price' , [PdfController::class , 'totalPrice']);
-Route::get('/order-price' , [OrderController::class ,'getOrderPrice']);
+Route::post('/order-price' , [OrderController::class ,'getOrderPrice']);
 
 
 
