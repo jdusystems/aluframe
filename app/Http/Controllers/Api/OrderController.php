@@ -108,22 +108,22 @@ class OrderController extends Controller
                         }
                         if($windowHandler){
                             if($handlerPosition->slug == "opposite"){
-                                $price += $height*$windowHandler->price;
+                                $price += $height*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $height;
                                 $profilePeremetr = $profilePeremetr + 2*$width + $height;
                             }
                             if($handlerPosition->slug == "top"){
-                                $price += $width*$windowHandler->price;
+                                $price += $width*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $width;
                                 $profilePeremetr = $profilePeremetr + 2*$height + $width;
                             }
                             if($handlerPosition->slug == "below"){
-                                $price += $width*$windowHandler->price;
+                                $price += $width*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $width;
                                 $profilePeremetr = $profilePeremetr + 2*$height + $width;
                             }
                             if($handlerPosition->slug == "round"){
-                                $price += $peremetr*$windowHandler->price;
+                                $price += $profileNumber * 2*($width + $height)*$windowHandler->price;
                                 $windowHandlerQuantity = $peremetr;
                                 $profilePeremetr += 0;
                             }
@@ -145,7 +145,7 @@ class OrderController extends Controller
                 if($detail['window_color_id']){
                     $windowColor = WindowColor::find($detail['window_color_id']);
                     if($windowColor){
-                        $price += $surface * $windowColor->price*$profileNumber;
+                        $price += $surface * $windowColor->price;
                     }
                 }
                 if(array_key_exists('additional_service_id' ,$detail)){
@@ -184,7 +184,7 @@ class OrderController extends Controller
                     'comment' => ($detail['comment']) ? $detail['comment'] : " " ,
                     'corner_quantity' =>  $cornerQuantity,
                     'sealant_quantity' =>  $sealantQuantity,
-                    'window_handler_quantity' =>  $windowHandlerQuantity,
+                    'window_handler_quantity' =>  $windowHandlerQuantity*$profileNumber,
                     'status_id' =>  1,
                     'X1' => (array_key_exists('X1' , $detail)) ? $detail['X1'] : 100 ,
                     'X2' => (array_key_exists('X2' , $detail)) ? $detail['X2'] : 100 ,
@@ -340,7 +340,6 @@ class OrderController extends Controller
                                     $handlerPosition = HandlerPosition::find($request->handler_position_id);
                                     $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $profileColor->id)->whereNull('deleted_at')->first();
                                     if($handlerPosition && $windowHandler){
-
                                         if($handlerPosition->slug =="no_handler"){
                                             $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                         }
@@ -353,7 +352,7 @@ class OrderController extends Controller
                                             $windowHandlerPrice =+ $width*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug == "below"){
-                                            $profilePerimeter = $profilePerimeter +  2*$height + $width;
+                                            $profilePerimeter = $profilePerimeter + 2*$height + $width;
                                             $windowHandlerPrice += $width*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug=="round"){
