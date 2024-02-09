@@ -294,11 +294,15 @@ class OrderController extends Controller
             $price = 0;
             if($request->has('profile_type_id')){
                 $profileType = ProfileType::find($request->profile_type_id);
+                if($profileType){
                 $price += $profileType->price;
+                }
             }
             if($request->has('window_color_id')){
                 $windowColor = WindowColor::find($request->window_color_id);
+                if($windowColor){
                 $price += $windowColor->price;
+                }
             }
             return response()->json([
                 'total_price' => $price
