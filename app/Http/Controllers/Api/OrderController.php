@@ -394,7 +394,14 @@ class OrderController extends Controller
         $totalPrice += $sealantPrice + $cornerPrice+$windowHandlerPrice+$profilePrice+$windowPrice+$additionalServicePrice+$assemblyServicePrice;
 
         return response()->json([
-            'totalPrice' => $totalPrice
+            'totalPrice' => $totalPrice ,
+            'sealant_price' => $sealantPrice ,
+            'corner_price' => $cornerPrice ,
+            'window_handler_price' =>$windowHandlerPrice ,
+            'profile_price' => $profilePrice ,
+            'window_price' => $windowPrice ,
+            'additional_service_price' => $additionalServicePrice ,
+            'assembly_service_price' => $assemblyServicePrice
         ]);
     }
 
