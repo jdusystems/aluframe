@@ -273,6 +273,7 @@ class OrderController extends Controller
     }
 
     public function getOrderPrice(Request $request){
+
         $totalPrice = 0;
         $profilePrice = 0;
         $windowPrice = 0;
@@ -284,8 +285,8 @@ class OrderController extends Controller
         $profilePerimeter = 0;
 
 
-        $width = 1;
-        $height = 1;
+        $width = 0.25;
+        $height = 0.25;
         if($request->has('width') && $request->has('height')){
             $width = $request->width/1000;
             $height = $request->height/1000;
