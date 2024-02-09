@@ -284,12 +284,25 @@ class OrderController extends Controller
         $assemblyServicePrice = 0;
         $profilePerimeter = 0;
 
+        $width = 0;
+        $height = 0;
 
-        $width = 0.25;
-        $height = 0.25;
         if($request->has('width') && $request->has('height')){
             $width = $request->width/1000;
             $height = $request->height/1000;
+        }else{
+            $price = 0;
+            if($request->has('profile_type_id')){
+                $profileType = ProfileType::find($request->profile_type_id);
+                $price += $profileType->price;
+            }
+            if($request->has('window_color_id')){
+                $windowColor = WindowColor::find($request->window_color_id);
+                $price += $windowColor->price;
+            }
+            return response()->json([
+                'total_price' => $price
+            ]);
         }
         $profileNumber = 1;
         if($request->has('quantity_left')){
@@ -357,7 +370,7 @@ class OrderController extends Controller
         if($request->has('window_color_id')){
             $windowColor = WindowColor::find($request->window_color_id);
             if($windowColor){
-                $windowPrice = $windowPrice + $profileNumber*$width*$height*$windowHandler->price;
+                $windowPrice = $windowPrice + $profileNumber*$width*$height*$windowColor->price;
             }
         }
         if($request->has('additional_service_id')){
