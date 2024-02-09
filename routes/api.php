@@ -204,8 +204,6 @@ Route::post('/order-details' , [PdfController::class , 'orderDetails']);
 Route::post('/total-price' , [PdfController::class , 'totalPrice']);
 Route::post('/order-price' , [OrderController::class ,'getOrderPrice']);
 
-
-
 Route::get('/image' , function (){
     return view('image');
 });

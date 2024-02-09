@@ -28,6 +28,23 @@ class AuthenticatedSessionController extends Controller
             'token' => $token->plainTextToken
         ]);
      }
+     public function userLogin(LoginRequest $request): JsonResponse
+    {
+        $request->authenticate();
+
+        $user = $request->user();
+        if($user->is_admin || $user->superadmin){
+            return response()->json([
+                'message' => "Admins can't login here"
+            ] , 422);
+        }
+        $token = $user->createToken('api-token');
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token->plainTextToken
+        ]);
+     }
 //2|Ag3rpM2yNBbGGdGJmWkGZuA8VInkxPuzZCDeEo3mde55230c
     /**
      * Destroy an authenticated session.
