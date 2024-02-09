@@ -333,11 +333,8 @@ class OrderController extends Controller
                             if($request->has('profile_color_id')){
                                 $profileColor = ProfileColor::where('id',$request->profile_color_id)->whereNull('deleted_at')->first();
                                 if($profileColor){
-                                    return response()->json([
-                                        'data' => "Keldi",
-                                    ]);
                                     $handlerPosition = HandlerPosition::find($request->handler_position_id);
-                                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , )->whereNull('deleted_at')->first();
+                                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $profileColor->id)->whereNull('deleted_at')->first();
                                     if($handlerPosition && $windowHandler){
 
                                         if($handlerPosition->slug =="no_handler"){
