@@ -370,7 +370,6 @@ class OrderController extends Controller
                 }
             }
                 $profilePrice = $profileNumber * $profileType->price*$profilePerimeter;
-                $profilePrice = $profilePrice + $sealantPrice + $cornerPrice + $windowHandlerPrice;
         }
         if($request->has('window_color_id')){
             $windowColor = WindowColor::find($request->window_color_id);
