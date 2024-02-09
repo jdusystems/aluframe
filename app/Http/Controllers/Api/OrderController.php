@@ -302,10 +302,6 @@ class OrderController extends Controller
 
         if($request->has('profile_type_id')){
             $profileType = ProfileType::find($request->profile_type_id);
-            return response()->json([
-                'profile' => $profileType
-            ]);
-
             if($profileType){
                 if($profileType->selant){
                     $sealant  = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
