@@ -301,7 +301,7 @@ class OrderController extends Controller
         $perimeter = 2*($width + $height);
 
         if($request->has('profile_type_id')){
-            $profileType = ProfileType::where('id' , $request->profile_type_id)->whereNull('deleted_at')->first();
+            $profileType = ProfileType::find($request->profile_type_id);
             if($profileType){
                 if($profileType->selant){
                     $sealant  = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
