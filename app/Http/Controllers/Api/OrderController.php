@@ -316,10 +316,7 @@ class OrderController extends Controller
         if($request->has('profile_type_id')){
             $profileType = ProfileType::find($request->profile_type_id);
             if($profileType){
-                if($profileType->selant){
-                    return response()->json([
-                        'data' => "Keldi",
-                    ]);
+                if($profileType->sealant){
                     $sealant  = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                     if($sealant){
                         $sealantPrice += 2*($height + $width)*$sealant->price*$profileNumber;
