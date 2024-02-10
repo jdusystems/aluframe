@@ -288,7 +288,7 @@
             <tr class="list-item">
                 <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
                 <th class="list-text1">{{$profile->profileType->corner->name}}</th>
-                <th class="list-text1">{{($profile->total_corner_quantity}}</th>
+                <th class="list-text1">{{$profile->total_corner_quantity}}</th>
             </tr>
         @endforeach
         @foreach($windowColors as $windowColor)
