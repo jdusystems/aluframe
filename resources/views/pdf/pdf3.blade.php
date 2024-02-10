@@ -55,7 +55,7 @@
           width: 50%;
           padding-top:30px ;
           padding-bottom:30px ;
-          margin-left: 2%;
+          margin-left: 20px;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: right;
@@ -64,7 +64,7 @@
           width: 50%;
           padding-top: 30px ;
           padding-bottom:30px ;
-          margin-left: 2%;
+          margin-left: 20px;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: left;
@@ -247,7 +247,7 @@
 <br>
 <br>
 <br>
-<div class="wrap1" style="margin-bottom: 20px;">
+<div class="wrap1">
     <div class="card1">
             <table class="card-item1">
                 <tr class="card-title">
