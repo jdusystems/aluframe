@@ -207,7 +207,9 @@
                             $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
                         ?>
                     <td class="text">Ручка:</td>
-                    <td class="title">{{$windowHandler->name}}</td>
+                    <td class="title">
+                        {{($windowHandler) ? $windowHandler->name : ""}}
+                    </td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Присака станд.?:</td>
