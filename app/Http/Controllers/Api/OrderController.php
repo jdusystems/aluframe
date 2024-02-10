@@ -377,7 +377,11 @@ class OrderController extends Controller
         if($request->has('window_color_id')){
             $windowColor = WindowColor::find($request->window_color_id);
             if($windowColor){
+                if($width > 0 && $height > 0){
                 $windowPrice = $windowPrice + $profileNumber*$width*$height*$windowColor->price;
+                }else{
+                   $windowPrice +=  $windowColor->price;
+                }
             }
         }
         if($request->has('additional_service_id')){
