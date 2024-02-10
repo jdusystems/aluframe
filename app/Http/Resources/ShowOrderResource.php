@@ -20,6 +20,7 @@ class ShowOrderResource extends JsonResource
             'client_name' => ($this->user) ? $this->user->name : " " ,
             'client_phone_number' => ($this->user) ? $this->user->phone_number : " " ,
             'status' => ($this->status) ? $this->status->name : " ",
+            'status_color' => ($this->status) ? $this->status->color : " ",
             'status_id' => ($this->status) ? $this->status->id : " ",
             'total_price' => $this->total_price ,
             'ordered_time' => $this->created_at,

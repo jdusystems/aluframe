@@ -53,14 +53,14 @@
       }
       .card1{
           width: 37.5%;
-          padding: 55px ;
+          padding-top:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: right;
       }
       .card2{
           width: 37.5%;
-          padding: 55px ;
+          padding-top: 30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: left;
