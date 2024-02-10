@@ -287,7 +287,7 @@ class OrderController extends Controller
         $width = 0;
         $height = 0;
 
-        if($request->has('width') && $request->has('height')){
+        if($request->has('width') && $request->width > 0 && $request->has('height') && $request->height > 0){
             $width = $request->width/1000;
             $height = $request->height/1000;
         }else{
@@ -301,7 +301,7 @@ class OrderController extends Controller
             if($request->has('window_color_id')){
                 $windowColor = WindowColor::find($request->window_color_id);
                 if($windowColor){
-                $price += $windowColor->price;
+                    $price += $windowColor->price;
                 }
             }
             return response()->json([
