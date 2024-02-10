@@ -260,11 +260,9 @@
                 </tr>
              @foreach($profiles as $profile)
                 <tr class="card-list">
-                    <?php
-                        $profiles = \App\Models\OrderDetail::where('profile_type_id' , $profile->profile_type_id)->where('order_id' , $order->id)->get(); ?>
                     <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
-                    <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width + ($profile->quantity_right_height + $profile->quantity_left_height))}}</td>
-                    <td style=" padding-left: 20px;">{{$profile->total_quantity_left + $profile->total_quantity_right + $profiles->count()}}</td>
+                    <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width )}}</td>
+                    <td style=" padding-left: 20px;">{{$profile->total_facade_height}}</td>
                 </tr>
                  @endforeach
             </table>
@@ -289,9 +287,9 @@
                     ?>
                 <tr class="card-list">
                     <td style=" padding-left: 30px;">{{$windowColor->windowColor->name}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->height}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->width}}</td>
-                    <td style=" padding-left: 20px;">{{$profiles->count() + $windowColor->total_quantity_left + $windowColor->total_quantity_right}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_height}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_width}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_facade_quantity}}</td>
                 </tr>
             @endforeach
         </table>
