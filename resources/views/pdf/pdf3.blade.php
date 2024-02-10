@@ -249,14 +249,14 @@
     <div class="card1">
             <table class="card-item1">
                 <tr class="card-title" style="margin-left: 20px">
-                    <td>Профиль</td>
-                    <td>{{$order->order_id}}</td>
-                    <td>{{$order->created_at}}</td>
+                    <td style=" padding: 15px;">Профиль</td>
+                    <td style=" padding: 15px;">{{$order->order_id}}</td>
+                    <td style=" padding: 15px;">{{$order->created_at}}</td>
                 </tr>
                 <tr class="card-top">
-                    <td>Код товара</td>
-                    <td>Высота</td>
-                    <td>Кол-во</td>
+                    <td style=" padding: 15px;">Код товара</td>
+                    <td style=" padding: 15px;">Высота</td>
+                    <td style=" padding: 15px;">Кол-во</td>
                 </tr>
              @foreach($profiles as $profile)
                 <tr class="card-list">
@@ -272,25 +272,25 @@
     <div class="card2">
         <table class="card-item1">
             <tr class="card-title" style="margin-left: 20px">
-                <td>Стекло</td>
-                <td>{{$order->order_id}}</td>
-                <td>{{$order->created_at}}</td>
+                <td style="padding: 10px;">Стекло</td>
+                <td style=" padding: 10px;">{{$order->order_id}}</td>
+                <td style=" padding: 10px;">{{$order->created_at}}</td>
             </tr>
             <tr class="card-top">
-                <td>Код товара</td>
-                <td>Высота</td>
-                <td>Ширина</td>
-                <td>Кол-во</td>
+                <td style=" padding: 10px;">Код товара</td>
+                <td style=" padding: 10px;">Высота</td>
+                <td style=" padding: 10px;">Кол-во</td>
+                <td style=" padding: 10px;">Ширина</td>
             </tr>
             @foreach($windowColors as $windowColor)
                     <?php
                     $profiles = \App\Models\OrderDetail::where('window_color_id' , $windowColor->window_color_id)->where('order_id' , $order->id)->get();
                     ?>
                 <tr class="card-list">
-                    <td>{{$windowColor->windowColor->name}}</td>
-                    <td>{{$windowColor->height}}</td>
-                    <td>{{$windowColor->width}}</td>
-                    <td>{{$profiles->count() + $windowColor->total_quantity_left + $windowColor->total_quantity_right}}</td>
+                    <td style=" padding: 10px;">{{$windowColor->windowColor->name}}</td>
+                    <td style=" padding: 10px;">{{$windowColor->height}}</td>
+                    <td style=" padding: 10p style=" padding: 15px;"x;">{{$windowColor->width}}</td>
+                    <td style=" padding: 10px;">{{$profiles->count() + $windowColor->total_quantity_left + $windowColor->total_quantity_right}}</td>
                 </tr>
             @endforeach
         </table>
