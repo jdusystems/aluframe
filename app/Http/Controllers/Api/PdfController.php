@@ -393,7 +393,7 @@ class PdfController extends Controller
                 $windowHandlerQuantity = 0;
 
                 //
-                $surface = $profileNumber * ($width * $height);
+                $surface = $width * $height;
 
                 if($profileType->sealant){
                     $sealant = Sealant::where('profile_type_id' , $profileType->id)->first();
