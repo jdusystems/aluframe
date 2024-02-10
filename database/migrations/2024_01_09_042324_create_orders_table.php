@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('client_id')->references('id')->on('clients');
             $table->unsignedBigInteger('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('statuses');
-            $table->unsignedDouble('total_price')->nullable();
+            $table->unsignedDouble('total_price' , 15 , 2)->nullable();
             $table->timestamps();
         });
     }

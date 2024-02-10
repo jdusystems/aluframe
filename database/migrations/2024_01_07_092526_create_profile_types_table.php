@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('profile_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->double('price')->nullable();
+            $table->double('price' , 15 , 2)->nullable();
             $table->integer('sort_index')->default(1);
             $table->unsignedBigInteger('calculation_type_id')->nullable();
             $table->foreign('calculation_type_id')->references('id')->on('calculation_types');

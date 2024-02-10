@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('image_url')->nullable();
             $table->string('name');
             $table->string('vendor_code'); // Артикул
-            $table->double('price');
+            $table->double('price' , 15 , 2)->nullable();
             $table->integer('sort_index');
             $table->timestamps();
             $table->softDeletes();

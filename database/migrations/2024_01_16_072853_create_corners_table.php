@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('vendor_code')->nullable();
             $table->string('name')->nullable();
-            $table->double('price')->nullable();
+            $table->double('price' , 15 , 2)->nullable();
             $table->unsignedBigInteger('profile_type_id')->nullable();
             $table->foreign('profile_type_id')->references('id')->on('profile_types');
             $table->softDeletes();

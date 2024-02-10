@@ -38,7 +38,7 @@ return new class extends Migration
             $table->integer('corner_quantity')->nullable();
             $table->double('window_handler_quantity')->nullable();
             $table->string('comment')->nullable();
-            $table->unsignedDouble('price')->nullable();
+            $table->unsignedDouble('price' , 15 , 2)->nullable();
             $table->double('X1')->nullable();
             $table->double('X2')->nullable();
             $table->double('Y1')->nullable();

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('vendor_code')->nullable();
             $table->string('condition_operator')->nullable();
             $table->double('facade_height')->nullable();
-            $table->double('price')->nullable();
+            $table->double('price' , 15 , 2)->nullable();
             $table->timestamps();
         });
     }
