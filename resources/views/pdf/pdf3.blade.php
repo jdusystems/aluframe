@@ -274,7 +274,7 @@
             <tr class="card-title" >
                 <td style="padding-left: 30px;">Стекло</td>
                 <td style=" padding-left: 20px;">{{$order->order_id}}</td>
-                <td style=" padding-left: 20px; " rowspan="2">{{$order->created_at}}</td>
+                <td style=" padding-left: 20px; " colspan="2">{{$order->created_at}}</td>
 
             </tr>
             <tr class="card-top">
