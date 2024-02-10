@@ -298,7 +298,7 @@ class OrderController extends Controller
             if($request->has('profile_type_id')){
                 $profileType = ProfileType::find($request->profile_type_id);
                 if($profileType){
-                $price += $profileType->price;
+                $price += 100;
                 }
             }
             if($request->has('window_color_id')){
