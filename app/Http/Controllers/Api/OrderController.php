@@ -302,6 +302,7 @@ class OrderController extends Controller
                 }
             }
             if($request->has('window_color_id')){
+                $price += 10;
                 $windowColor = WindowColor::find($request->window_color_id);
                 if($windowColor){
                     $price += $windowColor->price;
