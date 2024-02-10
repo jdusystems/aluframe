@@ -151,7 +151,7 @@ class PdfController extends Controller
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
-            DB::raw('SUM(facade_height) as total_facade_height'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
 
         $windowColors = OrderDetail::select('window_color_id' ,
