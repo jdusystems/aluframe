@@ -345,7 +345,7 @@ class PdfController extends Controller
                 'assembly_service_vendor_code' => ($assemblyService) ? $assemblyService->vendor_code : "" ,
                 'assembly_service_name' => ($assemblyService) ? $assemblyService->name : "" ,
                 'assembly_service_price' => ($assemblyService) ? $assemblyService->price : 0 ,
-                'assembly_service_quantity' => ($assemblyService) ? 1 : 0 ,
+                'assembly_service_quantity' => ($assemblyService) ? $profileNumber : 0 ,
                 'sealant_name' => ($sealant1) ? $sealant1->name : "",
                 'sealant_vendor_code' => ($sealant1) ? $sealant1->vendor_code : "",
                 'sealant_price' => ($sealant1) ? $sealant1->price : 0,
