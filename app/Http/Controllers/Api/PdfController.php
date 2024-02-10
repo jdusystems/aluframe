@@ -261,17 +261,17 @@ class PdfController extends Controller
                         }
                         if($handlerPosition->slug == "opposite"){
                             $price += $height*$windowHandler->price*$profileNumber;
-                            $windowHandlerQuantity = $height;
+                            $windowHandlerQuantity = $height*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2*$width + $height;
                         }
                         if($handlerPosition->slug == "top"){
                             $price += $width*$windowHandler->price*$profileNumber;
-                            $windowHandlerQuantity = $width;
+                            $windowHandlerQuantity = $width*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2*$height + $width;
                         }
                         if($handlerPosition->slug == "below"){
                             $price += $width*$windowHandler->price*$profileNumber;
-                            $windowHandlerQuantity = $width;
+                            $windowHandlerQuantity = $width*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2*$height + $width;
                         }
                         if($handlerPosition->slug == "round"){
@@ -302,13 +302,14 @@ class PdfController extends Controller
                     $price += $additionalService->price; // Har bitta rom uchun alohida qo'shimcha xizmat xaqi mi yoki hammasiga bittami
                 }
             }
-            if($height < 1.8){
+            $perimeter = 2*($width + $height);
+            if($perimeter >= 1.8 && $perimeter < 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber ;
                 }
 
-            }elseif($height > 1.8){
+            }elseif($perimeter >=2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;
