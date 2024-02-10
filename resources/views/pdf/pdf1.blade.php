@@ -251,8 +251,8 @@
                 <th class="list-text1">{{$profile->profileType->vendor_code}}</th>
                 <th class="list-text1">{{$profile->profileType->name}}</th>
                 <th class="list-text1">{{$profile->profileType->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * (2*($profile->total_height+$profile->total_width)-$profile->total_window_handler_quantity)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * (2*($profile->total_height+$profile->total_width) - $profile->total_window_handler_quantity)*$profile->profileType->price}}</th>
+                <th class="list-text1">{{$profile->total_profile_length}}</th>
+                <th class="list-text1">{{$profile->total_profile_length*$profile->profileType->price}}</th>
             </tr>
         @endforeach
         @foreach($profiles as $profile)
@@ -260,8 +260,8 @@
                 <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
                 <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
                 <th class="list-text1">{{$profile->profileType->sealant->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->profileType->sealant->price}}</th>
+                <th class="list-text1">{{$profile->total_sealant_length}}</th>
+                <th class="list-text1">{{$profile->total_sealant_length*$profile->profileType->sealant->price}}</th>
             </tr>
         @endforeach
 
@@ -270,8 +270,8 @@
                 <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
                 <th class="list-text1">{{$profile->profileType->corner->name}}</th>
                 <th class="list-text1">{{$profile->profileType->corner->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 4}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 4 * $profile->profileType->corner->price}}</th>
+                <th class="list-text1">{{$profile->total_corner_quantity}}</th>
+                <th class="list-text1">{{$profile->total_corner_quantity*$profile->profileType->corner->price}}</th>
             </tr>
         @endforeach
         @foreach($windowColors as $windowColor)
@@ -279,8 +279,8 @@
                 <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
                 <th class="list-text1">{{$windowColor->windowColor->name}}</th>
                 <th class="list-text1">{{$windowColor->windowColor->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * ($windowColor->width*$windowColor->height)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * ($windowColor->width*$windowColor->height) * $windowColor->windowColor->price}}</th>
+                <th class="list-text1">{{$windowColor->total_surface}}</th>
+                <th class="list-text1">{{$windowColor->total_surface * $windowColor->windowColor->price}}</th>
             </tr>
         @endforeach
         @foreach($additionalServices as $additionalService)

@@ -87,11 +87,9 @@ class OrderController extends Controller
 
                     $cornerQuantity = 4*$profileNumber;
                     $profilePeremetr = 0;
-
                     $sealantQuantity = $peremetr;
                     //
                     $windowHandlerQuantity = 0;
-
                     //
                     $surface = $profileNumber * ($width * $height);
 
@@ -189,7 +187,10 @@ class OrderController extends Controller
                     'X1' => (array_key_exists('X1' , $detail)) ? $detail['X1'] : 100 ,
                     'X2' => (array_key_exists('X2' , $detail)) ? $detail['X2'] : 100 ,
                     'Y1' => (array_key_exists('Y1' , $detail)) ? $detail['Y1'] : 100 ,
-                    'price' => $price
+                    'price' => $price ,
+                    'facade_quantity' => $profileNumber ,
+                    'surface' => $surface ,
+                    'profile_length' => $profilePeremetr*$profileNumber
                 ]);
                 $totalPrice += $price;
             }
@@ -203,7 +204,9 @@ class OrderController extends Controller
 
         }catch (\Exception $e){
             DB::rollBack();
-
+            return response()->json([
+                'message' => "Something went wrong!"
+            ] , 500);
         }
     }
 

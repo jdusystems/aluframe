@@ -41,18 +41,19 @@ class PdfController extends Controller
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width'),
-            DB::raw('SUM(quantity_right) as quantity_right'),
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
+            DB::raw('SUM(sealant_quantity) as total_sealant_length'),
+            DB::raw('SUM(corner_quantity) as total_corner_quantity'),
             DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity'),
+            DB::raw('SUM(profile_length) as total_profile_length'),
         )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
 //        return response()->json([
 //            'data' => $profiles ,
 //            'details' => $orderDetails
 //        ]);
         $windowColors = OrderDetail::select('window_color_id' ,
-            DB::raw('SUM(width*height) as total_surface'),
-            DB::raw('SUM(quantity_right) as quantity_right'),
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(surface) as total_surface'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
         $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
