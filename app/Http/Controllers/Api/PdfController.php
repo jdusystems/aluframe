@@ -57,7 +57,10 @@ class PdfController extends Controller
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
         $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
-        $assemblyServices = OrderDetail::select('assembly_service_id')->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
+
+        $assemblyServices = OrderDetail::select('assembly_service_id' ,
+            DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
+        )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
 
         $user = User::find($order->user_id);
 
