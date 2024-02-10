@@ -330,7 +330,7 @@ class PdfController extends Controller
             $data[] = [
                 'profile_type_name' => $profileType->name ,
                 'profile_type_price' => $profileType->price ,
-                'profile_quantity' => 2*($width+$height)*($detail['quantity_left'] + $detail['quantity_right']+1) ,
+                'profile_quantity' => $profilePeremetr*$profileNumber ,
                 'window_vendor_code' => $windowColor1->vendor_code ,
                 'window_color_name' => $windowColor1->name ,
                 'window_color_price' => $windowColor1->price ,
