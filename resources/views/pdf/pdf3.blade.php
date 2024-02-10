@@ -55,7 +55,6 @@
           width: 50%;
           padding-top:30px ;
           padding-bottom:30px ;
-          padding-left:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: right;
@@ -64,7 +63,6 @@
           width: 50%;
           padding-top: 30px ;
           padding-bottom:30px ;
-          padding-left:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: left;
