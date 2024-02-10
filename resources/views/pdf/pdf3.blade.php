@@ -52,15 +52,19 @@
           text-align: left;
       }
       .card1{
-          width: 37.5%;
+          width: 50%;
           padding-top:30px ;
+          padding-bottom:30px ;
+          padding-left:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: right;
       }
       .card2{
-          width: 37.5%;
+          width: 50%;
           padding-top: 30px ;
+          padding-bottom:30px ;
+          padding-left:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: left;
