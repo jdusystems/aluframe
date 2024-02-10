@@ -25,7 +25,6 @@
       }
       .full{
           width: 100%;
-
       }
       .wrap{
           width: 100%;
@@ -44,6 +43,13 @@
       .card:nth-child(2n-1){
           border-right: 1px dotted #121212;
           float: left;
+      }
+      .wrap1{
+          width: 100%;
+          max-width: 876px;
+          margin: 0 auto;
+          display: inline-block;
+          text-align: left;
       }
       .card1{
           width: 50%;
@@ -237,7 +243,7 @@
 <br>
 <br>
 <br>
-<div class="wrap" style="margin-bottom: 20px;">
+<div class="wrap1" style="margin-bottom: 20px;">
     <div class="card1">
             <table class="card-item1">
                 <tr class="card-title">
