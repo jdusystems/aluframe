@@ -40,10 +40,9 @@ class WindowHandlerController extends Controller
      */
     public function store(StoreWindowHandlerRequest $request)
     {
-
         $exists = WindowHandler::where('profile_type_id' , $request->profile_type_id)
             ->where('profile_color_id' , $request->profile_color_id)
-            ->where('deleted_at' , null)->exists();
+            ->whereNull('deleted_at')->exists();
 
         if($exists){
             return new ReturnResponseResource([
