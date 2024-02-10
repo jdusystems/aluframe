@@ -261,7 +261,7 @@
              @foreach($profiles as $profile)
                 <tr class="card-list">
                     <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
-                    <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width )}}</td>
+                    <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)}}</td>
                     <td style=" padding-left: 20px;">{{$profile->total_facade_height}}</td>
                 </tr>
                  @endforeach
