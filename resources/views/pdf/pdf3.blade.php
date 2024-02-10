@@ -262,7 +262,7 @@
                 <tr class="card-list">
                     <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
                     <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)}}</td>
-                    <td style=" padding-left: 20px;">{{$profile->total_facade_height}}</td>
+                    <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
                 </tr>
                  @endforeach
             </table>
@@ -287,8 +287,8 @@
                     ?>
                 <tr class="card-list">
                     <td style=" padding-left: 30px;">{{$windowColor->windowColor->name}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_height}}</td>
                     <td style=" padding-left: 20px;">{{$windowColor->total_width}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_height}}</td>
                     <td style=" padding-left: 20px;">{{$windowColor->total_facade_quantity}}</td>
                 </tr>
             @endforeach
