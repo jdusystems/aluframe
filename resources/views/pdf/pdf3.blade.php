@@ -47,14 +47,14 @@
       }
       .card1{
           width: 50%;
-          padding: 55px 40px;
+          padding: 55px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: right;
       }
       .card2{
           width: 50%;
-          padding: 55px 40px;
+          padding: 55px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: left;
@@ -237,7 +237,7 @@
 <br>
 <br>
 <br>
-<div class="wrap" style="margin-bottom: 20px; margin-left: 50px;">
+<div class="wrap" style="margin-bottom: 20px;">
     <div class="card1">
             <table class="card-item1">
                 <tr class="card-title">
