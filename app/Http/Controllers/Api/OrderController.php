@@ -293,7 +293,8 @@ class OrderController extends Controller
         if($request->has('width')  && $request->has('height') ){
             $width = $request->width/1000;
             $height = $request->height/1000;
-        }else if ($request->width==0 || $request->height == 0){
+        }
+        if ($request->width==0 || $request->height == 0){
             $price = 0;
             if($request->has('profile_type_id')){
                 $profileType = ProfileType::find($request->profile_type_id);
