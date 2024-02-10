@@ -55,7 +55,6 @@
           width: 50%;
           padding-top:30px ;
           padding-bottom:30px ;
-          margin-left: 20px;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: right;
@@ -64,7 +63,6 @@
           width: 50%;
           padding-top: 30px ;
           padding-bottom:30px ;
-          margin-left: 20px;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
           float: left;
@@ -250,7 +248,7 @@
 <div class="wrap1">
     <div class="card1">
             <table class="card-item1">
-                <tr class="card-title">
+                <tr class="card-title" style="margin-left: 20px">
                     <td>Профиль</td>
                     <td>{{$order->order_id}}</td>
                     <td>{{$order->created_at}}</td>
@@ -273,7 +271,7 @@
     </div>
     <div class="card2">
         <table class="card-item1">
-            <tr class="card-title">
+            <tr class="card-title" style="margin-left: 20px">
                 <td>Стекло</td>
                 <td>{{$order->order_id}}</td>
                 <td>{{$order->created_at}}</td>
