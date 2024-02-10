@@ -371,6 +371,7 @@ class PdfController extends Controller
             $price = 0;
             $profileNumber = 0;
             if($detail['profile_type_id']){
+
                 $profileType = ProfileType::find($detail['profile_type_id']);
                 $profileNumber += 1;
                 if(array_key_exists('quantity_right' , $detail) && $detail['quantity_right'] > 0){
@@ -400,7 +401,7 @@ class PdfController extends Controller
                     $price += $peremetr*$sealant->price;
                 }
                 if($profileType->window_handler){
-                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->first();
+                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
                     $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
                     if($handlerPosition->slug == "no_handler"){
                         $windowHandlerQuantity += 0;
@@ -450,12 +451,13 @@ class PdfController extends Controller
                 }
             }
             $p = 2*($width + $height);
+
             if($p >= 1.8 && $p < 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price * $profileNumber;
+                    $price += $assemblyService->price*$profileNumber;
                 }
-            }elseif($height >= 2.4){
+            }elseif($p >=2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;
