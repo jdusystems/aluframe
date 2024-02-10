@@ -251,8 +251,8 @@
                 <th class="list-text1">{{$profile->profileType->vendor_code}}</th>
                 <th class="list-text1">{{$profile->profileType->name}}</th>
                 <th class="list-text1">{{$profile->profileType->price}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)}}</th>
-                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * 2*($profile->total_height+$profile->total_width)*$profile->profileType->price}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * (2*($profile->total_height+$profile->total_width)-$profile->window_handler_quantity)}}</th>
+                <th class="list-text1">{{($profile->quantity_left+$profile->quantity_right + 1) * (2*($profile->total_height+$profile->total_width) - $profile->window_handler_quantity)*$profile->profileType->price}}</th>
             </tr>
         @endforeach
         @foreach($profiles as $profile)
