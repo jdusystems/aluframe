@@ -52,6 +52,13 @@
           border-bottom: 1px dotted #121212;
           float: right;
       }
+      .card2{
+          width: 50%;
+          padding: 55px 40px;
+          border-top: 1px dotted #121212;
+          border-bottom: 1px dotted #121212;
+          float: left;
+      }
       .card1:nth-child(2n-1){
           border-right: 1px dotted #121212;
           float: left;
@@ -251,7 +258,7 @@
                  @endforeach
             </table>
     </div>
-    <div class="card1">
+    <div class="card2">
         <table class="card-item1">
             <tr class="card-title">
                 <td>Стекло</td>
