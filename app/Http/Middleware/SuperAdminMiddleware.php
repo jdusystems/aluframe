@@ -15,7 +15,7 @@ class SuperAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()->superadmin == 1 || $request->user()->is_admin == 1){
+        if($request->user()->superadmin == 1){
             return $next($request);
         }
         return response()->json([
