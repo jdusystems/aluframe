@@ -37,7 +37,7 @@ class OrderController extends Controller
             $itemsPerPage = 10;
         }
         $user = Auth::user();
-        if($user->is_admin == 1){
+        if($user->is_admin == 1 || $user->superadmin == 1){
             $orders = Order::latest()->paginate($itemsPerPage);
         }else{
             $orders = Order::where('user_id' , $user->id)->latest()->paginate($itemsPerPage);

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ShowOrderResource extends JsonResource
 {
@@ -14,6 +15,7 @@ class ShowOrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $user = Auth::user();
         return [
             'id' => $this->id,
             'order_id' => $this->order_id ,
@@ -22,7 +24,7 @@ class ShowOrderResource extends JsonResource
             'status' => ($this->status) ? $this->status->name : " ",
             'status_color' => ($this->status) ? $this->status->color : " ",
             'status_id' => ($this->status) ? $this->status->id : " ",
-            'total_price' => $this->total_price ,
+            'total_price' => ($user->is_admin==1) ? $this->total_price : 0,
             'ordered_time' => $this->created_at,
             'order_details' => OrderDetailResource::collection($this->orderDetails) ,
         ];
