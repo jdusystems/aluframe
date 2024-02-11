@@ -47,18 +47,28 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::get('/user' , function (Request $request){
        $user = \Illuminate\Support\Facades\Auth::user();
        $role = "user";
-        if($user->superadmin==1){
+        if($user->superadmin==1 && $user->is_admin==1){
             $role = "superadmin";
+            return response()->json([
+                'user' => $user ,
+                'user_role' => $role ,
+            ]);
         }
+
        if($user->is_admin==1 && $user->superadmin == 0){
            $role = "admin";
+           return response()->json([
+               'user' => $user ,
+               'user_role' => $role ,
+           ]);
        }else{
            $role = "user";
+           return response()->json([
+               'user' => $user ,
+               'user_role' => $role ,
+           ]);
        }
-       return response()->json([
-           'user' => $user ,
-           'user_role' => $role ,
-       ]);
+
 
     });
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
