@@ -47,7 +47,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::get('/user' , function (Request $request){
        $user = \Illuminate\Support\Facades\Auth::user();
        $role = "user";
-        if($user->superadmin==1 && $user->is_admin==1){
+        if($user->superadmin == 1 && $user->is_admin == 1){
             $role = "superadmin";
             return response()->json([
                 'user' => $user ,
@@ -55,7 +55,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
             ]);
         }
 
-       if($user->is_admin==1 && $user->superadmin == 0){
+       if($user->is_admin == 1){
            $role = "admin";
            return response()->json([
                'user' => $user ,
@@ -78,79 +78,80 @@ Route::middleware(['auth:sanctum'])->group( function () {
         ->name('change.password');
 
     // Super Admin
-    Route::middleware(['superadmin'])->group(function (){
-        Route::apiResource('profile-colors' , ProfileColorController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-        Route::apiResource('window-colors' , WindowColorController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-        Route::apiResource('additional-services' , AdditionalServiceController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-        Route::apiResource('assembly-services' , AssemblyServiceController::class);
 
-        Route::apiResource('types' , TypeController::class , [
-            'only' => ['update' , 'store' , 'destroy']
-        ]);
-
-        Route::apiResource('opening-types' , OpeningTypeController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-
-// Get Opening Types by Types
-
-        Route::apiResource('calculation-types' , CalculationTypeController::class);
-
-        Route::apiResource('profiles' , ProfileTypeController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-
-        Route::apiResource('corners' , CornerController::class);
-        Route::apiResource('window-handlers' , WindowHandlerController::class);
-        Route::apiResource('sealants' , SealantController::class);
-        Route::get('/all-sealants', [SealantController::class , 'all']);
-
-
-        Route::apiResource('handler-types' , HandlerTypeController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-
-        Route::apiResource('statuses' , StatusController::class);
-        Route::apiResource('handler-positions' , HandlerPositionController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-
-        Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class , [
-            'only' => ['store' , 'update' , 'destroy']
-        ]);
-
-        Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
-        Route::post('/profile-colors/delete-multiple' , [ProfileColorController::class , 'deleteMultiple']);
-        Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);
-        Route::post('/additional-services/delete-multiple' , [AdditionalServiceController::class , 'deleteMultiple']);
-        Route::post('/assembly-services/delete-multiple' , [AssemblyServiceController::class , 'deleteMultiple']);
-        Route::post('/opening-types/delete-multiple' , [OpeningTypeController::class , 'deleteMultiple']);
-        Route::post('/profiles/delete-multiple' , [ProfileTypeController::class , 'deleteMultiple']);
-        Route::post('/clients/delete-multiple' , [ClientController::class , 'deleteMultiple']);
-        Route::post('/calculation-types/delete-multiple' , [CalculationTypeController::class , 'deleteMultiple']);
-        Route::post('/corners/delete-multiple' , [CornerController::class , 'deleteMultiple']);
-        Route::post('/window-handlers/delete-multiple' , [WindowHandlerController::class , 'deleteMultiple']);
-        Route::post('/sealants/delete-multiple' , [SealantController::class , 'deleteMultiple']);
-
-        Route::post('/image-upload', [ImageController::class, 'imageUpload']);
-        Route::post('/image-delete', [ImageController::class, 'imageDelete']);
-
-    });
 
     // Admin
     Route::middleware(['admin'])->group(function () {
         Route::apiResource('clients' , ClientController::class);
         Route::get('/all-clients', [ClientController::class , 'all']);
+
+        Route::middleware(['superadmin'])->group(function (){
+            Route::apiResource('profile-colors' , ProfileColorController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+            Route::apiResource('window-colors' , WindowColorController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+            Route::apiResource('additional-services' , AdditionalServiceController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+            Route::apiResource('assembly-services' , AssemblyServiceController::class);
+
+            Route::apiResource('types' , TypeController::class , [
+                'only' => ['update' , 'store' , 'destroy']
+            ]);
+
+            Route::apiResource('opening-types' , OpeningTypeController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+
+// Get Opening Types by Types
+
+            Route::apiResource('calculation-types' , CalculationTypeController::class);
+
+            Route::apiResource('profiles' , ProfileTypeController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+
+            Route::apiResource('corners' , CornerController::class);
+            Route::apiResource('window-handlers' , WindowHandlerController::class);
+            Route::apiResource('sealants' , SealantController::class);
+            Route::get('/all-sealants', [SealantController::class , 'all']);
+
+
+            Route::apiResource('handler-types' , HandlerTypeController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+
+            Route::apiResource('statuses' , StatusController::class);
+            Route::apiResource('handler-positions' , HandlerPositionController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+
+            Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class , [
+                'only' => ['store' , 'update' , 'destroy']
+            ]);
+
+            Route::post('/opening-type-numbers/addImage', [OpeningTypeNumberController::class , 'addImage']);
+            Route::post('/profile-colors/delete-multiple' , [ProfileColorController::class , 'deleteMultiple']);
+            Route::post('/window-colors/delete-multiple' , [WindowColorController::class , 'deleteMultiple']);
+            Route::post('/additional-services/delete-multiple' , [AdditionalServiceController::class , 'deleteMultiple']);
+            Route::post('/assembly-services/delete-multiple' , [AssemblyServiceController::class , 'deleteMultiple']);
+            Route::post('/opening-types/delete-multiple' , [OpeningTypeController::class , 'deleteMultiple']);
+            Route::post('/profiles/delete-multiple' , [ProfileTypeController::class , 'deleteMultiple']);
+            Route::post('/clients/delete-multiple' , [ClientController::class , 'deleteMultiple']);
+            Route::post('/calculation-types/delete-multiple' , [CalculationTypeController::class , 'deleteMultiple']);
+            Route::post('/corners/delete-multiple' , [CornerController::class , 'deleteMultiple']);
+            Route::post('/window-handlers/delete-multiple' , [WindowHandlerController::class , 'deleteMultiple']);
+            Route::post('/sealants/delete-multiple' , [SealantController::class , 'deleteMultiple']);
+
+            Route::post('/image-upload', [ImageController::class, 'imageUpload']);
+            Route::post('/image-delete', [ImageController::class, 'imageDelete']);
+
+        });
+
     });
-
     Route::apiResource('orders' , OrderController::class);
-
 });
 //profiles
 Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
