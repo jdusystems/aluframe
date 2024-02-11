@@ -50,7 +50,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         if($user->superadmin==1){
             $role = "superadmin";
         }
-       if($user->is_admin==1){
+       if($user->is_admin==1 && $user->superadmin == 0){
            $role = "admin";
        }else{
            $role = "user";
