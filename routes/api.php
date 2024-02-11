@@ -55,19 +55,19 @@ Route::middleware(['auth:sanctum'])->group( function () {
             ]);
         }
 
-//       if($user->is_admin==1 && $user->superadmin == 0){
-//           $role = "admin";
-//           return response()->json([
-//               'user' => $user ,
-//               'user_role' => $role ,
-//           ]);
-//       }else{
-//           $role = "user";
-//           return response()->json([
-//               'user' => $user ,
-//               'user_role' => $role ,
-//           ]);
-//       }
+       if($user->is_admin==1 && $user->superadmin == 0){
+           $role = "admin";
+           return response()->json([
+               'user' => $user ,
+               'user_role' => $role ,
+           ]);
+       }else{
+           $role = "user";
+           return response()->json([
+               'user' => $user ,
+               'user_role' => $role ,
+           ]);
+       }
 
 
     });
