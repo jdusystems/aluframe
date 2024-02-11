@@ -36,7 +36,8 @@ class User extends Authenticatable
         'remember_token',
         'is_admin' ,
         'parol' ,
-        'registered'
+        'registered' ,
+        'superadmin'
     ];
 
     /**

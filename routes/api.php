@@ -47,10 +47,12 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::get('/user' , function (Request $request){
        $user = \Illuminate\Support\Facades\Auth::user();
        $role = "user";
+
        if($user->is_admin==1){
            $role = "admin";
-       }elseif($user->superadmin){
-           $role = "superadmin";
+           if($user->superadmin==1){
+               $role = "superadmin";
+           }
        }else{
            $role = "user";
        }
