@@ -77,7 +77,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         ->name('change.password');
 
     // Super Admin
-    Route::middleware(['superadmin'])->group(function (){
+    Route::middleware(['admin' , 'superadmin'])->group(function (){
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
@@ -143,7 +143,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
     });
 
     // Admin
-    Route::middleware(['admin'])->group(function () {
+    Route::middleware(['superadmin'])->group(function () {
         Route::apiResource('clients' , ClientController::class);
         Route::get('/all-clients', [ClientController::class , 'all']);
     });
