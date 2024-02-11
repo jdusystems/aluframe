@@ -48,13 +48,13 @@ Route::middleware(['auth:sanctum'])->group( function () {
        $user = \Illuminate\Support\Facades\Auth::user();
 
         if($user->superadmin==1 && $user->is_admin==1){
-            $role = "superadmin";
+            $role = "admin";
             return response()->json([
                 'user' => $user ,
                 'user_role' => $role ,
             ]);
-        }elseif($user->is_admin==1){
-           $role = "admin";
+        }elseif($user->superadmin==1){
+           $role = "superadmin";
            return response()->json([
                'user' => $user ,
                'user_role' => $role ,
@@ -75,7 +75,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         ->name('change.password');
 
     // Super Admin
-    Route::middleware(['superadmin'])->group(function (){
+    Route::middleware(['admin'])->group(function (){
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
@@ -141,7 +141,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
     });
 
     // Admin
-    Route::middleware(['admin'])->group(function () {
+    Route::middleware(['superadmin'])->group(function () {
         Route::apiResource('clients' , ClientController::class);
         Route::get('/all-clients', [ClientController::class , 'all']);
     });
