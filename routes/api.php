@@ -48,7 +48,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
        $user = \Illuminate\Support\Facades\Auth::user();
 
         if($user->superadmin==1 && $user->is_admin==1){
-            $role = "superadmin";
+            $role = "admin";
             return response()->json([
                 'user' => $user ,
                 'user_role' => $role ,
@@ -56,7 +56,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         }
 
        if($user->is_admin==1 && $user->superadmin == 0){
-           $role = "admin";
+           $role = "superadmin";
            return response()->json([
                'user' => $user ,
                'user_role' => $role ,
@@ -68,7 +68,6 @@ Route::middleware(['auth:sanctum'])->group( function () {
                'user_role' => $role ,
            ]);
        }
-
 
     });
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
