@@ -77,7 +77,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         ->name('change.password');
 
     // Super Admin
-    Route::middleware(['admin' , 'superadmin'])->group(function (){
+    Route::middleware(['admin'])->group(function (){
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
