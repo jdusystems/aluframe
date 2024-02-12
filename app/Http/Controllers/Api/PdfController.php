@@ -354,7 +354,7 @@ class PdfController extends Controller
                 'window_handler_name' => ($windowHandler1) ? $windowHandler1->name : "",
                 'window_handler_price' => ($windowHandler1) ? $windowHandler1->price : 0,
                 'window_handler_quantity' => ($windowHandler1) ? $windowHandlerQuantity : 0,
-                'corner_vendor_code' => ($corner1)  ? $corner->vendor_code : "",
+                'conrer_vendor_code' => ($corner1)  ? $corner->vendor_code : "",
                 'conrer_name' => ($corner1)  ? $corner->name : "",
                 'conrer_price' => ($corner1)  ? $corner->price : 0,
                 'conrer_quantity' => ($corner1)  ? $cornerQuantity : 0,
