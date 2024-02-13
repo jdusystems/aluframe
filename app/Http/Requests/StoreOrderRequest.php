@@ -45,8 +45,8 @@ class StoreOrderRequest extends FormRequest
             'orders.*.X1' => ['numeric' ],
             'orders.*.X2' => ['numeric' ],
             'orders.*.Y1' => ['numeric' ],
-            'orders.*.quantity_right' => ['integer' , 'min:0'],
-            'orders.*.quantity_left' => ['integer' , 'min:0'],
+            'orders.*.quantity_right' => ['required' , 'integer' , 'min:0'],
+            'orders.*.quantity_left' => ['required' , 'integer' , 'min:0'],
             'orders.*.number_of_loops' => ['integer' , 'min:0'],
         ];
     }
