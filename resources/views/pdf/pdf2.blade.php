@@ -303,7 +303,7 @@
                 <?php
                 $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();
                 ?>
-            @if($additionalService)
+            @if($additionalService->additionalService)
                 <tr class="list-item">
                     <th class="list-text1">{{$additionalService->additionalService->vendor_code}}</th>
                     <th class="list-text1">{{$additionalService->additionalService->name}}</th>
@@ -317,7 +317,7 @@
                 <?php
                 $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
                 ?>
-        @if($assemblyService)
+        @if($assemblyService->assemblyService)
                 <tr class="list-item">
                     <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>

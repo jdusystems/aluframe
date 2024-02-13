@@ -178,19 +178,19 @@
         <table class="list">
             <tr class="list-item">
                 <th class="list-text">Профиль</th>
-                <th class="list-text">{{$orderDetail->profileType->name}},{{$orderDetail->profileColor->name}}</th>
+                <th class="list-text">{{($orderDetail->profileType) ? $orderDetail->profileType->name: ""}},{{($orderDetail->profileColor) ? $orderDetail->profileColor->name : ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Цвет стекла:</th>
-                <th class="list-text">{{$orderDetail->windowColor->name}}</th>
+                <th class="list-text">{{($orderDetail->windowColor)? $orderDetail->windowColor->name : ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Дополнительные услуги для стекла:</th>
-                <th class="list-text">{{$orderDetail->additionalService->name}}</th>
+                <th class="list-text">{{($orderDetail->additionalService) ? $orderDetail->additionalService->name: ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Тип открывания:</th>
-                <th class="list-text">{{$orderDetail->openingType->name}}</th>
+                <th class="list-text">{{($orderDetail->openingType) ? $orderDetail->openingType->name: ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Количество петель:</th>
@@ -221,11 +221,11 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
-                <th class="list-text">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </th>
+                <th class="list-text">X1 = {{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes: "Стандарт"}}}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Комментарий:</th>
-                <th class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</th>
+                <th class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</th>
             </tr>
         </table>
         <br>
@@ -247,41 +247,53 @@
             <th class="list-text1 list-text2">Сумма</th>
         </tr>
         @foreach($profiles as $profile)
-            <tr class="list-item">
-                <th class="list-text1">{{$profile->profileType->vendor_code}}</th>
-                <th class="list-text1">{{$profile->profileType->name}}</th>
-                <th class="list-text1">{{$profile->profileType->price}}</th>
-                <th class="list-text1">{{$profile->total_profile_length}}</th>
-                <th class="list-text1">{{$profile->total_profile_length*$profile->profileType->price}}</th>
-            </tr>
+            @if($profile->profileType)
+                <tr class="list-item">
+                    <th class="list-text1">{{$profile->profileType->vendor_code}}</th>
+                    <th class="list-text1">{{$profile->profileType->name}}</th>
+                    <th class="list-text1">{{$profile->profileType->price}}</th>
+                    <th class="list-text1">{{$profile->total_profile_length}}</th>
+                    <th class="list-text1">{{$profile->total_profile_length*$profile->profileType->price}}</th>
+                </tr>
+            @endif
+
         @endforeach
         @foreach($profiles as $profile)
-            <tr class="list-item">
-                <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
-                <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
-                <th class="list-text1">{{$profile->profileType->sealant->price}}</th>
-                <th class="list-text1">{{$profile->total_sealant_length}}</th>
-                <th class="list-text1">{{$profile->total_sealant_length*$profile->profileType->sealant->price}}</th>
-            </tr>
+            @if($profile->profileType->sealant)
+                <tr class="list-item">
+                    <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
+                    <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
+                    <th class="list-text1">{{$profile->profileType->sealant->price}}</th>
+                    <th class="list-text1">{{$profile->total_sealant_length}}</th>
+                    <th class="list-text1">{{$profile->total_sealant_length*$profile->profileType->sealant->price}}</th>
+                </tr>
+            @endif
+
         @endforeach
 
         @foreach($profiles as $profile)
-            <tr class="list-item">
-                <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
-                <th class="list-text1">{{$profile->profileType->corner->name}}</th>
-                <th class="list-text1">{{$profile->profileType->corner->price}}</th>
-                <th class="list-text1">{{$profile->total_corner_quantity}}</th>
-                <th class="list-text1">{{$profile->total_corner_quantity*$profile->profileType->corner->price}}</th>
-            </tr>
+            @if($profile->profileType->corner)
+                <tr class="list-item">
+                    <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
+                    <th class="list-text1">{{$profile->profileType->corner->name}}</th>
+                    <th class="list-text1">{{$profile->profileType->corner->price}}</th>
+                    <th class="list-text1">{{$profile->total_corner_quantity}}</th>
+                    <th class="list-text1">{{$profile->total_corner_quantity*$profile->profileType->corner->price}}</th>
+                </tr>
+            @endif
+
         @endforeach
         @foreach($windowColors as $windowColor)
-            <tr class="list-item">
-                <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
-                <th class="list-text1">{{$windowColor->windowColor->name}}</th>
-                <th class="list-text1">{{$windowColor->windowColor->price}}</th>
-                <th class="list-text1">{{$windowColor->total_surface}}</th>
-                <th class="list-text1">{{$windowColor->total_surface * $windowColor->windowColor->price}}</th>
-            </tr>
+            @if($windowColor->windowColor)
+                <tr class="list-item">
+                    <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
+                    <th class="list-text1">{{$windowColor->windowColor->name}}</th>
+                    <th class="list-text1">{{$windowColor->windowColor->price}}</th>
+                    <th class="list-text1">{{$windowColor->total_surface}}</th>
+                    <th class="list-text1">{{$windowColor->total_surface * $windowColor->windowColor->price}}</th>
+                </tr>
+            @endif
+
         @endforeach
         @foreach($additionalServices as $additionalService)
                 <?php
@@ -309,7 +321,6 @@
                     <th class="list-text1">{{$assemblyService->total_facade_quantity * $services->count() * $assemblyService->assemblyService->price}}</th>
                 </tr>
         @endif
-
         @endforeach
 
         @foreach($profiles as $profile)

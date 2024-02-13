@@ -120,7 +120,7 @@ class OrderController extends Controller
                             }
                             if($handlerPosition->slug == "round"){
                                 $price += $profileNumber * 2*($width + $height)*$windowHandler->price;
-                                $windowHandlerQuantity = $peremetr;
+                                $windowHandlerQuantity = 2*($width + $height);
                                 $profilePeremetr += 0;
                             }
                         }else{
