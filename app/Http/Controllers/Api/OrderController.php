@@ -152,7 +152,7 @@ class OrderController extends Controller
                     }
                 }
                 // Mana shu joyini ko'rish kerak balandlik yoki peremetr assembly service
-                $p = 2*($width + $height);
+
                 if($height >= 1.8 && $height < 2.4){
                     $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                     if($assemblyService){
@@ -183,9 +183,7 @@ class OrderController extends Controller
                     'sealant_quantity' =>  $sealantQuantity,
                     'window_handler_quantity' =>  $windowHandlerQuantity*$profileNumber,
                     'status_id' =>  1,
-                    'X1' => (array_key_exists('X1' , $detail)) ? $detail['X1'] : 100 ,
-                    'X2' => (array_key_exists('X2' , $detail)) ? $detail['X2'] : 100 ,
-                    'Y1' => (array_key_exists('Y1' , $detail)) ? $detail['Y1'] : 100 ,
+                    'additive_sizes' => (array_key_exists('additive_sizes' , $detail)) ? $detail['additive_sizes'] : "",
                     'price' => $price ,
                     'facade_quantity' => $profileNumber ,
                     'surface' => $surface ,
