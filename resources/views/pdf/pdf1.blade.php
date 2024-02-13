@@ -300,7 +300,7 @@
                     $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
                 ?>
 
-        @if($assemblyService)
+        @if($assemblyService->assemblyService)
                 <tr class="list-item">
                     <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
