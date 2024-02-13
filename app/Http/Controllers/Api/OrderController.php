@@ -309,7 +309,7 @@ class OrderController extends Controller
                 'total_price' => $price
             ]);
         }
-        $profileNumber = 1;
+        $profileNumber = 0;
         if($request->has('quantity_left')){
             $profileNumber += $request->quantity_left;
         }
@@ -384,15 +384,15 @@ class OrderController extends Controller
         if($request->has('additional_service_id')){
             $additionalService = AdditionalService::find($request->additional_service_id);
             if($additionalService){
-                $additionalServicePrice += $additionalService->price;
+                $additionalServicePrice += $additionalService->price*$height*$width*$profileNumber;
             }
         }
-        if($perimeter >= 1.8 && $perimeter < 2.4){
+        if($height >= 1.8 && $height < 2.4){
             $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
             }
-        }elseif($perimeter >=2.4){
+        }elseif($height >=2.4){
             $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;

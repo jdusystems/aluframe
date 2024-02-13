@@ -384,7 +384,6 @@ class PdfController extends Controller
             if($detail['profile_type_id']){
 
                 $profileType = ProfileType::find($detail['profile_type_id']);
-                $profileNumber += 1;
                 if(array_key_exists('quantity_right' , $detail) && $detail['quantity_right'] > 0){
                     $profileNumber += $detail['quantity_right'];
                 }
@@ -458,17 +457,16 @@ class PdfController extends Controller
             if(array_key_exists('additional_service_id' ,$detail)){
                 $additionalService = AdditionalService::find($detail['additional_service_id']);
                 if($additionalService){
-                    $price += $additionalService->price;
+                    $price += $additionalService->price*$surface*$profileNumber;
                 }
             }
-            $p = 2*($width + $height);
 
-            if($p >= 1.8 && $p < 2.4){
+            if($height >= 1.8 && $height < 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;
                 }
-            }elseif($p >=2.4){
+            }elseif($height >=2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;
