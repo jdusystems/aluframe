@@ -40,7 +40,7 @@ class GetOrderDetailRequest extends FormRequest
             })] ,
             'orders.*.width' => ['required' , 'numeric' , 'min:1' ],
             'orders.*.height' => ['required' , 'numeric' , 'min:1' ],
-            'orders.*.additive_sizes' => ['text' ],
+            'orders.*.additive_sizes' => ['string' , 'max:1000'],
             'orders.*.quantity_right' => ['required', 'integer' , 'min:0'],
             'orders.*.quantity_left' => ['required' , 'integer' , 'min:0'],
             'orders.*.number_of_loops' => ['integer' , 'min:1'],
