@@ -330,7 +330,7 @@ class PdfController extends Controller
             $windowHandler1 = WindowHandler::where('profile_type_id', $profileType->id)->where('profile_color_id', $detail['profile_color_id'])->first();
             $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
             $data[] = [
-                'profile_type_name' => $profileType->calculationType->name ,
+                'profile_type' => $profileType->calculationType->name ,
                 'profile_type_name' => $profileType->name ,
                 'profile_type_price' => $profileType->price ,
                 'profile_quantity' => $profilePeremetr*$profileNumber ,
