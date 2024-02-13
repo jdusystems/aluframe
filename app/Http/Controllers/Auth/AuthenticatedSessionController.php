@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
@@ -20,8 +21,22 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
-        $user->tokens()->delete();
+        $token = $user->createToken('api-token');
 
+        return response()->json([
+            'user' => $user,
+            'token' => $token->plainTextToken
+        ]);
+     }
+     public function userLogin(LoginRequest $request): JsonResponse
+    {
+        $request->authenticate();
+        $user = $request->user();
+        if($user->is_admin || $user->superadmin){
+            return response()->json([
+                'message' => "Admins can't login here"
+            ] , 422);
+        }
         $token = $user->createToken('api-token');
 
         return response()->json([
@@ -37,10 +52,10 @@ class AuthenticatedSessionController extends Controller
     {
         $user = $request->user();
 
-        $user->tokens()->delete();
-
+        $expirationDate = Carbon::now()->subDays(2);
+       $user->tokens()->where('created_at' , $expirationDate)->delete();
        return response()->json([
-           'message' => 'Logged Out'
+           'message' => 'Successfully logged out!'
        ]);
     }
 }

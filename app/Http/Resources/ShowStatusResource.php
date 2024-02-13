@@ -17,7 +17,8 @@ class ShowStatusResource extends JsonResource
         return [
             'id' => $this->id,
             'slug' => $this->slug,
-            'name' => $this->name
+            'name' => $this->name,
+            'color' => $this->color,
         ];
     }
 }

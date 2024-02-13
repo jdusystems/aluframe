@@ -9,7 +9,7 @@ class Status extends Model
 {
     use HasFactory;
     protected $fillable = [
-          'name' , 'slug'
+          'name' , 'slug' ,'color'
         ];
     public function orders(){
         return $this->hasMany(Order::class);

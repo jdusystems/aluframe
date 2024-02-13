@@ -40,7 +40,11 @@ class WindowHandlerController extends Controller
      */
     public function store(StoreWindowHandlerRequest $request)
     {
-        if(ProfileType::find($request->profile_type_id)->window_handler()->exists() && ProfileColor::find($request->profile_color_id)->windowHandlers()->exists()){
+        $exists = WindowHandler::where('profile_type_id' , $request->profile_type_id)
+            ->where('profile_color_id' , $request->profile_color_id)
+            ->whereNull('deleted_at')->exists();
+
+        if($exists){
             return new ReturnResponseResource([
                 'code' => 422 ,
                 'message' => "Record already exists!"
@@ -48,7 +52,6 @@ class WindowHandlerController extends Controller
         }
         return new ShowWindowHandlerResource(WindowHandler::create($request->all()));
     }
-
     /**
      * Display the specified resource.
      */
@@ -90,8 +93,6 @@ class WindowHandlerController extends Controller
 
         return new ShowWindowHandlerResource($windowHandler);
     }
-
-
     public function deleteMultiple(Request $request){
         $ids = $request->json('ids');
 

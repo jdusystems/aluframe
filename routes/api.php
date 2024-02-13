@@ -46,19 +46,26 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     Route::get('/user' , function (Request $request){
        $user = \Illuminate\Support\Facades\Auth::user();
-       $role = "user";
-       if($user->is_admin==1){
+// is_admin bu superadmin
+        if($user->superadmin==1 && $user->is_admin==1){
+            $role = "superadmin";
+            return response()->json([
+                'user' => $user ,
+                'user_role' => $role ,
+            ]);
+        }elseif($user->is_admin==1){
            $role = "admin";
-       }elseif($user->superadmin){
-           $role = "superadmin";
+           return response()->json([
+               'user' => $user ,
+               'user_role' => $role ,
+           ]);
        }else{
            $role = "user";
+           return response()->json([
+               'user' => $user ,
+               'user_role' => $role ,
+           ]);
        }
-       return response()->json([
-           'user' => $user ,
-           'user_role' => $role ,
-       ]);
-
     });
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
@@ -68,7 +75,6 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     // Super Admin
     Route::middleware(['superadmin'])->group(function (){
-
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
@@ -203,8 +209,7 @@ Route::apiResource('types' , TypeController::class , [
 
 Route::post('/order-details' , [PdfController::class , 'orderDetails']);
 Route::post('/total-price' , [PdfController::class , 'totalPrice']);
-
-
+Route::post('/order-price' , [OrderController::class ,'getOrderPrice']);
 
 Route::get('/image' , function (){
     return view('image');

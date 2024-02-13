@@ -41,19 +41,26 @@ class PdfController extends Controller
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width'),
-            DB::raw('SUM(quantity_right) as quantity_right'),
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
+            DB::raw('SUM(sealant_quantity) as total_sealant_length'),
+            DB::raw('SUM(corner_quantity) as total_corner_quantity'),
             DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity'),
+            DB::raw('SUM(profile_length) as total_profile_length'),
         )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
-
+//        return response()->json([
+//            'data' => $profiles ,
+//            'details' => $orderDetails
+//        ]);
         $windowColors = OrderDetail::select('window_color_id' ,
-            DB::raw('SUM(width*height) as total_surface'),
-            DB::raw('SUM(quantity_right) as quantity_right'),
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(surface) as total_surface'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
         $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
-        $assemblyServices = OrderDetail::select('assembly_service_id')->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
+
+        $assemblyServices = OrderDetail::select('assembly_service_id' ,
+            DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
+        )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
 
         $user = User::find($order->user_id);
 
@@ -91,19 +98,23 @@ class PdfController extends Controller
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width'),
-            DB::raw('SUM(quantity_right) as quantity_right'),
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
+            DB::raw('SUM(sealant_quantity) as total_sealant_length'),
+            DB::raw('SUM(corner_quantity) as total_corner_quantity'),
             DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity'),
+            DB::raw('SUM(profile_length) as total_profile_length'),
         )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
 
         $windowColors = OrderDetail::select('window_color_id' ,
-            DB::raw('SUM(width*height) as total_surface'),
-            DB::raw('SUM(quantity_right) as quantity_right'),
-            DB::raw('SUM(quantity_left) as quantity_left'),
+            DB::raw('SUM(surface) as total_surface'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
         $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
-        $assemblyServices = OrderDetail::select('assembly_service_id')->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
+
+        $assemblyServices = OrderDetail::select('assembly_service_id' ,
+            DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
+        )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
 
         $user = User::find($order->user_id);
 
@@ -140,19 +151,14 @@ class PdfController extends Controller
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
-            DB::raw('SUM(quantity_right) as total_quantity_right'),
-            DB::raw('SUM(quantity_left) as total_quantity_left') ,
-            DB::raw('SUM(quantity_right*height) as quantity_right_height') ,
-            DB::raw('SUM(quantity_right*width) as quantity_right_width') ,
-            DB::raw('SUM(quantity_left*height) as quantity_left_height'),
-            DB::raw('SUM(quantity_left*width) as quantity_left_width'),
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
 
         $windowColors = OrderDetail::select('window_color_id' ,
+            DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
-            DB::raw('SUM(quantity_right) as total_quantity_right') ,
-            DB::raw('SUM(quantity_left) as total_quantity_left'),
+            DB::raw('SUM(surface) as total_surface'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
         $filename = 'invoice3_' . $order->order_id . '.pdf';
@@ -254,18 +260,18 @@ class PdfController extends Controller
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                         }
                         if($handlerPosition->slug == "opposite"){
-                            $price += $height*$windowHandler->price;
-                            $windowHandlerQuantity = $height;
+                            $price += $height*$windowHandler->price*$profileNumber;
+                            $windowHandlerQuantity = $height*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2*$width + $height;
                         }
                         if($handlerPosition->slug == "top"){
-                            $price += $width*$windowHandler->price;
-                            $windowHandlerQuantity = $width;
+                            $price += $width*$windowHandler->price*$profileNumber;
+                            $windowHandlerQuantity = $width*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2*$height + $width;
                         }
                         if($handlerPosition->slug == "below"){
-                            $price += $width*$windowHandler->price;
-                            $windowHandlerQuantity = $width;
+                            $price += $width*$windowHandler->price*$profileNumber;
+                            $windowHandlerQuantity = $width*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2*$height + $width;
                         }
                         if($handlerPosition->slug == "round"){
@@ -287,25 +293,26 @@ class PdfController extends Controller
             if($detail['window_color_id']){
                 $windowColor = WindowColor::find($detail['window_color_id']);
                 if($windowColor){
-                    $price += $surface * $windowColor->price;
+                    $price += $surface * $windowColor->price*$profileNumber;
                 }
             }
             if(array_key_exists('additional_service_id' ,$detail)){
                 $additionalService = AdditionalService::find($detail['additional_service_id']);
                 if($additionalService){
-                    $price += $additionalService->price ;
+                    $price += $additionalService->price; // Har bitta rom uchun alohida qo'shimcha xizmat xaqi mi yoki hammasiga bittami
                 }
             }
-            if($height < 1.8){
+            $perimeter = 2*($width + $height);
+            if($perimeter >= 1.8 && $perimeter < 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price*$profileNumber ;
                 }
 
-            }elseif($height > 1.8){
+            }elseif($perimeter >=2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price*$profileNumber;
                 }
             }
             $windowColor1 = WindowColor::find($detail['window_color_id']);
@@ -317,38 +324,37 @@ class PdfController extends Controller
              if(array_key_exists('handler_position_id' ,$detail)){
                 $handlerPosition1 = HandlerPosition::find($detail['handler_position_id']);
             }
-            if($profileType->sealant){
-                $sealant1 = Sealant::where('profile_type_id' , $profileType->id)->first();
-            }
-            if($profileType->window_handler) {
-                $windowHandler1 = WindowHandler::where('profile_type_id', $profileType->id)->where('profile_color_id', $detail['profile_color_id'])->first();
-            }
-            if($profileType->corner){
-                $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
-            }
-
+             $sealant1 = Sealant::where('profile_type_id' , $profileType->id)->first();
+            $windowHandler1 = WindowHandler::where('profile_type_id', $profileType->id)->where('profile_color_id', $detail['profile_color_id'])->first();
+            $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
             $data[] = [
                 'profile_type_name' => $profileType->name ,
                 'profile_type_price' => $profileType->price ,
-                'profile_quantity' => 2*($width+$height)*($detail['quantity_left'] + $detail['quantity_right']+1) ,
+                'profile_quantity' => $profilePeremetr*$profileNumber ,
+                'window_vendor_code' => $windowColor1->vendor_code ,
                 'window_color_name' => $windowColor1->name ,
                 'window_color_price' => $windowColor1->price ,
                 'window_color_surface' => ($width*$height)*($detail['quantity_left'] + $detail['quantity_right']+1) ,
                 'profile_color_name' =>  $profileColor1->name,
                 'opening_type_name' => $openingType1->name ,
                 'handler_position_name' => ($handlerPosition1) ? $handlerPosition1->name :"",
+                'additional_service_vendor_code' => ($additionalService1) ? $additionalService1->vendor_code  : "",
                 'additional_service_name' => ($additionalService1) ? $additionalService1->name  : "",
                 'additional_service_price' => ($additionalService1) ? $additionalService1->price  : 0,
                 'additional_service_quantity' => ($additionalService1) ? 1  : 0,
+                'assembly_service_vendor_code' => ($assemblyService) ? $assemblyService->vendor_code : "" ,
                 'assembly_service_name' => ($assemblyService) ? $assemblyService->name : "" ,
                 'assembly_service_price' => ($assemblyService) ? $assemblyService->price : 0 ,
-                'assembly_service_quantity' => ($assemblyService) ? 1 : 0 ,
+                'assembly_service_quantity' => ($assemblyService) ? $profileNumber : 0 ,
                 'sealant_name' => ($sealant1) ? $sealant1->name : "",
+                'sealant_vendor_code' => ($sealant1) ? $sealant1->vendor_code : "",
                 'sealant_price' => ($sealant1) ? $sealant1->price : 0,
                 'sealant_quantity' => ($sealant1) ? $sealantQuantity : 0,
+                'window_handler_vendor_code' => ($windowHandler1) ? $windowHandler1->vendor_code : "",
                 'window_handler_name' => ($windowHandler1) ? $windowHandler1->name : "",
                 'window_handler_price' => ($windowHandler1) ? $windowHandler1->price : 0,
                 'window_handler_quantity' => ($windowHandler1) ? $windowHandlerQuantity : 0,
+                'conrer_vendor_code' => ($corner1)  ? $corner->vendor_code : "",
                 'conrer_name' => ($corner1)  ? $corner->name : "",
                 'conrer_price' => ($corner1)  ? $corner->price : 0,
                 'conrer_quantity' => ($corner1)  ? $cornerQuantity : 0,
@@ -356,7 +362,7 @@ class PdfController extends Controller
                 'height' => $height ,
                 'quantity_right' => (array_key_exists('quantity_right', $detail)) ? $detail['quantity_right'] : 0 ,
                 'quantity_left' => (array_key_exists('quantity_left' , $detail)) ? $detail['quantity_left'] : 0 ,
-                'number_of_loops' => ($detail['number_of_loops']) ? $detail['number_of_loops'] : 1 ,
+                'number_of_loops' => ($detail['number_of_loops']) ? ($detail['quantity_left'] + $detail['quantity_right']+1)*$detail['number_of_loops'] : 1 ,
                 'comment' => ($detail['comment']) ? $detail['comment'] : " " ,
                 'X1' => (array_key_exists('X1' , $detail)) ? $detail['X1'] : null ,
                 'X2' => (array_key_exists('X2' , $detail)) ? $detail['X2'] : null ,
@@ -375,9 +381,9 @@ class PdfController extends Controller
             $price = 0;
             $profileNumber = 0;
             if($detail['profile_type_id']){
+
                 $profileType = ProfileType::find($detail['profile_type_id']);
                 $profileNumber += 1;
-
                 if(array_key_exists('quantity_right' , $detail) && $detail['quantity_right'] > 0){
                     $profileNumber += $detail['quantity_right'];
                 }
@@ -398,39 +404,41 @@ class PdfController extends Controller
                 $windowHandlerQuantity = 0;
 
                 //
-                $surface = $profileNumber * ($width * $height);
+                $surface = $width * $height;
 
                 if($profileType->sealant){
                     $sealant = Sealant::where('profile_type_id' , $profileType->id)->first();
                     $price += $peremetr*$sealant->price;
                 }
                 if($profileType->window_handler){
-                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->first();
+                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
                     $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
                     if($handlerPosition->slug == "no_handler"){
                         $windowHandlerQuantity += 0;
                         $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                     }
-                    if($handlerPosition->slug == "opposite"){
-                        $price += $height*$windowHandler->price;
-                        $windowHandlerQuantity = $height;
-                        $profilePeremetr = $profilePeremetr + 2*$width + $height;
-                    }
-                    if($handlerPosition->slug == "top"){
-                        $price += $width*$windowHandler->price;
-                        $windowHandlerQuantity = $width;
-                        $profilePeremetr = $profilePeremetr + 2*$height + $width;
-                    }
-                    if($handlerPosition->slug == "below"){
-                        $price += $width*$windowHandler->price;
-                        $windowHandlerQuantity = $width;
-                        $profilePeremetr = $profilePeremetr + 2*$height + $width;
-                    }
-                    if($handlerPosition->slug == "round"){
-                        $price += $peremetr*$windowHandler->price;
-                        $windowHandlerQuantity = $peremetr;
-                        $profilePeremetr += 0;
-                    }
+                   if($windowHandler){
+                       if($handlerPosition->slug == "opposite"){
+                           $price += $height*$windowHandler->price*$profileNumber;
+                           $windowHandlerQuantity = $height;
+                           $profilePeremetr = $profilePeremetr + 2*$width + $height;
+                       }
+                       if($handlerPosition->slug == "top"){
+                           $price += $width*$windowHandler->price*$profileNumber;
+                           $windowHandlerQuantity = $width;
+                           $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                       }
+                       if($handlerPosition->slug == "below"){
+                           $price += $width*$windowHandler->price*$profileNumber;
+                           $windowHandlerQuantity = $width;
+                           $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                       }
+                       if($handlerPosition->slug == "round"){
+                           $price += $peremetr*$windowHandler->price;
+                           $windowHandlerQuantity = $peremetr;
+                           $profilePeremetr += 0;
+                       }
+                   }
                 }
                 if($profileType->corner){
                     $corner = Corner::where('profile_type_id' , $profileType->id)->first();
@@ -443,24 +451,26 @@ class PdfController extends Controller
             if($detail['window_color_id']){
                 $windowColor = WindowColor::find($detail['window_color_id']);
                 if($windowColor){
-                    $price += $surface * $windowColor->price;
+                    $price += $surface * $windowColor->price * $profileNumber;
                 }
             }
             if(array_key_exists('additional_service_id' ,$detail)){
                 $additionalService = AdditionalService::find($detail['additional_service_id']);
                 if($additionalService){
-                    $price += $additionalService->price ;
+                    $price += $additionalService->price;
                 }
             }
-            if($height < 1.8){
+            $p = 2*($width + $height);
+
+            if($p >= 1.8 && $p < 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price*$profileNumber;
                 }
-            }elseif($height > 1.8){
+            }elseif($p >=2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
                 if($assemblyService){
-                    $price += $assemblyService->price ;
+                    $price += $assemblyService->price*$profileNumber;
                 }
             }
 

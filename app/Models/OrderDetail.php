@@ -22,7 +22,8 @@ class OrderDetail extends Model
         'additional_service_id' , 'assembly_service_id' , 'opening_type_id' ,
         'handler_type_id' , 'width' ,'height' ,'quantity_right' ,'quantity_left' ,'number_of_loops' ,'comment' ,
         'price' ,'X1' , 'X2' ,'Y1' , 'sealant_quantity' ,
-        'corner_quantity' ,'window_handler_quantity' ,'handler_position_id'
+        'corner_quantity' ,'window_handler_quantity' ,'handler_position_id' ,
+        'profile_length' , 'sealant_length' , 'surface' , 'facade_quantity' , 'corner_quantity'
     ];
 
     public function order(){
