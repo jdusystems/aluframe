@@ -278,10 +278,11 @@ class PdfController extends Controller
                             $windowHandlerQuantity = $peremetr;
                             $profilePeremetr += 0;
                         }
-                    }else{
-                     $profilePeremetr = 2*($height + $width);
                     }
+                }else{
+                    $profilePeremetr = 2*($height + $width);
                 }
+
                 if($profileType->corner){
                     $corner = Corner::where('profile_type_id' , $profileType->id)->first();
                     if($corner){
@@ -342,7 +343,7 @@ class PdfController extends Controller
                 'additional_service_vendor_code' => ($additionalService1) ? $additionalService1->vendor_code  : "",
                 'additional_service_name' => ($additionalService1) ? $additionalService1->name  : "",
                 'additional_service_price' => ($additionalService1) ? $additionalService1->price  : 0,
-                'additional_service_quantity' => ($additionalService1) ? 1  : 0,
+                'additional_service_quantity' => ($additionalService1) ? $surface  : 0,
                 'assembly_service_vendor_code' => ($assemblyService) ? $assemblyService->vendor_code : "" ,
                 'assembly_service_name' => ($assemblyService) ? $assemblyService->name : "" ,
                 'assembly_service_price' => ($assemblyService) ? $assemblyService->price : 0 ,
