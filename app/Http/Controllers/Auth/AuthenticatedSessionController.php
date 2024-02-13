@@ -31,7 +31,6 @@ class AuthenticatedSessionController extends Controller
      public function userLogin(LoginRequest $request): JsonResponse
     {
         $request->authenticate();
-
         $user = $request->user();
         if($user->is_admin || $user->superadmin){
             return response()->json([
