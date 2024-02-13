@@ -168,19 +168,19 @@
             <table class="card">
                 <tr class="card-item">
                     <td class="text">Профиль:</td>
-                    <td class="title">{{$orderDetail->profileType->name}}, {{$orderDetail->profileColor->name}}</td>
+                    <td class="title">{{($orderDetail->profileType) ? $orderDetail->profileType->name: ""}}, {{($orderDetail->profileColor) ? $orderDetail->profileColor->name : ""}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Цвет стекла:</td>
-                    <td class="title">{{$orderDetail->windowColor->name}}</td>
+                    <td class="title">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name :""}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Доп-услуги для стекла:</td>
-                    <td class="title">{{$orderDetail->additionalService->name}}</td>
+                    <td class="title">{{($orderDetail->additionalService) ? $orderDetail->additionalService->name : ""}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Тип открывания:</td>
-                    <td class="title">{{$orderDetail->openingType->name}}</td>
+                    <td class="title">{{($orderDetail->openingType) ? $orderDetail->openingType->name : ""}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Количество петель:</td>
@@ -213,11 +213,11 @@
                 </tr>
                 <tr class="card-item">
                     <td class="text">Присака станд.?:</td>
-                    <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </td>
+                    <td class="title">{{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes : ""}} </td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Комментарий:</td>
-                    <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</td>
+                    <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</td>
                 </tr>
             </table>
         @endforeach
