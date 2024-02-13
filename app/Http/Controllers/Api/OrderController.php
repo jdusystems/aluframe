@@ -98,7 +98,6 @@ class OrderController extends Controller
 
                     if($windowHandler){
                         $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
-
                         if($handlerPosition->slug == "no_handler"){
                             $windowHandlerQuantity += 0;
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
@@ -152,7 +151,7 @@ class OrderController extends Controller
                     }
                 }
                 // Mana shu joyini ko'rish kerak balandlik yoki peremetr assembly service
-
+                $assemblyService = null;
                 if($height >= 1.8 && $height < 2.4){
                     $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
                     if($assemblyService){
@@ -309,13 +308,16 @@ class OrderController extends Controller
                 'total_price' => $price
             ]);
         }
+
         $profileNumber = 0;
+
         if($request->has('quantity_left')){
             $profileNumber += $request->quantity_left;
         }
         if($request->has('quantity_right')){
             $profileNumber += $request->quantity_right;
         }
+
         $perimeter = 2*($width + $height);
 
         if($request->has('profile_type_id')){
