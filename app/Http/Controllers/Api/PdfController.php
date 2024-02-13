@@ -337,7 +337,7 @@ class PdfController extends Controller
                 'window_vendor_code' => $windowColor1->vendor_code ,
                 'window_color_name' => $windowColor1->name ,
                 'window_color_price' => $windowColor1->price ,
-                'window_color_surface' => ($width*$height)*($detail['quantity_left'] + $detail['quantity_right']+1) ,
+                'window_color_surface' => ($width*$height)*($detail['quantity_left'] + $detail['quantity_right']) ,
                 'profile_color_name' =>  $profileColor1->name,
                 'opening_type_name' => $openingType1->name ,
                 'handler_position_name' => ($handlerPosition1) ? $handlerPosition1->name :"",
