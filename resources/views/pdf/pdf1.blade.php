@@ -249,7 +249,7 @@
         @foreach($profiles as $profile)
             @if($profile->profileType)
                 <tr class="list-item">
-                    <th class="list-text1">{{$profile->profileType->vendor_code}}</th>
+                    <th class="list-text1">{{$profile->profileType->calCulationType->name}}</th>
                     <th class="list-text1">{{$profile->profileType->name}}</th>
                     <th class="list-text1">{{$profile->profileType->price}}</th>
                     <th class="list-text1">{{$profile->total_profile_length}}</th>
