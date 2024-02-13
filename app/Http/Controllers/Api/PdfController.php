@@ -302,6 +302,7 @@ class PdfController extends Controller
                     $price += $additionalService->price*$surface; // Har bitta rom uchun alohida qo'shimcha xizmat xaqi mi yoki hammasiga bittami
                 }
             }
+            $assemblyService = null;
             $perimeter = 2*($width + $height);
             if($height >= 1.8 && $height < 2.4){
                 $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
