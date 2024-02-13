@@ -94,8 +94,9 @@ class OrderController extends Controller
                         $sealant = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                         $price += $peremetr*$sealant->price;
                     }
-                    if($profileType->window_handler){
-                        $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
+                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
+
+                    if($windowHandler){
                         $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
 
                         if($handlerPosition->slug == "no_handler"){

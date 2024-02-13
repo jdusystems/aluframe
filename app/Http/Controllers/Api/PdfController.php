@@ -250,10 +250,10 @@ class PdfController extends Controller
                     $sealant = Sealant::where('profile_type_id' , $profileType->id)->first();
                     $price += $peremetr*$sealant->price;
                 }
-                if($profileType->window_handler){
-                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
+                $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
+                if($windowHandler){
                     $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
-                    if($windowHandler){
+                    if($handlerPosition){
                         if($handlerPosition->slug == "no_handler"){
                             $windowHandlerQuantity += 0;
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
