@@ -299,13 +299,17 @@
                 <?php
                     $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
                 ?>
-            <tr class="list-item">
-                <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
-                <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
-                <th class="list-text1">{{$assemblyService->assemblyService->price}}</th>
-                <th class="list-text1">{{$services->count() * $assemblyService->total_facade_quantity}}</th>
-                <th class="list-text1">{{$assemblyService->total_facade_quantity * $services->count() * $assemblyService->assemblyService->price}}</th>
-            </tr>
+
+        @if($assemblyService)
+                <tr class="list-item">
+                    <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
+                    <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
+                    <th class="list-text1">{{$assemblyService->assemblyService->price}}</th>
+                    <th class="list-text1">{{$services->count() * $assemblyService->total_facade_quantity}}</th>
+                    <th class="list-text1">{{$assemblyService->total_facade_quantity * $services->count() * $assemblyService->assemblyService->price}}</th>
+                </tr>
+        @endif
+
         @endforeach
 
         @foreach($profiles as $profile)
