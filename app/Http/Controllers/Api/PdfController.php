@@ -369,7 +369,7 @@ class PdfController extends Controller
                 'height' => $height ,
                 'quantity_right' => (array_key_exists('quantity_right', $detail)) ? $detail['quantity_right'] : 0 ,
                 'quantity_left' => (array_key_exists('quantity_left' , $detail)) ? $detail['quantity_left'] : 0 ,
-                'number_of_loops' => ($detail['number_of_loops']) ? ($detail['quantity_left'] + $detail['quantity_right']+1)*$detail['number_of_loops'] : 1 ,
+                'number_of_loops' => ($detail['number_of_loops']) ? $detail['number_of_loops'] : 1 ,
                 'comment' => ($detail['comment']) ? $detail['comment'] : "" ,
                 'additive_sizes' => (array_key_exists('additive_sizes' , $detail)) ? $detail['additive_sizes'] : "" ,
             ];
