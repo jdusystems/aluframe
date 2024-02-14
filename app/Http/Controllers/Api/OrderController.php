@@ -388,7 +388,11 @@ class OrderController extends Controller
         if($request->has('additional_service_id')){
             $additionalService = AdditionalService::find($request->additional_service_id);
             if($additionalService){
-                $additionalServicePrice += $additionalService->price*$height*$width*$profileNumber;
+                if($height && $width){
+                    $additionalServicePrice += $additionalService->price*$height*$width*$profileNumber;
+                }else{
+                    $additionalServicePrice += $additionalService->price;
+                }
             }
         }
         if($height >= 1.8 && $height < 2.4){
