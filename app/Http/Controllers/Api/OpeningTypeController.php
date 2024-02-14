@@ -31,7 +31,7 @@ class OpeningTypeController extends Controller
     }
     public function all()
     {
-        return new OpeningTypeCollection(OpeningType::all());
+        return new OpeningTypeCollection(OpeningType::orderBy('sort_index')->get());
     }
 
     public function getByType(string $type_id){
@@ -42,7 +42,7 @@ class OpeningTypeController extends Controller
                 'message' => 'Record not found!'
             ] , 404);
         }
-        $openingTypes = OpeningType::where('type_id' , $type_id)->get();
+        $openingTypes = OpeningType::where('type_id' , $type_id)->orderBy('sort_index')->get();
         return new OpeningTypeCollection($openingTypes);
     }
 
