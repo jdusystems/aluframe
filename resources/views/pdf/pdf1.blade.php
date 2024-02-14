@@ -221,7 +221,7 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
-                <th class="list-text">X1 = {{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes: "Стандарт"}}}}</th>
+                <th class="list-text">{{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes: "Стандарт"}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Комментарий:</th>
@@ -303,8 +303,8 @@
                 <th class="list-text1">{{$additionalService->additionalService->vendor_code}}</th>
                 <th class="list-text1">{{$additionalService->additionalService->name}}</th>
                 <th class="list-text1">{{$additionalService->additionalService->price}}</th>
-                <th class="list-text1">{{$services->count()}}</th>
-                <th class="list-text1">{{$services->count() * $additionalService->additionalService->price}}</th>
+                <th class="list-text1">{{$additionalService->total_surface}}</th>
+                <th class="list-text1">{{$additionalService->total_surface * $additionalService->additionalService->price}}</th>
             </tr>
         @endforeach
         @foreach($assemblyServices as $assemblyService)

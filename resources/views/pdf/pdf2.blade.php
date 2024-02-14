@@ -245,7 +245,7 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
-                <th class="list-text">{{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes: ""}} </th>
+                <th class="list-text">{{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes: "Стандарт"}} </th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Комментарий:</th>
@@ -316,7 +316,7 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$additionalService->additionalService->vendor_code}}</th>
                     <th class="list-text1">{{$additionalService->additionalService->name}}</th>
-                    <th class="list-text1">{{$services->count()}}</th>
+                    <th class="list-text1">{{$additionalService->total_surface}}</th>
                 </tr>
             @endif
 

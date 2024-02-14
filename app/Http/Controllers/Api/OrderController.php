@@ -309,7 +309,7 @@ class OrderController extends Controller
             ]);
         }
 
-        $profileNumber = 0;
+        $profileNumber = 1;
 
         if($request->has('quantity_left')){
             $profileNumber += $request->quantity_left;
@@ -317,7 +317,9 @@ class OrderController extends Controller
         if($request->has('quantity_right')){
             $profileNumber += $request->quantity_right;
         }
-
+        if($profileNumber > 1){
+            $profileNumber = $profileNumber - 1;
+        }
         $perimeter = 2*($width + $height);
 
         if($request->has('profile_type_id')){

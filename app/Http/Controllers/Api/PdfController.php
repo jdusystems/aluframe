@@ -56,7 +56,9 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
+        $additionalServices = OrderDetail::select('additional_service_id' ,
+            DB::raw('SUM(surface) as total_surface')
+        )->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
 
         $assemblyServices = OrderDetail::select('assembly_service_id' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
@@ -110,7 +112,9 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $additionalServices = OrderDetail::select('additional_service_id')->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
+        $additionalServices = OrderDetail::select('additional_service_id' ,
+            DB::raw('SUM(surface) as total_surface')
+        )->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
 
         $assemblyServices = OrderDetail::select('assembly_service_id' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
@@ -374,7 +378,9 @@ class PdfController extends Controller
         return response()->json([
             'data' => $data ,
         ]);
-    }public function totalPrice(GetOrderDetailRequest $request){
+    }
+
+    public function totalPrice(GetOrderDetailRequest $request){
         $details = $request->input('orders');
         $totalPrice = 0;
         $data =  [];
