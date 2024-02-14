@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('order_details', function (Blueprint $table) {
-            $table->integer('facade_quantity')->default(0);
-            $table->double('profile_length' , 10 ,2)->default(0.00);
-            $table->double('surface' , 10 , 2)->default(0.00);
+            $table->double('profile_length', 10, 2)->default(0.00)->change();
+            $table->double('surface', 10, 2)->default(0.00)->change();
         });
     }
 
