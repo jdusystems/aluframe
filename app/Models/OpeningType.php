@@ -24,7 +24,7 @@ class OpeningType extends Model
         return $this->hasMany(OpeningTypeNumber::class);
     }
     public function handlerPositions(){
-        return $this->belongsToMany(HandlerPosition::class , 'handlerposition_openingtype' , );
+        return $this->belongsToMany(HandlerPosition::class , 'handlerposition_openingtype')->orderBy('sort_index');
     }
 
 }
