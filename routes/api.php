@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\PdfController;
 use App\Http\Controllers\Api\HandlerPositionController;
 use App\Http\Controllers\Api\OpeningTypeNumberController;
+use App\Http\Controllers\CurrencyController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -75,6 +76,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     // Super Admin
     Route::middleware(['superadmin'])->group(function (){
+
+        Route::apiResource('currencies' , CurrencyController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
+
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
@@ -151,6 +157,12 @@ Route::middleware(['auth:sanctum'])->group( function () {
 //profiles
 Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
 Route::apiResource('profiles' , ProfileTypeController::class , [
+    'only' => ['show' , 'index']
+]);
+//profile-colors
+//Currencies
+Route::get('/all-currencies', [CurrencyController::class , 'allData']);
+Route::apiResource('currencies' , CurrencyController::class , [
     'only' => ['show' , 'index']
 ]);
 //profile-colors
