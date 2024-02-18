@@ -17,6 +17,7 @@ class ShowCurrencyResource extends JsonResource
         return [
             'id' => $this->id ,
             'name' => $this->name ,
+            'symbol' => $this->symbol ,
             'rate' => $this->rate ,
         ];
     }

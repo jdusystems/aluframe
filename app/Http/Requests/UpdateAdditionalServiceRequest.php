@@ -23,12 +23,14 @@ class UpdateAdditionalServiceRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'uz_name' => ['required'],
             'image_url' => ['required'],
             'image_name' => ['required'],
             'sort_index' => ['required' , 'integer'],
-            'vendor_code' => ['required'],
+            'vendor_code' => ['required','string'],
             'price' =>  ['required', 'numeric', 'min:0'],
-            'description' => 'string'
+            'description' => 'string' ,
+            'uz_description' => 'string' ,
         ];
     }
 }

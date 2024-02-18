@@ -9,7 +9,7 @@ class Currency extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name' , 'rate'
+        'name' , 'rate' , 'symbol'
     ];
 
     public function orders(){

@@ -25,8 +25,11 @@ class UpdateProfileTypeRequest extends FormRequest
             'image_name' => "required" ,
             'image_url' => "required" ,
             'name' => "required" ,
+            'uz_name' => "required" ,
+            'size_name' => "required" ,
             'calculation_type_id' => "required|exists:calculation_types,id",
             'price' =>  ['required', 'numeric', 'min:0.01'],
+            'thickness' =>  ['required', 'numeric', 'min:1'],
             'sort_index' => ['required' , 'integer']
         ];
     }

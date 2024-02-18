@@ -23,6 +23,7 @@ class UpdateProfileColorRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'uz_name' => ['required'],
             'sort_index' => ['required' , 'integer'],
             'color_from' => ['required'],
             'color_to' => ['required'],

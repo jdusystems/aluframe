@@ -23,6 +23,7 @@ class StoreCurrencyRequest extends FormRequest
     {
         return [
             'name' => ['required' , 'string'] ,
+            'symbol' => ['required'] ,
             'rate' => ['required' , 'numeric' , 'min:1']
         ];
     }

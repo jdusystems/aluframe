@@ -75,6 +75,7 @@ class CornerController extends Controller
         }
         $corner->update([
             'name' => $request->name,
+            'uz_name' => $request->uz_name,
             'price' => $request->price,
             'vendor_code' => $request->vendor_code,
             'profile_type_id' => $request->profile_type_id

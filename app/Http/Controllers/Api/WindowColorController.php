@@ -46,6 +46,7 @@ class WindowColorController extends Controller
             'second_image_name' => $request->second_image_name ,
             'second_image_url' => $request->second_image_url ,
             'name' => $request->name ,
+            'uz_name' => $request->uz_name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
             'sort_index' => $request->sort_index ,
@@ -92,11 +93,12 @@ class WindowColorController extends Controller
 
         $windowColor->update([
             'name' => $request->name,
+            'uz_name' => $request->uz_name ,
             'image_url' => $request->image_url,
             'image_name' => $request->image_name,
             'second_image_name' => $request->second_image_name ,
             'second_image_url' => $request->second_image_url ,
-            'sort_index' => $request->sort_index,
+            'sort_index' => $request->sort_index ,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price,
             'profile_color_id' => $request->profile_color_id

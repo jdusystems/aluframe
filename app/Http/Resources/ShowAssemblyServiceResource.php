@@ -17,6 +17,7 @@ class ShowAssemblyServiceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ,
+            'uz_name' => $this->uz_name ,
             'vendor_code' => $this->vendor_code ,
             'condition_operator' => $this->condition_operator ,
             'facade_height' => $this->facade_height ,

@@ -10,6 +10,7 @@ use App\Http\Resources\ShowOrderResource;
 use App\Models\AdditionalService;
 use App\Models\AssemblyService;
 use App\Models\Corner;
+use App\Models\Currency;
 use App\Models\HandlerPosition;
 use App\Models\HandlerType;
 use App\Models\Order;
@@ -55,11 +56,14 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
+            $currency = Currency::find($request->currency_id);
             $startingOrderId = 1000;
             $lastOrderId = Order::max('order_id');
             $nextOrderId = $lastOrderId ? $lastOrderId + 1 : $startingOrderId;
             $status = Status::where('slug' , 'pending')->first();
             $order = Order::create([
+                'currency_id' => $currency->id ,
+                'language' => $request->language,
                 'order_id' => $nextOrderId,
                 'user_id' => $request->user_id ,
                 'status_id' => $status->id
@@ -67,10 +71,18 @@ class OrderController extends Controller
             $details = $request->input('orders');
             $totalPrice = 0;
             foreach ($details as $detail){
+                $profilePrice = 0;
+                $cornerPrice = 0;
+                $sealantPrice = 0;
+                $windowPrice = 0;
+                $windowHandlerPrice = 0;
+                $assemblyServicePrice = 0;
+                $additionalServicePrice = 0;
                 $price = 0;
                 $profileNumber = 0;
                 if($detail['profile_type_id']){
                     $profileType = ProfileType::find($detail['profile_type_id']);
+                    $profilePrice = $profileType->price;
                     $profileNumber = 0;
                     if(array_key_exists('quantity_right' , $detail)){
                         $profileNumber += $detail['quantity_right'];
@@ -78,6 +90,7 @@ class OrderController extends Controller
                     if(array_key_exists('quantity_left' , $detail)){
                         $profileNumber += $detail['quantity_left'];
                     }
+
                     $width = $detail['width']/1000;
                     $height = $detail['height']/1000;
                     $peremetr = 2*($width + $height) * $profileNumber;
@@ -88,15 +101,18 @@ class OrderController extends Controller
                     //
                     $windowHandlerQuantity = 0;
                     //
-                    $surface = $profileNumber * ($width * $height);
+                    $thickness = $profileType->thickness/1000;
+                    $surface = $profileNumber * (($width -$thickness) * ($height - $thickness));
 
                     if($profileType->sealant){
                         $sealant = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                         $price += $peremetr*$sealant->price;
+                        $sealantPrice = $sealant->price;
                     }
                     $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
 
                     if($windowHandler){
+                        $windowHandlerPrice = $windowHandler->price;
                         $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
                         if($handlerPosition->slug == "no_handler"){
                             $windowHandlerQuantity += 0;
@@ -134,6 +150,7 @@ class OrderController extends Controller
                         $corner = Corner::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                         if($corner){
                             $price += 4 * $profileNumber * $corner->price;
+                            $cornerPrice = $corner->price;
                         }
                     }
                     $price += $profileNumber*$profilePeremetr*$profileType->price;
@@ -142,25 +159,29 @@ class OrderController extends Controller
                     $windowColor = WindowColor::find($detail['window_color_id']);
                     if($windowColor){
                         $price += $surface * $windowColor->price;
+                        $windowPrice = $windowColor->price;
                     }
                 }
                 if(array_key_exists('additional_service_id' ,$detail)){
                     $additionalService = AdditionalService::find($detail['additional_service_id']);
                     if($additionalService){
                         $price += $additionalService->price*$surface;
+                        $additionalServicePrice = $additionalService->price;
                     }
                 }
                 // Mana shu joyini ko'rish kerak balandlik yoki peremetr assembly service
                 $assemblyService = null;
-                if($height >= 1.8 && $height < 2.4){
-                    $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+                if($height <= 1.8){
+                    $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator', '<')->first();
                     if($assemblyService){
                         $price += $assemblyService->price*$profileNumber;
+                        $assemblyServicePrice = $assemblyService->price;
                     }
-                }elseif($height >=2.4){
-                    $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+                }elseif($height > 1.8){
+                    $assemblyService = AssemblyService::where('facade_height' , 2400)->where('condition_operator', '>')->first();
                     if($assemblyService){
                         $price += $assemblyService->price*$profileNumber;
+                        $assemblyServicePrice = $assemblyService->price;
                     }
                 }
                 OrderDetail::create([
@@ -183,12 +204,19 @@ class OrderController extends Controller
                     'window_handler_quantity' =>  $windowHandlerQuantity*$profileNumber,
                     'status_id' =>  1,
                     'additive_sizes' => (array_key_exists('additive_sizes' , $detail)) ? $detail['additive_sizes'] : "",
-                    'price' => $price ,
+                    'profile_price' => $profilePrice * $currency->rate ,
+                    'corner_price' => $cornerPrice * $currency->rate,
+                    'sealant_price' => $sealantPrice * $currency->rate ,
+                    'window_handler_price' => $windowHandlerPrice * $currency->rate ,
+                    'window_price' => $windowPrice * $currency->rate ,
+                    'assembly_service_price' => $assemblyServicePrice * $currency->rate ,
+                    'additional_service_price' =>  $additionalServicePrice * $currency->rate,
+                    'price' => $price * $currency->rate ,
                     'facade_quantity' => $profileNumber ,
                     'surface' => $surface ,
                     'profile_length' => $profilePeremetr*$profileNumber
                 ]);
-                $totalPrice += $price;
+                $totalPrice += $price * $currency->rate;
             }
             if($totalPrice > 0){
                 $order->update([
@@ -395,13 +423,13 @@ class OrderController extends Controller
                 }
             }
         }
-        if($height >= 1.8 && $height < 2.4){
-            $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+        if($height < 1800 ){
+            $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '<')->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
             }
-        }elseif($height >=2.4){
-            $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+        }elseif($height >= 1800){
+            $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '>')->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
             }

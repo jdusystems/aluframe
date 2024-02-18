@@ -65,6 +65,7 @@ class CurrencyController extends Controller
 
         $currency->update([
             'name' => $request->name ,
+            'symbol' => $request->symbol ,
             'rate' => $request->rate
         ]);
 
