@@ -302,6 +302,9 @@ class OrderController extends Controller
 
     public function getOrderPrice(Request $request){
 
+        $request->validate([
+            'currency_id' => ['required' , 'numeric' ,'min:1' , 'exists:currencies,id']
+        ]);
         $currency = Currency::find($request->currency_id);
         $totalPrice = 0;
         $profilePrice = 0;
