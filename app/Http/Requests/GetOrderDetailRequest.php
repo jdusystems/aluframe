@@ -23,6 +23,7 @@ class GetOrderDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'currency_id' => ['required' , 'numeric' , 'min:1' , 'exists:currencies,id'] ,
             'orders' => 'required|array|min:1' ,
             'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');

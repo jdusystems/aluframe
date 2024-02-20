@@ -57,6 +57,7 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $currency = Currency::find($request->currency_id);
+
             $startingOrderId = 1000;
             $lastOrderId = Order::max('order_id');
             $nextOrderId = $lastOrderId ? $lastOrderId + 1 : $startingOrderId;
@@ -301,6 +302,7 @@ class OrderController extends Controller
 
     public function getOrderPrice(Request $request){
 
+        $currency = Currency::find($request->currency_id);
         $totalPrice = 0;
         $profilePrice = 0;
         $windowPrice = 0;
@@ -438,14 +440,14 @@ class OrderController extends Controller
         $totalPrice += $sealantPrice + $cornerPrice+$windowHandlerPrice+$profilePrice+$windowPrice+$additionalServicePrice+$assemblyServicePrice;
 
         return response()->json([
-            'totalPrice' => $totalPrice ,
-            'sealant_price' => $sealantPrice ,
-            'corner_price' => $cornerPrice ,
-            'window_handler_price' =>$windowHandlerPrice ,
-            'profile_price' => $profilePrice ,
-            'window_price' => $windowPrice ,
-            'additional_service_price' => $additionalServicePrice ,
-            'assembly_service_price' => $assemblyServicePrice
+            'totalPrice' => $totalPrice * $currency->rate ,
+            'sealant_price' => $sealantPrice* $currency->rate ,
+            'corner_price' => $cornerPrice * $currency->rate,
+            'window_handler_price' =>$windowHandlerPrice* $currency->rate ,
+            'profile_price' => $profilePrice* $currency->rate ,
+            'window_price' => $windowPrice* $currency->rate ,
+            'additional_service_price' => $additionalServicePrice* $currency->rate ,
+            'assembly_service_price' => $assemblyServicePrice* $currency->rate
         ]);
     }
 

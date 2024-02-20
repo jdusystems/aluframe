@@ -9,6 +9,7 @@ use App\Http\Resources\ShowOrderResource;
 use App\Models\AdditionalService;
 use App\Models\AssemblyService;
 use App\Models\Corner;
+use App\Models\Currency;
 use App\Models\HandlerPosition;
 use App\Models\OpeningType;
 use App\Models\Order;
@@ -220,6 +221,7 @@ class PdfController extends Controller
     public function orderDetails(GetOrderDetailRequest $request){
 
         $details = $request->input('orders');
+        $currency = Currency::find($request->currency_id);
         $totalPrice = 0;
         $data =  [];
         foreach ($details as $detail){
@@ -336,34 +338,42 @@ class PdfController extends Controller
             $data[] = [
                 'profile_type' => $profileType->calculationType->name ,
                 'profile_type_name' => $profileType->name ,
-                'profile_type_price' => $profileType->price ,
+                'profile_type_name_uz' => $profileType->uz_name ,
+                'profile_type_price' => $profileType->price*$currency->rate ,
                 'profile_quantity' => $profilePeremetr*$profileNumber ,
                 'window_vendor_code' => $windowColor1->vendor_code ,
                 'window_color_name' => $windowColor1->name ,
-                'window_color_price' => $windowColor1->price ,
+                'window_color_name_uz' => $windowColor1->uz_name ,
+                'window_color_price' => $windowColor1->price*$currency->rate ,
                 'window_color_surface' => ($width*$height)*($detail['quantity_left'] + $detail['quantity_right']) ,
                 'profile_color_name' =>  $profileColor1->name,
+                'profile_color_name_uz' =>  $profileColor1->uz_name,
                 'opening_type_name' => $openingType1->name ,
                 'handler_position_name' => ($handlerPosition1) ? $handlerPosition1->name :"",
+                'handler_position_name_uz' => ($handlerPosition1) ? $handlerPosition1->uz_name :"",
                 'additional_service_vendor_code' => ($additionalService1) ? $additionalService1->vendor_code  : "",
                 'additional_service_name' => ($additionalService1) ? $additionalService1->name  : "",
-                'additional_service_price' => ($additionalService1) ? $additionalService1->price  : 0,
+                'additional_service_name_uz' => ($additionalService1) ? $additionalService1->uz_name  : "",
+                'additional_service_price' => ($additionalService1) ? $additionalService1->price * $currency->rate  : 0,
                 'additional_service_quantity' => ($additionalService1) ? $surface  : 0,
                 'assembly_service_vendor_code' => ($assemblyService) ? $assemblyService->vendor_code : "" ,
                 'assembly_service_name' => ($assemblyService) ? $assemblyService->name : "" ,
-                'assembly_service_price' => ($assemblyService) ? $assemblyService->price : 0 ,
+                'assembly_service_name_uz' => ($assemblyService) ? $assemblyService->uz_name : "" ,
+                'assembly_service_price' => ($assemblyService) ? $assemblyService->price * $currency->rate : 0 ,
                 'assembly_service_quantity' => ($assemblyService) ? $profileNumber : 0 ,
                 'sealant_name' => ($sealant1) ? $sealant1->name : "",
+                'sealant_name_uz' => ($sealant1) ? $sealant1->uz_name : "",
                 'sealant_vendor_code' => ($sealant1) ? $sealant1->vendor_code : "",
-                'sealant_price' => ($sealant1) ? $sealant1->price : 0,
+                'sealant_price' => ($sealant1) ? $sealant1->price * $currency->rate : 0,
                 'sealant_quantity' => ($sealant1) ? $sealantQuantity : 0,
                 'window_handler_vendor_code' => ($windowHandler1) ? $windowHandler1->vendor_code : "",
                 'window_handler_name' => ($windowHandler1) ? $windowHandler1->name : "",
-                'window_handler_price' => ($windowHandler1) ? $windowHandler1->price : 0,
+                'window_handler_price' => ($windowHandler1) ? $windowHandler1->price *$currency->rate : 0,
                 'window_handler_quantity' => ($windowHandler1) ? $windowHandlerQuantity : 0,
                 'conrer_vendor_code' => ($corner1)  ? $corner->vendor_code : "",
                 'conrer_name' => ($corner1)  ? $corner->name : "",
-                'conrer_price' => ($corner1)  ? $corner->price : 0,
+                'conrer_name_uz' => ($corner1)  ? $corner->uz_name : "",
+                'conrer_price' => ($corner1)  ? $corner->price*$currency->rate : 0,
                 'conrer_quantity' => ($corner1)  ? $cornerQuantity : 0,
                 'width' => $width ,
                 'height' => $height ,
@@ -381,9 +391,9 @@ class PdfController extends Controller
     }
 
     public function totalPrice(GetOrderDetailRequest $request){
+        $currency = Currency::find($request->currency_id);
         $details = $request->input('orders');
         $totalPrice = 0;
-        $data =  [];
         foreach ($details as $detail){
             $price = 0;
             $profileNumber = 0;
@@ -402,12 +412,9 @@ class PdfController extends Controller
 
                 $peremetr = 2*($width + $height) * $profileNumber;
 
-                $cornerQuantity = 4*$profileNumber;
                 $profilePeremetr = 0;
 
-                $sealantQuantity = $peremetr;
                 //
-                $windowHandlerQuantity = 0;
 
                 //
                 $surface = $width * $height;
@@ -420,28 +427,23 @@ class PdfController extends Controller
                     $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
                     $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
                     if($handlerPosition->slug == "no_handler"){
-                        $windowHandlerQuantity += 0;
                         $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                     }
                    if($windowHandler){
                        if($handlerPosition->slug == "opposite"){
                            $price += $height*$windowHandler->price*$profileNumber;
-                           $windowHandlerQuantity = $height;
                            $profilePeremetr = $profilePeremetr + 2*$width + $height;
                        }
                        if($handlerPosition->slug == "top"){
                            $price += $width*$windowHandler->price*$profileNumber;
-                           $windowHandlerQuantity = $width;
                            $profilePeremetr = $profilePeremetr + 2*$height + $width;
                        }
                        if($handlerPosition->slug == "below"){
                            $price += $width*$windowHandler->price*$profileNumber;
-                           $windowHandlerQuantity = $width;
                            $profilePeremetr = $profilePeremetr + 2*$height + $width;
                        }
                        if($handlerPosition->slug == "round"){
                            $price += $peremetr*$windowHandler->price;
-                           $windowHandlerQuantity = $peremetr;
                            $profilePeremetr += 0;
                        }
                    }
@@ -466,24 +468,22 @@ class PdfController extends Controller
                     $price += $additionalService->price*$surface*$profileNumber;
                 }
             }
-
-            if($height >= 1.8 && $height < 2.4){
-                $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+            if($height < 1800 ){
+                $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '<')->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;
                 }
-            }elseif($height >=2.4){
-                $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+            }elseif($height >= 1800){
+                $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '>')->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;
                 }
             }
-
             $totalPrice += $price;
         }
 
         return response()->json([
-            'totalPrice' => $totalPrice ,
+            'totalPrice' => $totalPrice * $currency->rate ,
         ]);
     }
 
