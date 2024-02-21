@@ -223,6 +223,9 @@ Route::post('/order-details' , [PdfController::class , 'orderDetails']);
 Route::post('/total-price' , [PdfController::class , 'totalPrice']);
 Route::post('/order-price' , [OrderController::class ,'getOrderPrice']);
 
+Route::post('/send-sms' , [\App\Http\Controllers\SmsController::class , 'sendSms']);
+Route::post('/check-sms' , [\App\Http\Controllers\SmsController::class , 'getToken']);
+
 Route::get('/image' , function (){
     return view('image');
 });

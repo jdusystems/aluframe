@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PhoneNumber;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
@@ -51,8 +52,25 @@ class RegisteredUserController extends Controller
 
         $request->validate([
             'name' => ['required'] ,
-            'phone_number' => ['required']
+            'phone_number' => ['required'] ,
+            'code' => ['required' , 'numeric'] ,
         ]);
+
+        $phoneNumber = PhoneNumber::where('phone_number' , $request->phone_number)->first();
+        if(!$phoneNumber){
+            return response()->json([
+                'code' => 404 ,
+                'message' => "Bunaqa foydalanuvchi topilmadi!"
+            ] , 404);
+        }
+        if($request->code != $phoneNumber->code){
+            return response()->json([
+                'code' => 404 ,
+                'message' => "Tasdiqlash kodi noto'g'ri!"
+            ] , 404);
+        }
+        $phoneNumber->delete();
+
         $user = User::where('phone_number' , $request->phone_number)->first();
         if($user && $user->registered){
             $user->tokens()->delete();
