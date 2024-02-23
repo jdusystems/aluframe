@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PhoneNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class SmsController extends Controller
@@ -14,10 +15,15 @@ class SmsController extends Controller
             'name' => ['required' , 'string' , 'max:50'] ,
             'phone_number' => ['required' , 'string' , 'max:12'] ,
         ]);
+
         $token = $this->getToken();
         $phone = $request->phone_number;
         $code = mt_rand(1000 , 9999);
 
+        $items = PhoneNumber::where('phone_number' , $request->phone_number)->get();
+        if(!empty($items)){
+        DB::table('phone_numbers')->where('phone_number' , $request->phone_number)->delete();
+        }
         PhoneNumber::create([
             'name' => $request->name ,
             'phone_number' => $phone ,
