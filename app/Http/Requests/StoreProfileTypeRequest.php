@@ -25,6 +25,7 @@ class StoreProfileTypeRequest extends FormRequest
             'image_name' => "required" ,
             'image_url' => "required" ,
             'name' => "required" ,
+            'vendor_code' => "required" ,
             'uz_name' => "required" ,
             'size_name' => "required" ,
             'calculation_type_id' => "required|exists:calculation_types,id",

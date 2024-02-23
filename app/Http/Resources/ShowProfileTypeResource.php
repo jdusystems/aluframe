@@ -19,6 +19,7 @@ class ShowProfileTypeResource extends JsonResource
             'image_name' => $this->image_name ,
             'image_url' => $this->image_url ,
             'name' => $this->name ,
+            'vendor_code' => $this->vendor_code ,
             'uz_name' => $this->uz_name ,
             'size_name' => $this->size_name ,
             'thickness' => $this->thickness ,
