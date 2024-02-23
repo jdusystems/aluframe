@@ -52,8 +52,7 @@ class AuthenticatedSessionController extends Controller
     {
         $user = $request->user();
 
-        $expirationDate = Carbon::now()->subDays(2);
-       $user->tokens()->where('created_at' , $expirationDate)->delete();
+       $user->tokens()->delete();
        return response()->json([
            'message' => 'Successfully logged out!'
        ]);
