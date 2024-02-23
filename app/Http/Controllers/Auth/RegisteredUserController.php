@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 
@@ -80,6 +81,7 @@ class RegisteredUserController extends Controller
                 'token' => $token->plainTextToken
             ]);
         }else{
+
             $password = Str::random(10);
             $user = User::create([
                 'name' => $request->name ,
@@ -88,12 +90,51 @@ class RegisteredUserController extends Controller
                 'registered' => true ,
                 'parol' => $password
             ]);
+
+            $this->sendSms($user->phone_number , $user->parol);
             $token = $user->createToken('api-token');
             return response()->json([
                 'user' => $user ,
                 'token' => $token->plainTextToken
             ]);
         }
+    }
+
+    public function sendSms($phone , $parol){
+
+
+        $token = $this->getToken();
+
+        $headers = [
+            'Authorization' => "Bearer ".$token ,
+            'Accept' => 'application/json',
+        ];
+        $payload = [
+            'mobile_phone' => $phone,
+            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ."Логин:". $phone . "Пароль:" . $parol,
+        ];
+        $url = 'notify.eskiz.uz/api/message/sms/send';
+        try {
+            Http::withHeaders($headers)
+                ->post($url, $payload);
+            return response()->json(['message' => "Telefon raqamingizga login va parolingiz jo'natildi!", 'status_code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+    }
+
+    public function getToken(){
+        $url = env('SMS_URL');
+        $username = env('SMS_USERNAME');
+        $password = env('SMS_PASSWORD');
+
+        $response = Http::post($url, [
+            'email' => $username,
+            'password' => $password,
+        ]);
+        $token = $response['data']['token'];
+        return $token;
     }
 }
 //1|3yZKq45IaDGeBwWgjRDgsXxAdJMhiIqaiF6q4t7p2215b13f

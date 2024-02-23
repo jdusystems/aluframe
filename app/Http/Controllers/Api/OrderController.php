@@ -15,6 +15,7 @@ use App\Models\HandlerPosition;
 use App\Models\HandlerType;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\PhoneNumber;
 use App\Models\ProfileColor;
 use App\Models\ProfileType;
 use App\Models\Sealant;
@@ -25,6 +26,7 @@ use App\Models\WindowHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
@@ -47,6 +49,44 @@ class OrderController extends Controller
         }
         return new OrderCollection($orders);
     }
+
+    public function sendSms($phone , $parol){
+
+
+        $token = $this->getToken();
+
+        $headers = [
+            'Authorization' => "Bearer ".$token ,
+            'Accept' => 'application/json',
+        ];
+        $payload = [
+            'mobile_phone' => $phone,
+            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ."Логин:". $phone . "Пароль:" . $parol,
+        ];
+        $url = 'notify.eskiz.uz/api/message/sms/send';
+        try {
+            Http::withHeaders($headers)
+                ->post($url, $payload);
+            return response()->json(['message' => "Telefon raqamingizga login va parolingiz jo'natildi!", 'status_code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+    }
+
+    public function getToken(){
+        $url = env('SMS_URL');
+        $username = env('SMS_USERNAME');
+        $password = env('SMS_PASSWORD');
+
+        $response = Http::post($url, [
+            'email' => $username,
+            'password' => $password,
+        ]);
+        $token = $response['data']['token'];
+        return $token;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -69,6 +109,8 @@ class OrderController extends Controller
                     'registered' => true ,
                     'parol' => $password ,
                 ]);
+
+                $this->sendSms($client->phone_number , $client->parol);
             }
             $startingOrderId = 1000;
             $lastOrderId = Order::max('order_id');
