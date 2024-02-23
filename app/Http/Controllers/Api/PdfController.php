@@ -311,14 +311,13 @@ class PdfController extends Controller
             }
             $assemblyService = null;
             $perimeter = 2*($width + $height);
-            if($height >= 1.8 && $height < 2.4){
-                $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+            if($height < 1800 ){
+                $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '<')->first();
                 if($assemblyService){
-                    $price += $assemblyService->price*$profileNumber*$surface;
+                    $price += $assemblyService->price*$profileNumber;
                 }
-
-            }elseif($height >=2.4){
-                $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+            }elseif($height >= 1800){
+                $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '>')->first();
                 if($assemblyService){
                     $price += $assemblyService->price*$profileNumber;
                 }
