@@ -87,9 +87,9 @@ class WindowColorController extends Controller
     {
         $windowColor = WindowColor::find($id);
 
-        $request->validate([
-            'vendor_code' => Rule::unique('window_colors')->ignore($windowColor->id),
-        ]);
+//        $request->validate([
+//            'vendor_code' => Rule::unique('window_colors')->ignore($windowColor->id),
+//        ]);
 
         $windowColor->update([
             'name' => $request->name,
