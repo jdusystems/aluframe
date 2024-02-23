@@ -430,19 +430,19 @@ class PdfController extends Controller
                    if($windowHandler){
                        if($handlerPosition->slug == "opposite"){
                            $price += $height*$windowHandler->price*$profileNumber;
-                           $profilePeremetr = $profilePeremetr + 2*$width + $height;
+                           $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                        }
                        if($handlerPosition->slug == "top"){
                            $price += $width*$windowHandler->price*$profileNumber;
-                           $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                           $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                        }
                        if($handlerPosition->slug == "below"){
                            $price += $width*$windowHandler->price*$profileNumber;
-                           $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                           $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                        }
                        if($handlerPosition->slug == "round"){
                            $price += $peremetr*$windowHandler->price;
-                           $profilePeremetr += 0;
+                           $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                        }
                    }
                 }
