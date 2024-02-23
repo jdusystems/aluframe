@@ -57,20 +57,20 @@ class RegisteredUserController extends Controller
             'code' => ['required' , 'numeric'] ,
         ]);
 
-        $phoneNumber = PhoneNumber::where('phone_number' , $request->phone_number)->first();
-        if(!$phoneNumber){
-            return response()->json([
-                'code' => 404 ,
-                'message' => "Bunaqa foydalanuvchi topilmadi!"
-            ] , 404);
-        }
+//        $phoneNumber = PhoneNumber::where('phone_number' , $request->phone_number)->first();
+//        if(!$phoneNumber){
+//            return response()->json([
+//                'code' => 404 ,
+//                'message' => "Bunaqa foydalanuvchi topilmadi!"
+//            ] , 404);
+//        }
         if($request->code != 1234){
             return response()->json([
                 'code' => 404 ,
                 'message' => "Tasdiqlash kodi noto'g'ri!"
             ] , 404);
         }
-        $phoneNumber->delete();
+//        $phoneNumber->delete();
 
         $user = User::where('phone_number' , $request->phone_number)->first();
         if($user && $user->registered){
