@@ -61,7 +61,7 @@ class OrderController extends Controller
         ];
         $payload = [
             'mobile_phone' => $phone,
-            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ."Логин:". $phone . "Пароль:" . $parol,
+            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ."<br>"."Логин:". $phone ."<br></br>". "Пароль:" . $parol,
         ];
         $url = 'notify.eskiz.uz/api/message/sms/send';
         try {
@@ -99,18 +99,22 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $currency = Currency::find($request->currency_id);
+            $user_id = 3;
             $client =  User::where('phone_number' , $request->phone_number)->first();
+
             if(!$client){
                 $password = Str::random(10);
-                $client = User::create([
+                $user = User::create([
                     'name' => $request->name ,
                     'phone_number' => $request->phone_number ,
                     'password' => $password ,
                     'registered' => true ,
                     'parol' => $password ,
                 ]);
-
+                $user_id = $user->id;
                 $this->sendSms($client->phone_number , $client->parol);
+            }else{
+                $user_id = $client->id;
             }
             $startingOrderId = 1000;
             $lastOrderId = Order::max('order_id');
@@ -120,7 +124,7 @@ class OrderController extends Controller
                 'currency_id' => $currency->id ,
                 'language' => $request->language,
                 'order_id' => $nextOrderId,
-                'user_id' => $client->id ,
+                'user_id' =>$user_id ,
                 'status_id' => $status->id
             ]);
             $details = $request->input('orders');

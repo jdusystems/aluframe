@@ -111,7 +111,7 @@ class RegisteredUserController extends Controller
         ];
         $payload = [
             'mobile_phone' => $phone,
-            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ."Логин:". $phone . "Пароль:" . $parol,
+            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ." <br>"."Логин:". $phone ."<br>". "Пароль:" . $parol,
         ];
         $url = 'notify.eskiz.uz/api/message/sms/send';
         try {
