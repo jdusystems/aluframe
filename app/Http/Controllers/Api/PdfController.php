@@ -223,10 +223,12 @@ class PdfController extends Controller
         $details = $request->input('orders');
         $currency = Currency::find($request->currency_id);
         $totalPrice = 0;
+
         $data =  [];
         foreach ($details as $detail){
             $price = 0;
             $profileNumber = 0;
+            $sealantQuantity = 0;
             if($detail['profile_type_id']){
                 $profileType = ProfileType::find($detail['profile_type_id']);
 
@@ -413,9 +415,6 @@ class PdfController extends Controller
 
                 $profilePeremetr = 0;
 
-                //
-
-                //
                 $surface = $width * $height;
 
                 if($profileType->sealant){
@@ -482,7 +481,7 @@ class PdfController extends Controller
         }
 
         return response()->json([
-            'totalPrice' => $totalPrice * $currency->rate ,
+            'totalPrice' => round($totalPrice * $currency->rate , 2) ,
         ]);
     }
 

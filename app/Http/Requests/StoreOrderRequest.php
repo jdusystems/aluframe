@@ -25,8 +25,9 @@ class StoreOrderRequest extends FormRequest
         return [
             'language' => ['required' , 'in:ru,uz'] ,
             'currency_id' => ['required' , 'numeric' , 'min:1' , 'exists:currencies,id'] ,
+            'user_id' => ['required' , 'numeric' , 'min:1' , 'exists:users,id'] ,
             'orders' => 'required|array|min:1' ,
-            'phone_number' => ['required' ,'string' , 'max:12'] ,
+//            'phone_number' => ['required' ,'string' , 'max:12'] ,
             'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
@@ -45,8 +46,8 @@ class StoreOrderRequest extends FormRequest
             'orders.*.width' => ['required' , 'numeric' , 'min:1' ],
             'orders.*.height' => ['required' , 'numeric' , 'min:1' ],
             'orders.*.additive_sizes' => ['string' , 'max:1000'],
-            'orders.*.quantity_left'  => 'required_without:quantity_right|numeric|min:0',
-            'orders.*.quantity_right' => 'required_without:quantity_left|numeric|min:0',
+            'orders.*.quantity_left'  => 'required_without:orders.*.quantity_right|numeric|min:1',
+            'orders.*.quantity_right' => 'required_without:orders.*.quantity_left|numeric|min:1',
             'orders.*.number_of_loops' => ['integer' , 'min:0'],
         ];
     }
