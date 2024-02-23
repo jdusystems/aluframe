@@ -351,6 +351,7 @@ class PdfController extends Controller
                 'profile_color_name' =>  $profileColor1->name,
                 'profile_color_name_uz' =>  $profileColor1->uz_name,
                 'opening_type_name' => $openingType1->name ,
+                'opening_type_position' => $openingType1->position ,
                 'handler_position_name' => ($handlerPosition1) ? $handlerPosition1->name :"",
                 'handler_position_name_uz' => ($handlerPosition1) ? $handlerPosition1->uz_name :"",
                 'additional_service_vendor_code' => ($additionalService1) ? $additionalService1->vendor_code  : "",
