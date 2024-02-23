@@ -123,22 +123,22 @@ class OrderController extends Controller
                             if($handlerPosition->slug == "opposite"){
                                 $price += $height*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $height;
-                                $profilePeremetr = $profilePeremetr + 2*$width + $height;
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                             if($handlerPosition->slug == "top"){
                                 $price += $width*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $width;
-                                $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                             if($handlerPosition->slug == "below"){
                                 $price += $width*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $width;
-                                $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                             if($handlerPosition->slug == "round"){
                                 $price += $profileNumber * 2*($width + $height)*$windowHandler->price;
                                 $windowHandlerQuantity = 2*($width + $height);
-                                $profilePeremetr += 0;
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                         }else{
                             return new ReturnResponseResource([
