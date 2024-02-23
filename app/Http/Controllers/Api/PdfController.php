@@ -338,6 +338,7 @@ class PdfController extends Controller
             $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
             $data[] = [
                 'profile_type' => $profileType->calculationType->name ,
+                'profile_size' => $profileType->size_name ,
                 'profile_type_name' => $profileType->name ,
                 'profile_type_name_uz' => $profileType->uz_name ,
                 'profile_type_price' => round($profileType->price*$currency->rate  , 2),
@@ -376,8 +377,8 @@ class PdfController extends Controller
                 'conrer_name_uz' => ($corner1)  ? $corner->uz_name : "",
                 'conrer_price' => ($corner1)  ? round($corner->price*$currency->rate , 2) : 0.00,
                 'conrer_quantity' => ($corner1)  ? round($cornerQuantity , 2) : 0,
-                'width' => $width ,
-                'height' => $height ,
+                'width' => $width*1000 ,
+                'height' => $height*1000 ,
                 'quantity_right' => (array_key_exists('quantity_right', $detail)) ? $detail['quantity_right'] : 0 ,
                 'quantity_left' => (array_key_exists('quantity_left' , $detail)) ? $detail['quantity_left'] : 0 ,
                 'number_of_loops' => ($detail['number_of_loops']) ? $detail['number_of_loops'] : 1 ,
