@@ -231,12 +231,15 @@ class PdfController extends Controller
             $sealantQuantity = 0;
             if($detail['profile_type_id']){
                 $profileType = ProfileType::find($detail['profile_type_id']);
-
+                $quantity_left = 0;
+                $quantity_right = 0;
                 if(array_key_exists('quantity_right' , $detail)){
                     $profileNumber += $detail['quantity_right'];
+                    $quantity_right = $detail['quantity_right'];
                 }
                 if(array_key_exists('quantity_left' , $detail)){
                     $profileNumber += $detail['quantity_left'];
+                    $quantity_left = $detail['quantity_left'];
                 }
 
                 $width = $detail['width']/1000;
@@ -347,7 +350,7 @@ class PdfController extends Controller
                 'window_color_name' => $windowColor1->name ,
                 'window_color_name_uz' => $windowColor1->uz_name ,
                 'window_color_price' => $windowColor1->price*$currency->rate ,
-                'window_color_surface' => round(($width*$height)*($detail['quantity_left'] + $detail['quantity_right']) ),
+                'window_color_surface' => round(($width*$height)*($quantity_left + $quantity_right) ),
                 'profile_color_name' =>  $profileColor1->name,
                 'profile_color_name_uz' =>  $profileColor1->uz_name,
                 'opening_type_name' => $openingType1->name ,
