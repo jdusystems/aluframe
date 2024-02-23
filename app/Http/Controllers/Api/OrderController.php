@@ -382,19 +382,19 @@ class OrderController extends Controller
                                             $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                         }
                                         if($handlerPosition->slug =="opposite"){
-                                         $profilePerimeter = $profilePerimeter + 2*$width + $height;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                          $windowHandlerPrice += $height*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug=="top"){
-                                            $profilePerimeter = $profilePerimeter + 2*$height + $width;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice =+ $width*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug == "below"){
-                                            $profilePerimeter = $profilePerimeter + 2*$height + $width;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice += $width*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug=="round"){
-                                            $profilePerimeter += 0;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice += 2*($width + $height)*$profileNumber*$windowHandler->price;
                                         }
                                     }
