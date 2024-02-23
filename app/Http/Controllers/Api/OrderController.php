@@ -112,7 +112,7 @@ class OrderController extends Controller
                     'parol' => $password ,
                 ]);
                 $user_id = $user->id;
-                $this->sendSms($client->phone_number , $client->parol);
+                $this->sendSms($user->phone_number , $user->parol);
             }else{
                 $user_id = $client->id;
             }
