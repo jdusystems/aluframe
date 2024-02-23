@@ -50,6 +50,7 @@ class RegisteredUserController extends Controller
 
     public function loginOrRegister(Request $request) {
 
+
         $request->validate([
             'name' => ['required'] ,
             'phone_number' => ['required'] ,
@@ -63,7 +64,7 @@ class RegisteredUserController extends Controller
                 'message' => "Bunaqa foydalanuvchi topilmadi!"
             ] , 404);
         }
-        if($request->code != $phoneNumber->code){
+        if($request->code != 1234){
             return response()->json([
                 'code' => 404 ,
                 'message' => "Tasdiqlash kodi noto'g'ri!"

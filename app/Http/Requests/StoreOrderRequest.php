@@ -26,7 +26,7 @@ class StoreOrderRequest extends FormRequest
             'language' => ['required' , 'in:ru,uz'] ,
             'currency_id' => ['required' , 'numeric' , 'min:1' , 'exists:currencies,id'] ,
             'orders' => 'required|array|min:1' ,
-            'user_id' => ['required' ,'integer', 'exists:users,id'] ,
+            'phone_number' => ['required' ,'string' , 'max:12'] ,
             'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,

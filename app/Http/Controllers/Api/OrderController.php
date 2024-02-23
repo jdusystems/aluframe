@@ -443,14 +443,14 @@ class OrderController extends Controller
         $totalPrice += $sealantPrice + $cornerPrice+$windowHandlerPrice+$profilePrice+$windowPrice+$additionalServicePrice+$assemblyServicePrice;
 
         return response()->json([
-            'totalPrice' => $totalPrice * $currency->rate ,
-            'sealant_price' => $sealantPrice* $currency->rate ,
-            'corner_price' => $cornerPrice * $currency->rate,
-            'window_handler_price' =>$windowHandlerPrice* $currency->rate ,
-            'profile_price' => $profilePrice* $currency->rate ,
-            'window_price' => $windowPrice* $currency->rate ,
-            'additional_service_price' => $additionalServicePrice* $currency->rate ,
-            'assembly_service_price' => $assemblyServicePrice* $currency->rate
+            'totalPrice' => round($totalPrice * $currency->rate , 2) ,
+            'sealant_price' => round($sealantPrice* $currency->rate , 2) ,
+            'corner_price' => round($cornerPrice * $currency->rate , 2),
+            'window_handler_price' => round($windowHandlerPrice* $currency->rate , 2) ,
+            'profile_price' => round($profilePrice* $currency->rate , 2) ,
+            'window_price' => round($windowPrice* $currency->rate , 2),
+            'additional_service_price' => round($additionalServicePrice* $currency->rate , 2) ,
+            'assembly_service_price' => round($assemblyServicePrice* $currency->rate , 2)
         ]);
     }
 
