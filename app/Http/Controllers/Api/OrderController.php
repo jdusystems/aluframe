@@ -19,11 +19,13 @@ use App\Models\ProfileColor;
 use App\Models\ProfileType;
 use App\Models\Sealant;
 use App\Models\Status;
+use App\Models\User;
 use App\Models\WindowColor;
 use App\Models\WindowHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -57,7 +59,17 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $currency = Currency::find($request->currency_id);
-
+            $client =  User::where('phone_number' , $request->phone_number)->first();
+            if(!$client){
+                $password = Str::random(10);
+                $client = User::create([
+                    'name' => $request->name ,
+                    'phone_number' => $request->phone_number ,
+                    'password' => $password ,
+                    'registered' => true ,
+                    'parol' => $password ,
+                ]);
+            }
             $startingOrderId = 1000;
             $lastOrderId = Order::max('order_id');
             $nextOrderId = $lastOrderId ? $lastOrderId + 1 : $startingOrderId;
@@ -66,7 +78,7 @@ class OrderController extends Controller
                 'currency_id' => $currency->id ,
                 'language' => $request->language,
                 'order_id' => $nextOrderId,
-                'user_id' => $request->user_id ,
+                'user_id' => $client->id ,
                 'status_id' => $status->id
             ]);
             $details = $request->input('orders');
