@@ -486,12 +486,12 @@ class OrderController extends Controller
                 }
             }
         }
-        if($height < 1800 ){
+        if($height < 1.8 ){
             $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '<')->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
             }
-        }elseif($height >= 1800){
+        }elseif($height >= 1.8){
             $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '>')->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
