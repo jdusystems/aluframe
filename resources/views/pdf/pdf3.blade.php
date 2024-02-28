@@ -18,6 +18,9 @@
           margin: 0;
           box-sizing: border-box;
       }
+      .break-page{
+          page-break-after: always;
+      }
 
       body{
           font-family: "Inter";
@@ -158,6 +161,77 @@
           font-weight: 400;
           line-height: normal;
       }
+      *,
+      *::after,
+      *::before{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body{
+          font-family: "Inter";
+
+      }
+      .WrapConent{
+          width: 100%;
+          max-width: 716px;
+          gap: 21px;
+          margin: 80px auto;
+          display: flex;
+          flex-wrap: wrap;
+      }
+
+      .cardConent{
+          width:calc((100% - 21px) / 2);
+          list-style: none;
+          padding-top: 20px;
+          padding-bottom: 37px;
+          border-top: 1px dotted black;
+          border-bottom: 1px dotted black;
+      }
+      .cardConent-top{
+          display: flex;
+          align-items: center;
+          margin-bottom: 22px;
+          gap: 22px;
+      }
+      .cardConent-top p {
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+      }
+      .cardConent-top p:last-child{
+          margin-left: auto;
+      }
+      .cardConent-item{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 22px;
+          gap: 22px;
+      }
+      .cardConent-item p {
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+      }
+      .cardConent-item p:last-child{
+          text-align: end;
+      }
+      .cardConent-item:nth-child(5) p:first-child {
+          font-weight: 700;
+      }
+      .cardConent-item:nth-child(4) p:first-child {
+          font-weight: 700;
+      }
+
   </style>
 </head>
 
@@ -296,6 +370,82 @@
             @endforeach
         </table>
     </div>
+</div>
+
+<div class="break-page">
+
+</div>
+
+<div class="WrapConent">
+    <ui class="cardConent">
+        <li class="cardConent-top">
+            <p>#1401</p>
+            <p>28.12.2023 18:53</p>
+            <p>Фасад 1/12</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Высота:</p>
+            <p>2470</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Ширина:</p>
+            <p>2470</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Профиль:</p>
+            <p>Узкий (19 мм), Черный</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Cтекло:</p>
+            <p>Прозрачное</p>
+        </li>
+    </ui>
+    <ui class="cardConent">
+        <li class="cardConent-top">
+            <p>#1401</p>
+            <p>28.12.2023 18:53</p>
+            <p>Фасад 1/12</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Высота:</p>
+            <p>2470</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Ширина:</p>
+            <p>2470</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Профиль:</p>
+            <p>Узкий (19 мм), Черный</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Cтекло:</p>
+            <p>Прозрачное</p>
+        </li>
+    </ui>
+    <ui class="cardConent">
+        <li class="cardConent-top">
+            <p>#1401</p>
+            <p>28.12.2023 18:53</p>
+            <p>Фасад 1/12</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Высота:</p>
+            <p>2470</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Ширина:</p>
+            <p>2470</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Профиль:</p>
+            <p>Узкий (19 мм), Черный</p>
+        </li>
+        <li class="cardConent-item">
+            <p>Cтекло:</p>
+            <p>Прозрачное</p>
+        </li>
+    </ui>
 </div>
 </body>
 
