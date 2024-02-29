@@ -408,14 +408,14 @@ class PdfController extends Controller
               ]
             ];
         })->map(function ($group){
-            return [
+            return [ "profile" => [
                 'profile_vendor_code' => $group[0]['profile_vendor_code'] ,
                 'profile_name' => $group[0]['profile_name'] ,
                 'profile_name_uz' =>$group[0]['profile_name_uz'] ,
                 'profile_price' => $group[0]['profile_price'] ,
                 'profile_size' => $group[0]['profile_size'],
                 'total_quantity' => $group->sum('profile_quantity'),
-            ];
+            ]];
         });
 
         // Windows 'window_color_id' => $windowColor1->id ,
