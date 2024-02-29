@@ -348,6 +348,7 @@ class PdfController extends Controller
                 'profile_type_name_uz' => $profileType->uz_name ,
                 'profile_type_price' => round($profileType->price*$currency->rate  , 2),
                 'profile_quantity' => round($profilePeremetr*$profileNumber , 2) ,
+                'window_color_id' => $windowColor1->id ,
                 'window_vendor_code' => $windowColor1->vendor_code ,
                 'window_color_name' => $windowColor1->name ,
                 'window_color_name_uz' => $windowColor1->uz_name ,
@@ -394,17 +395,9 @@ class PdfController extends Controller
             ];
         }
 
-//                  'profile_id' => $profileType->id,
-//                'profile_type' => $profileType->calculationType->name ,
-//                'profile_size' => $profileType->size_name ,
-//                'profile_type_name' => $profileType->name ,
-//                'profile_type_vendor_code' => $profileType->vendor_code ,
-//                'profile_type_name_uz' => $profileType->uz_name ,
-//                'profile_type_price' => round($profileType->price*$currency->rate  , 2),
-//                'profile_quantity' => round($profilePeremetr*$profileNumber , 2) ,
-        $profiles = collect($data);
-//
-        $summedProfiles = $profiles->mapToGroups(function ($item) {
+        $data = collect($data);
+   // Profiles
+        $summedProfiles = $data->mapToGroups(function ($item) {
             return ["{$item['profile_id']}-{$item['profile_color_id']}"=> [
                     'profile_name' => $item['profile_type_name'] ,
                     'profile_name_uz' => $item['profile_type_name_uz'] ,
@@ -416,19 +409,44 @@ class PdfController extends Controller
             ];
         })->map(function ($group){
             return [
+                'profile_vendor_code' => $group[0]['profile_vendor_code'] ,
                 'profile_name' => $group[0]['profile_name'] ,
                 'profile_name_uz' =>$group[0]['profile_name_uz'] ,
-                'profile_vendor_code' => $group[0]['profile_vendor_code'] ,
                 'profile_price' => $group[0]['profile_price'] ,
                 'profile_size' => $group[0]['profile_size'],
                 'total_quantity' => $group->sum('profile_quantity'),
-//                'items' => $group->all(), // You can include all items in the group if needed
+            ];
+        });
+
+        // Windows 'window_color_id' => $windowColor1->id ,
+        //                'window_vendor_code' => $windowColor1->vendor_code ,
+        //                'window_color_name' => $windowColor1->name ,
+        //                'window_color_name_uz' => $windowColor1->uz_name ,
+        //                'window_color_price' => $windowColor1->price*$currency->rate ,
+        //                'window_color_surface' => round(($width*$height)*($quantity_left + $quantity_right) ),
+        $summedWindows = $data->mapToGroups(function ($item) {
+            return ["{$item['window_color_id']}"=> [
+                'window_vendor_code' => $item['window_vendor_code'] ,
+                'window_color_name' => $item['window_color_name'] ,
+                'window_color_name_uz' => $item['window_color_name_uz'] ,
+                'window_color_price' => $item['window_color_price'] ,
+                'window_color_surface' => $item['window_color_surface'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'window_vendor_code' => $group[0]['window_vendor_code'] ,
+                'window_color_name' => $group[0]['window_color_name'] ,
+                'window_color_name_uz' =>$group[0]['window_color_name_uz'] ,
+                'window_color_price' => $group[0]['window_color_price'] ,
+                'total_quantity' => $group->sum('window_color_surface'),
             ];
         });
 
         return response()->json([
-            'data' => $data ,
-             'profiles' => $summedProfiles
+             'data' => $data ,
+             'profiles' => $summedProfiles ,
+             'windows' => $summedWindows
         ]);
     }
 
