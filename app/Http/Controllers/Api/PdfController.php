@@ -394,21 +394,31 @@ class PdfController extends Controller
             ];
         }
 
-
+//                  'profile_id' => $profileType->id,
+//                'profile_type' => $profileType->calculationType->name ,
+//                'profile_size' => $profileType->size_name ,
+//                'profile_type_name' => $profileType->name ,
+//                'profile_type_vendor_code' => $profileType->vendor_code ,
+//                'profile_type_name_uz' => $profileType->uz_name ,
+//                'profile_type_price' => round($profileType->price*$currency->rate  , 2),
+//                'profile_quantity' => round($profilePeremetr*$profileNumber , 2) ,
         $profiles = collect($data);
-//        $summedProfiles = $profiles->groupBy('profile_id')->map(function ($profile) {
-//            return [
-//                'total_quantity' => $profile->sum($profile->profile_quantity) ,
-//                'price' => $profile->profile_type_price ,
-//                'profile_vendor_code' => $profile->profile_type_vendor_code ,
-//                'profile_name' => $profile->profile_type_name ,
-//                'profile_name_uz' => $profile->profile_type_name_uz ,
-//            ];
-//        });
+//
         $summedProfiles = $profiles->mapToGroups(function ($item) {
-            return [$item['profile_id'] => $item['profile_quantity']];
-        })->map(function ($group) {
-            return ['total_quantity' => $group->sum()];
+            return ["{$item['profile_id']}-{$item['profile_color_id']}"=> [
+                    'profile_name' => $item['profile_type_name'] ,
+                    'profile_name_uz' => $item['profile_type_name_uz'] ,
+                    'profile_vendor_code' => $item['profile_type_vendor_code'] ,
+                    'profile_price' => $item['profile_type_price'] ,
+                    'profile_quantity' => $item['profile_quantity'],
+                    'profile_size' => $item['profile_size'],
+              ]
+            ];
+        })->map(function ($group){
+            return [
+                'total_quantity' => $group->sum('profile_quantity'),
+                'items' => $group->all(), // You can include all items in the group if needed
+            ];
         });
 
         return response()->json([
