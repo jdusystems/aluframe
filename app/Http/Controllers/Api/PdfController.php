@@ -396,14 +396,19 @@ class PdfController extends Controller
 
 
         $profiles = collect($data);
-        $summedProfiles = $profiles->groupBy('profile_id')->map(function ($profile) {
-            return [
-                'total_quantity' => $profile->sum($profile->profile_quantity) ,
-                'price' => $profile->profile_type_price ,
-                'profile_vendor_code' => $profile->profile_type_vendor_code ,
-                'profile_name' => $profile->profile_type_name ,
-                'profile_name_uz' => $profile->profile_type_name_uz ,
-            ];
+//        $summedProfiles = $profiles->groupBy('profile_id')->map(function ($profile) {
+//            return [
+//                'total_quantity' => $profile->sum($profile->profile_quantity) ,
+//                'price' => $profile->profile_type_price ,
+//                'profile_vendor_code' => $profile->profile_type_vendor_code ,
+//                'profile_name' => $profile->profile_type_name ,
+//                'profile_name_uz' => $profile->profile_type_name_uz ,
+//            ];
+//        });
+        $summedProfiles = $profiles->mapToGroups(function ($item) {
+            return [$item['profile_id'] => $item['profile_quantity']];
+        })->map(function ($group) {
+            return ['total_quantity' => $group->sum()];
         });
 
         return response()->json([
