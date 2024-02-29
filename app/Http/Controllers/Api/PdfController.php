@@ -416,11 +416,10 @@ class PdfController extends Controller
             ];
         })->map(function ($group){
             return [
-                'profile_name' => $group[0]['profile_type_name'] ,
-                'profile_name_uz' =>$group[0]['profile_type_name_uz'] ,
-                'profile_vendor_code' => $group[0]['profile_type_vendor_code'] ,
-                'profile_price' => $group[0]['profile_type_price'] ,
-                'profile_quantity' => $group[0]['profile_quantity'],
+                'profile_name' => $group[0]['profile_name'] ,
+                'profile_name_uz' =>$group[0]['profile_name_uz'] ,
+                'profile_vendor_code' => $group[0]['profile_vendor_code'] ,
+                'profile_price' => $group[0]['profile_price'] ,
                 'profile_size' => $group[0]['profile_size'],
                 'total_quantity' => $group->sum('profile_quantity'),
 //                'items' => $group->all(), // You can include all items in the group if needed
