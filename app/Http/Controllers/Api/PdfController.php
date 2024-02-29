@@ -402,17 +402,17 @@ class PdfController extends Controller
         //                'profile_type_price' => round($profileType->price*$currency->rate  ,
         $profiles = collect($data);
         $groupedProfiles = $profiles->groupBy(['profile_id' , 'profile_color_id']);
-        $summedProfiles = $groupedProfiles->mapWithKeys(function ($profile , $key){
-            return [
-                $key => [
-                      'total_quantity' => $profile->sum($profile->profile_quantity) ,
-                      'price' => $profile->profile_type_price ,
-                      'profile_vendor_code' => $profile->profile_type_vendor_code ,
-                      'profile_name' => $profile->profile_type_name ,
-                      'profile_name_uz' => $profile->profile_type_name_uz ,
-                    ]
-            ];
-        });
+//        $summedProfiles = $groupedProfiles->mapWithKeys(function ($profile , $key){
+//            return [
+//                $key => [
+//                      'total_quantity' => $profile->sum($profile->profile_quantity) ,
+//                      'price' => $profile->profile_type_price ,
+//                      'profile_vendor_code' => $profile->profile_type_vendor_code ,
+//                      'profile_name' => $profile->profile_type_name ,
+//                      'profile_name_uz' => $profile->profile_type_name_uz ,
+//                    ]
+//            ];
+//        });
 
 
 
