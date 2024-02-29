@@ -417,7 +417,7 @@ class PdfController extends Controller
         })->map(function ($group){
             return [
                 'total_quantity' => $group->sum('profile_quantity'),
-                'items' => $group->all(), // You can include all items in the group if needed
+//                'items' => $group->all(), // You can include all items in the group if needed
             ];
         });
 
