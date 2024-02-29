@@ -340,9 +340,11 @@ class PdfController extends Controller
             $windowHandler1 = WindowHandler::where('profile_type_id', $profileType->id)->where('profile_color_id', $detail['profile_color_id'])->first();
             $corner1 = Corner::where('profile_type_id' , $profileType->id)->first();
             $data[] = [
+                'profile_id' => $profileType->id,
                 'profile_type' => $profileType->calculationType->name ,
                 'profile_size' => $profileType->size_name ,
                 'profile_type_name' => $profileType->name ,
+                'profile_type_vendor_code' => $profileType->vendor_code ,
                 'profile_type_name_uz' => $profileType->uz_name ,
                 'profile_type_price' => round($profileType->price*$currency->rate  , 2),
                 'profile_quantity' => round($profilePeremetr*$profileNumber , 2) ,
@@ -351,6 +353,7 @@ class PdfController extends Controller
                 'window_color_name_uz' => $windowColor1->uz_name ,
                 'window_color_price' => $windowColor1->price*$currency->rate ,
                 'window_color_surface' => round(($width*$height)*($quantity_left + $quantity_right) ),
+                'profile_color_id' =>  $profileColor1->id,
                 'profile_color_name' =>  $profileColor1->name,
                 'profile_color_name_uz' =>  $profileColor1->uz_name,
                 'opening_type_name' => $openingType1->name ,
@@ -391,8 +394,29 @@ class PdfController extends Controller
             ];
         }
 
+        // Profiles 'profile_id' => $profileType->id,
+        //                'profile_type' => $profileType->calculationType->name ,
+        //                'profile_size' => $profileType->size_name ,
+        //                'profile_type_name' => $profileType->name ,
+        //                'profile_type_name_uz' => $profileType->uz_name ,
+        //                'profile_type_price' => round($profileType->price*$currency->rate  ,
+        $profiles = collect($data);
+        $groupedProfiles = $profiles->groupBy(['profile_id' , 'profile_color_id']);
+        $summedProfiles = $groupedProfiles->map(function ($profile){
+            return [
+              'total_score' => $profile->sum($profile->profile_quantity) ,
+              'price' => $profile->profile_type_price ,
+              'profile_vendor_code' => $profile->profile_type_vendor_code ,
+              'profile_name' => $profile->profile_type_name ,
+              'profile_name_uz' => $profile->profile_type_name_uz ,
+            ];
+        });
+
+
+
         return response()->json([
             'data' => $data ,
+             'profiles' => $summedProfiles
         ]);
     }
 
