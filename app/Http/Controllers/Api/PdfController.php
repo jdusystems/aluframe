@@ -353,7 +353,7 @@ class PdfController extends Controller
                 'window_color_name' => $windowColor1->name ,
                 'window_color_name_uz' => $windowColor1->uz_name ,
                 'window_color_price' => $windowColor1->price*$currency->rate ,
-                'window_color_surface' => round(($width*$height)*($quantity_left + $quantity_right) ),
+                'window_color_surface' => round(($width*$height)*($quantity_left + $quantity_right) , 2 ),
                 'profile_color_id' =>  $profileColor1->id,
                 'profile_color_name' =>  $profileColor1->name,
                 'profile_color_name_uz' =>  $profileColor1->uz_name,
