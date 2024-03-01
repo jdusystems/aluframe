@@ -361,25 +361,31 @@ class PdfController extends Controller
                 'opening_type_position' => $openingType1->position ,
                 'handler_position_name' => ($handlerPosition1) ? $handlerPosition1->name :"",
                 'handler_position_name_uz' => ($handlerPosition1) ? $handlerPosition1->uz_name :"",
+                'additional_service_id' => ($additionalService1) ? $additionalService1->id  : 0,
                 'additional_service_vendor_code' => ($additionalService1) ? $additionalService1->vendor_code  : "",
                 'additional_service_name' => ($additionalService1) ? $additionalService1->name  : "",
                 'additional_service_name_uz' => ($additionalService1) ? $additionalService1->uz_name  : "",
                 'additional_service_price' => ($additionalService1) ? round($additionalService1->price * $currency->rate , 2)  : 0,
                 'additional_service_quantity' => ($additionalService1) ? round($surface , 2)  : 0,
+                'assembly_service_id' => ($assemblyService) ? $assemblyService->id : 0 ,
                 'assembly_service_vendor_code' => ($assemblyService) ? $assemblyService->vendor_code : "" ,
                 'assembly_service_name' => ($assemblyService) ? $assemblyService->name : "" ,
                 'assembly_service_name_uz' => ($assemblyService) ? $assemblyService->uz_name : "" ,
                 'assembly_service_price' => ($assemblyService) ? round($assemblyService->price * $currency->rate , 2) : 0 ,
                 'assembly_service_quantity' => ($assemblyService) ? round($profileNumber , 2) : 0 ,
+                'sealant_id' => ($sealant1) ? $sealant1->id : 0,
                 'sealant_name' => ($sealant1) ? $sealant1->name : "",
                 'sealant_name_uz' => ($sealant1) ? $sealant1->uz_name : "",
                 'sealant_vendor_code' => ($sealant1) ? $sealant1->vendor_code : "",
                 'sealant_price' => ($sealant1) ? round($sealant1->price * $currency->rate , 2) : 0,
                 'sealant_quantity' => ($sealant1) ? round($sealantQuantity , 2) : 0,
+                'window_handler_id' => ($windowHandler1) ? $windowHandler1->id : 0,
                 'window_handler_vendor_code' => ($windowHandler1) ? $windowHandler1->vendor_code : "",
                 'window_handler_name' => ($windowHandler1) ? $windowHandler1->name : "",
+                'window_handler_name_uz' => ($windowHandler1) ? $windowHandler1->uz_name : "",
                 'window_handler_price' => ($windowHandler1) ? round($windowHandler1->price *$currency->rate , 2) : 0,
                 'window_handler_quantity' => ($windowHandler1) ? round($windowHandlerQuantity , 2) : 0,
+                'corner_id' => ($corner1)  ? $corner->id : 0,
                 'conrer_vendor_code' => ($corner1)  ? $corner->vendor_code : "",
                 'conrer_name' => ($corner1)  ? $corner->name : "",
                 'conrer_name_uz' => ($corner1)  ? $corner->uz_name : "",
@@ -408,22 +414,17 @@ class PdfController extends Controller
               ]
             ];
         })->map(function ($group){
-            return [ "profile" => [
+            return [
                 'profile_vendor_code' => $group[0]['profile_vendor_code'] ,
                 'profile_name' => $group[0]['profile_name'] ,
                 'profile_name_uz' =>$group[0]['profile_name_uz'] ,
                 'profile_price' => $group[0]['profile_price'] ,
                 'profile_size' => $group[0]['profile_size'],
                 'total_quantity' => $group->sum('profile_quantity'),
-            ]];
+            ];
         });
 
-        // Windows 'window_color_id' => $windowColor1->id ,
-        //                'window_vendor_code' => $windowColor1->vendor_code ,
-        //                'window_color_name' => $windowColor1->name ,
-        //                'window_color_name_uz' => $windowColor1->uz_name ,
-        //                'window_color_price' => $windowColor1->price*$currency->rate ,
-        //                'window_color_surface' => round(($width*$height)*($quantity_left + $quantity_right) ),
+
         $summedWindows = $data->mapToGroups(function ($item) {
             return ["{$item['window_color_id']}"=> [
                 'window_vendor_code' => $item['window_vendor_code'] ,
@@ -442,11 +443,111 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('window_color_surface'),
             ];
         });
+        // Additional Services
+        $summedAdditionalServices = $data->mapToGroups(function ($item) {
+            return ["{$item['additional_service_id']}"=> [
+                'additional_service_vendor_code' => $item['additional_service_vendor_code'] ,
+                'additional_service_name' => $item['additional_service_name'] ,
+                'additional_service_name_uz' => $item['additional_service_name_uz'] ,
+                'additional_service_price' => $item['additional_service_price'] ,
+                'additional_service_quantity' => $item['additional_service_quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'additional_service_vendor_code' => $group[0]['additional_service_vendor_code'] ,
+                'additional_service_name' => $group[0]['additional_service_name'] ,
+                'additional_service_name_uz' =>$group[0]['additional_service_name_uz'] ,
+                'additional_service_price' => $group[0]['additional_service_price'] ,
+                'total_quantity' => $group->sum('additional_service_quantity'),
+            ];
+        });
+        // Assembly Services
+        $summedAssemblyServices = $data->mapToGroups(function ($item) {
+            return ["{$item['assembly_service_id']}"=> [
+                'assembly_service_vendor_code' => $item['assembly_service_vendor_code'] ,
+                'assembly_service_name' => $item['assembly_service_name'] ,
+                'assembly_service_name_uz' => $item['assembly_service_name_uz'] ,
+                'assembly_service_price' => $item['assembly_service_price'] ,
+                'assembly_service_quantity' => $item['assembly_service_quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'assembly_service_vendor_code' => $group[0]['assembly_service_vendor_code'] ,
+                'assembly_service_name' => $group[0]['assembly_service_name'] ,
+                'assembly_service_name_uz' =>$group[0]['assembly_service_name_uz'] ,
+                'assembly_service_price' => $group[0]['assembly_service_price'] ,
+                'total_quantity' => $group->sum('assembly_service_quantity'),
+            ];
+        });
+        // Sealants
+        $summedSealants = $data->mapToGroups(function ($item) {
+            return ["{$item['sealant_id']}"=> [
+                'sealant_vendor_code' => $item['sealant_vendor_code'] ,
+                'sealant_name' => $item['sealant_name'] ,
+                'sealant_name_uz' => $item['sealant_name_uz'] ,
+                'sealant_price' => $item['sealant_price'] ,
+                'sealant_quantity' => $item['sealant_quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'sealant_vendor_code' => $group[0]['sealant_vendor_code'] ,
+                'sealant_name' => $group[0]['sealant_name'] ,
+                'sealant_name_uz' =>$group[0]['sealant_name_uz'] ,
+                'sealant_price' => $group[0]['sealant_price'] ,
+                'total_quantity' => $group->sum('sealant_quantity'),
+            ];
+        });
+        // Corners
+        $summedCorners = $data->mapToGroups(function ($item) {
+            return ["{$item['corner_id']}"=> [
+                'corner_vendor_code' => $item['conrer_vendor_code'] ,
+                'corner_name' => $item['conrer_name'] ,
+                'corner_name_uz' => $item['conrer_name_uz'] ,
+                'corner_price' => $item['conrer_price'] ,
+                'corner_quantity' => $item['conrer_quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'corner_vendor_code' => $group[0]['corner_vendor_code'] ,
+                'corner_name' => $group[0]['corner_name'] ,
+                'corner_name_uz' =>$group[0]['corner_name_uz'] ,
+                'corner_price' => $group[0]['corner_price'] ,
+                'total_quantity' => $group->sum('corner_quantity') ,
+            ];
+        });
 
+        // Window Handlers
+        $summedWindowHandlers = $data->mapToGroups(function ($item) {
+            return ["{$item['window_handler_id']}"=> [
+                'window_handler_vendor_code' => $item['window_handler_vendor_code'] ,
+                'window_handler_name' => $item['window_handler_name'] ,
+                'window_handler_name_uz' => $item['window_handler_name_uz'] ,
+                'window_handler_price' => $item['window_handler_price'] ,
+                'window_handler_quantity' => $item['window_handler_quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'window_handler_vendor_code' => $group[0]['window_handler_vendor_code'] ,
+                'window_handler_name' => $group[0]['window_handler_name'] ,
+                'window_handler_name_uz' =>$group[0]['window_handler_name_uz'] ,
+                'window_handler_price' => $group[0]['window_handler_price'] ,
+                'total_quantity' => $group->sum('window_handler_quantity') ,
+            ];
+        });
         return response()->json([
              'data' => $data ,
              'profiles' => $summedProfiles ,
-             'windows' => $summedWindows
+             'windows' => $summedWindows ,
+             'additional_services' => $summedAdditionalServices ,
+             'assembly_services' => $summedAssemblyServices ,
+             'sealants' => $summedSealants ,
+             'corners' => $summedCorners ,
+             'window_handlers' => $summedWindowHandlers
         ]);
     }
 
