@@ -382,7 +382,7 @@ class PdfController extends Controller
                 'window_handler_id' => ($windowHandler1) ? $windowHandler1->id : 0,
                 'window_handler_vendor_code' => ($windowHandler1) ? $windowHandler1->vendor_code : "",
                 'window_handler_name' => ($windowHandler1) ? $windowHandler1->name : "",
-                'window_handler_name_uz' => ($windowHandler1) ? $windowHandler1->uz_name : "",
+//                'window_handler_name_uz' => ($windowHandler1) ? $windowHandler1->uz_name : "",
                 'window_handler_price' => ($windowHandler1) ? round($windowHandler1->price *$currency->rate , 2) : 0,
                 'window_handler_quantity' => ($windowHandler1) ? round($windowHandlerQuantity , 2) : 0,
                 'corner_id' => ($corner1)  ? $corner->id : 0,
@@ -525,7 +525,7 @@ class PdfController extends Controller
             return ["{$item['window_handler_id']}"=> [
                 'window_handler_vendor_code' => $item['window_handler_vendor_code'] ,
                 'window_handler_name' => $item['window_handler_name'] ,
-                'window_handler_name_uz' => $item['window_handler_name_uz'] ,
+//                'window_handler_name_uz' => $item['window_handler_name_uz'] ,
                 'window_handler_price' => $item['window_handler_price'] ,
                 'window_handler_quantity' => $item['window_handler_quantity'],
             ]
@@ -534,7 +534,7 @@ class PdfController extends Controller
             return [
                 'window_handler_vendor_code' => $group[0]['window_handler_vendor_code'] ,
                 'window_handler_name' => $group[0]['window_handler_name'] ,
-                'window_handler_name_uz' =>$group[0]['window_handler_name_uz'] ,
+//                'window_handler_name_uz' =>$group[0]['window_handler_name_uz'] ,
                 'window_handler_price' => $group[0]['window_handler_price'] ,
                 'total_quantity' => $group->sum('window_handler_quantity') ,
             ];
