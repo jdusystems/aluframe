@@ -181,10 +181,6 @@
           border-bottom: 1px dotted black;
           float: left;
       }
-
-      .card3:nth-child(even){
-          float: right;
-      }
       .card-top2{
           width: 100%;
           padding-bottom: 22px;
