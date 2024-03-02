@@ -60,7 +60,7 @@
           padding-bottom:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
-          float: right;
+          float: left;
       }
       .card2{
           width: 50%;
@@ -68,12 +68,12 @@
           padding-bottom:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
-          float: left;
+          float: right;
       }
-      .card1:nth-child(2n-1){
-          border-right: 1px dotted #121212;
-          float: left;
-      }
+      /*.card1:nth-child(2n-1){*/
+      /*    border-right: 1px dotted #121212;*/
+      /*    float: left;*/
+      /*}*/
       .card-item{
           width: 100%;
 
