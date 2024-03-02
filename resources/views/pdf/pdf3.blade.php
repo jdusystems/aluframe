@@ -180,6 +180,10 @@
           border-bottom: 1px dotted black;
           float: left;
       }
+      .card3:nth-child(1){
+          float: left;
+          margin-left: 50%;
+      }
       .card3:nth-child(odd){
           float: left;
       }
