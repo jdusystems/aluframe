@@ -173,7 +173,7 @@
           margin: 80px auto;
       }
       .card3{
-          width:calc((100% - 40px) / 2);
+          width:50%;
           list-style: none;
           padding-top: 20px;
           padding-bottom: 37px;
