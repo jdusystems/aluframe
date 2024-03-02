@@ -181,6 +181,9 @@
           float: left;
       }
       .card3:nth-child(odd){
+          float: left;
+      }
+      .card3:nth-child(even){
           float: right;
       }
       .card-top3{
