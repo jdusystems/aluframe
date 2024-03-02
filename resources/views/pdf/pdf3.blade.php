@@ -169,7 +169,6 @@
       .wrap3{
           width: 100%;
           max-width: 716px;
-          margin: 80px auto;
           display: inline-block;
       }
       .card3{
