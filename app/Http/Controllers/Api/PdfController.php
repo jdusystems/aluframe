@@ -404,7 +404,7 @@ class PdfController extends Controller
         $data = collect($data);
    // Profiles
         $summedProfiles = $data->mapToGroups(function ($item) {
-            return ["{$item['profile_id']}-{$item['profile_color_id']}"=> [
+            return ["{$item['profile_id']}"=> [
                     'profile_name' => $item['profile_type_name'] ,
                     'profile_name_uz' => $item['profile_type_name_uz'] ,
                     'profile_vendor_code' => $item['profile_type_vendor_code'] ,
@@ -539,12 +539,9 @@ class PdfController extends Controller
             ];
         });
 
-        $dataArray = json_decode($summedProfiles, true);
-        $dataArray['profiles'] = array_values($dataArray);
-        $modifiedJsonData = json_encode($dataArray, JSON_PRETTY_PRINT);
         return response()->json([
              'data' => $data ,
-             'profiles' => $modifiedJsonData ,
+             'profiles' => $summedProfiles ,
              'windows' => $summedWindows ,
              'additional_services' => $summedAdditionalServices ,
              'assembly_services' => $summedAssemblyServices ,
