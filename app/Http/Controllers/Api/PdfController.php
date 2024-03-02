@@ -443,6 +443,7 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('window_color_surface'),
             ];
         });
+        $summedWindows = collect($summedWindows)->values()->toArray();
         // Additional Services
         $summedAdditionalServices = $data->mapToGroups(function ($item) {
             return ["{$item['additional_service_id']}"=> [
@@ -462,6 +463,7 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('additional_service_quantity'),
             ];
         });
+        $summedAdditionalServices = collect($summedAdditionalServices)->values()->toArray();
         // Assembly Services
         $summedAssemblyServices = $data->mapToGroups(function ($item) {
             return ["{$item['assembly_service_id']}"=> [
@@ -481,6 +483,7 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('assembly_service_quantity'),
             ];
         });
+        $summedAssemblyServices = collect($summedAssemblyServices)->values()->toArray();
         // Sealants
         $summedSealants = $data->mapToGroups(function ($item) {
             return ["{$item['sealant_id']}"=> [
@@ -500,6 +503,7 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('sealant_quantity'),
             ];
         });
+        $summedSealants = collect($summedSealants)->values()->toArray();
         // Corners
         $summedCorners = $data->mapToGroups(function ($item) {
             return ["{$item['corner_id']}"=> [
@@ -519,7 +523,7 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('corner_quantity') ,
             ];
         });
-
+        $summedCorners = collect($summedCorners)->values()->toArray();
         // Window Handlers
         $summedWindowHandlers = $data->mapToGroups(function ($item) {
             return ["{$item['window_handler_id']}"=> [
@@ -539,7 +543,7 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('window_handler_quantity') ,
             ];
         });
-
+        $summedWindowHandlers = collect($summedWindowHandlers)->values()->toArray();
         return response()->json([
              'data' => $data ,
              'profiles' => $summedProfiles ,
