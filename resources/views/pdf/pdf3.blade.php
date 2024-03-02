@@ -178,11 +178,11 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
-          float: right;
-      }
-      .card:nth-child(2n-1){
           float: left;
       }
+      /*.card:nth-child(2n-1){*/
+      /*    float: right;*/
+      /*}*/
       /*.card3:nth-child(1){*/
       /*    float: left;*/
       /*}*/
