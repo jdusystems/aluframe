@@ -181,9 +181,7 @@
           border-bottom: 1px dotted black;
           float: left;
       }
-      .card3:nth-child(2n-1){
-          float: right;
-      }
+
       .card-top3{
           width: 100%;
           padding-bottom: 22px;
