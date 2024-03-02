@@ -423,6 +423,7 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('profile_quantity'),
             ];
         });
+        $summedProfiles = collect($summedProfiles)->values()->toArray();
 
         $summedWindows = $data->mapToGroups(function ($item) {
             return ["{$item['window_color_id']}"=> [
