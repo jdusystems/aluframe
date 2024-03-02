@@ -423,13 +423,6 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('profile_quantity'),
             ];
         });
-        $dataArray = json_decode($summedProfiles, true);
-        $dataArray['profiles'] = array_values($dataArray['profiles']);
-        $modifiedJsonData = json_encode($dataArray, JSON_PRETTY_PRINT);
-
-
-
-
 
         $summedWindows = $data->mapToGroups(function ($item) {
             return ["{$item['window_color_id']}"=> [
@@ -545,6 +538,10 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('window_handler_quantity') ,
             ];
         });
+
+        $dataArray = json_decode($summedProfiles, true);
+        $dataArray['profiles'] = array_values($dataArray);
+        $modifiedJsonData = json_encode($dataArray, JSON_PRETTY_PRINT);
         return response()->json([
              'data' => $data ,
              'profiles' => $modifiedJsonData ,
@@ -555,6 +552,7 @@ class PdfController extends Controller
              'corners' => $summedCorners ,
              'window_handlers' => $summedWindowHandlers
         ]);
+
     }
 
     public function totalPrice(GetOrderDetailRequest $request){
