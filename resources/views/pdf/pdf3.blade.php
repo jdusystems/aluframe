@@ -166,13 +166,13 @@
 
        */
 
-      .wrap2{
+      .wrap3{
           width: 100%;
           max-width: 716px;
           gap: 21px;
           margin: 80px auto;
       }
-      .card2{
+      .card3{
           width:calc((100% - 21px) / 2);
           list-style: none;
           padding-top: 20px;
@@ -181,14 +181,14 @@
           border-bottom: 1px dotted black;
           float: left;
       }
-      .card2:nth-child(2n-1){
+      .card3:nth-child(2n-1){
           float: right;
       }
       .card-top2{
           width: 100%;
           padding-bottom: 22px;
       }
-      .card-top2 td {
+      .card-top3 td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 13px;
@@ -198,13 +198,13 @@
           padding-bottom: 22px;
           /*padding-right: 10px;*/
       }
-      .card-top2 td:last-child{
+      .card-top3 td:last-child{
           margin-left: auto;
       }
-      .card-item2{
+      .card-item3{
           width: 100%;
       }
-      .card-item2 td {
+      .card-item3 td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 14px;
@@ -213,13 +213,13 @@
           line-height: normal;
           padding-bottom: 12px;
       }
-      .card-item2 td:last-child{
+      .card-item3 td:last-child{
           text-align: end;
       }
-      .card-item2:nth-child(5) td:first-child {
+      .card-item3:nth-child(5) td:first-child {
           font-weight: 700;
       }
-      .card-item2:nth-child(4) td:first-child {
+      .card-item3:nth-child(4) td:first-child {
           font-weight: 700;
       }
   </style>
@@ -365,30 +365,30 @@
 <div class="break-page">
 
 </div>
-<div class="wrap2">
+<div class="wrap3">
     @foreach($orderDetails as $orderDetail)
             <?php
             $facades = $orderDetail->quantity_left + $orderDetail->quantity_right  + 1;
             ?>
         @for($i = 1;$i <= $facades;$i++)
-            <table class="card2">
-                <tr class="card-top2">
+            <table class="card3">
+                <tr class="card-top3">
                     <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
                     <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
                 </tr>
-                <tr class="card-item2">
+                <tr class="card-item3">
                     <td>Высота:</td>
                     <td>{{$orderDetail->height*1000}} mm</td>
                 </tr>
-                <tr class="card-item2">
+                <tr class="card-item3">
                     <td>Ширина:</td>
                     <td>{{$orderDetail->width*1000}} mm</td>
                 </tr>
-                <tr class="card-item2">
+                <tr class="card-item3">
                     <td>Профиль:</td>
                     <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
                 </tr>
-                <tr class="card-item2">
+                <tr class="card-item3">
                     <td>Cтекло:</td>
                     <td>{{$orderDetail->windowColor->name}}</td>
                 </tr>
