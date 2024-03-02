@@ -161,74 +161,60 @@
           font-weight: 400;
           line-height: normal;
       }
-      *,
-      *::after,
-      *::before{
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-      }
-
-      body{
-          font-family: "Inter";
-
-      }
-      .WrapConent{
+      .wrapCantent{
           width: 100%;
           max-width: 716px;
           gap: 21px;
           margin: 80px auto;
-          display: flex;
-          flex-wrap: wrap;
       }
 
-      .cardConent{
+      .cardCantent{
           width:calc((100% - 21px) / 2);
           list-style: none;
           padding-top: 20px;
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
+          float: right;
       }
-      .cardConent-top{
-          display: flex;
-          align-items: center;
-          margin-bottom: 22px;
-          gap: 22px;
+      .cardCantent:nth-child(2n-1){
+          float: left;
       }
-      .cardConent-top p {
+      .cardCantent-top{
+          width: 100%;
+          padding-bottom: 22px;
+      }
+      .cardCantent-top td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 13px;
           font-style: normal;
           font-weight: 400;
           line-height: normal;
+          padding-bottom: 22px;
       }
-      .cardConent-top p:last-child{
+      .cardCantent-top td:last-child{
           margin-left: auto;
       }
-      .cardConent-item{
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 22px;
-          gap: 22px;
+      .cardCantent-item{
+          width: 100%;
       }
-      .cardConent-item p {
+      .cardCantent-item td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 14px;
           font-style: normal;
           font-weight: 500;
           line-height: normal;
+          padding-bottom: 12px;
       }
-      .cardConent-item p:last-child{
+      .cardCantent-item td:last-child{
           text-align: end;
       }
-      .cardConent-item:nth-child(5) p:first-child {
+      .cardCantent-item:nth-child(5) td:first-child {
           font-weight: 700;
       }
-      .cardConent-item:nth-child(4) p:first-child {
+      .cardCantent-item:nth-child(4) td:first-child {
           font-weight: 700;
       }
 
@@ -375,77 +361,75 @@
 <div class="break-page">
 
 </div>
+<div class="wrapCantent">
+    <table class="cardCantent">
+        <tr class="cardCantent-top">
+            <td>#1401 28.12.2023 18:53</td>
+            <td>Фасад 1/12</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Высота:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Ширина:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Профиль:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Cтекло:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+    </table>
+    <table class="cardCantent">
+        <tr class="cardCantent-top">
+            <td>#1401 28.12.2023 18:53</td>
+            <td>Фасад 1/12</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Высота:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Ширина:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Профиль:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Cтекло:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+    </table>
+    <table class="cardCantent">
+        <tr class="cardCantent-item">
+            <td>Профиль:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Высота:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Ширина:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Профиль:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
+        <tr class="cardCantent-item">
+            <td>Cтекло:</td>
+            <td>Узкий (19 мм), Черный</td>
+        </tr>
 
-<div class="WrapConent">
-    <ui class="cardConent">
-        <li class="cardConent-top">
-            <p>#1401</p>
-            <p>28.12.2023 18:53</p>
-            <p>Фасад 1/12</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Высота:</p>
-            <p>2470</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Ширина:</p>
-            <p>2470</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Профиль:</p>
-            <p>Узкий (19 мм), Черный</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Cтекло:</p>
-            <p>Прозрачное</p>
-        </li>
-    </ui>
-    <ui class="cardConent">
-        <li class="cardConent-top">
-            <p>#1401</p>
-            <p>28.12.2023 18:53</p>
-            <p>Фасад 1/12</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Высота:</p>
-            <p>2470</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Ширина:</p>
-            <p>2470</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Профиль:</p>
-            <p>Узкий (19 мм), Черный</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Cтекло:</p>
-            <p>Прозрачное</p>
-        </li>
-    </ui>
-    <ui class="cardConent">
-        <li class="cardConent-top">
-            <p>#1401</p>
-            <p>28.12.2023 18:53</p>
-            <p>Фасад 1/12</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Высота:</p>
-            <p>2470</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Ширина:</p>
-            <p>2470</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Профиль:</p>
-            <p>Узкий (19 мм), Черный</p>
-        </li>
-        <li class="cardConent-item">
-            <p>Cтекло:</p>
-            <p>Прозрачное</p>
-        </li>
-    </ui>
+
+    </table>
 </div>
 </body>
 
