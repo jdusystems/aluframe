@@ -181,7 +181,10 @@
           border-bottom: 1px dotted black;
           float: left;
       }
-      .card3:nth-child(2n){
+      .card3:nth-child(odd){
+          float: left;
+      }
+      .card3:nth-child(even){
           float: right;
       }
       .card-top2{
