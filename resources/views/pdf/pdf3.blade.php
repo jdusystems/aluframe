@@ -161,30 +161,34 @@
           font-weight: 400;
           line-height: normal;
       }
-      .wrapCantent{
+
+      /*
+
+       */
+
+      .wrap2{
           width: 100%;
           max-width: 716px;
           gap: 21px;
           margin: 80px auto;
       }
-
-      .cardCantent{
+      .card2{
           width:calc((100% - 21px) / 2);
           list-style: none;
           padding-top: 20px;
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
-          float: right;
-      }
-      .cardCantent:nth-child(2n-1){
           float: left;
       }
-      .cardCantent-top{
+      .card2:nth-child(2n-1){
+          float: right;
+      }
+      .card-top2{
           width: 100%;
           padding-bottom: 22px;
       }
-      .cardCantent-top td {
+      .card-top2 td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 13px;
@@ -192,14 +196,15 @@
           font-weight: 400;
           line-height: normal;
           padding-bottom: 22px;
+          /*padding-right: 10px;*/
       }
-      .cardCantent-top td:last-child{
+      .card-top2 td:last-child{
           margin-left: auto;
       }
-      .cardCantent-item{
+      .card-item2{
           width: 100%;
       }
-      .cardCantent-item td {
+      .card-item2 td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 14px;
@@ -208,16 +213,15 @@
           line-height: normal;
           padding-bottom: 12px;
       }
-      .cardCantent-item td:last-child{
+      .card-item2 td:last-child{
           text-align: end;
       }
-      .cardCantent-item:nth-child(5) td:first-child {
+      .card-item2:nth-child(5) td:first-child {
           font-weight: 700;
       }
-      .cardCantent-item:nth-child(4) td:first-child {
+      .card-item2:nth-child(4) td:first-child {
           font-weight: 700;
       }
-
   </style>
 </head>
 
@@ -361,76 +365,64 @@
 <div class="break-page">
 
 </div>
-<div class="wrapCantent">
-    <table class="cardCantent">
-        <tr class="cardCantent-top">
-            <td>#1401 28.12.2023 18:53</td>
-            <td>Фасад 1/12</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Высота:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Ширина:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Профиль:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Cтекло:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-    </table>
-    <table class="cardCantent">
-        <tr class="cardCantent-top">
-            <td>#1401 28.12.2023 18:53</td>
-            <td>Фасад 1/12</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Высота:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Ширина:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Профиль:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Cтекло:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-    </table>
-    <table class="cardCantent">
-        <tr class="cardCantent-item">
-            <td>Профиль:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Высота:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Ширина:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Профиль:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-        <tr class="cardCantent-item">
-            <td>Cтекло:</td>
-            <td>Узкий (19 мм), Черный</td>
-        </tr>
-
-
-    </table>
+<div class="wrap2">
+    @foreach($orderDetails as $orderDetail)
+            <?php
+            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right  + 1;
+            ?>
+        @for($i = 1;$i <= $facades;$i++)
+            <table class="card2">
+                <tr class="card-top2">
+                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
+                    <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
+                </tr>
+                <tr class="card-item2">
+                    <td>Высота:</td>
+                    <td>{{$orderDetail->height*1000}} mm</td>
+                </tr>
+                <tr class="card-item2">
+                    <td>Ширина:</td>
+                    <td>{{$orderDetail->width*1000}} mm</td>
+                </tr>
+                <tr class="card-item2">
+                    <td>Профиль:</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                </tr>
+                <tr class="card-item2">
+                    <td>Cтекло:</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
+                </tr>
+            </table>
+            @if($i%2==0)
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            @endif
+        @endfor
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    @endforeach
 </div>
+
 </body>
 
 </html>
