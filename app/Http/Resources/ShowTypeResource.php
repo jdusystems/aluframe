@@ -17,6 +17,7 @@ class ShowTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ,
+            'name_uz' => $this->name_uz ,
         ];
     }
 }
