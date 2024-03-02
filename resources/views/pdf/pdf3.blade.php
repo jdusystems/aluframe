@@ -169,7 +169,6 @@
       .wrap3{
           width: 100%;
           max-width: 716px;
-          gap: 21px;
           margin: 80px auto;
       }
       .card3{
@@ -181,7 +180,9 @@
           border-bottom: 1px dotted black;
           float: left;
       }
-
+      .card3:nth-child(odd){
+          float: right;
+      }
       .card-top3{
           width: 100%;
           padding-bottom: 22px;
