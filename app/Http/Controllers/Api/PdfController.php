@@ -423,6 +423,12 @@ class PdfController extends Controller
                 'total_quantity' => $group->sum('profile_quantity'),
             ];
         });
+        $dataArray = json_decode($summedProfiles, true);
+        $dataArray['profiles'] = array_values($dataArray['profiles']);
+        $modifiedJsonData = json_encode($dataArray, JSON_PRETTY_PRINT);
+
+
+
 
 
         $summedWindows = $data->mapToGroups(function ($item) {
@@ -541,7 +547,7 @@ class PdfController extends Controller
         });
         return response()->json([
              'data' => $data ,
-             'profiles' => $summedProfiles ,
+             'profiles' => $modifiedJsonData ,
              'windows' => $summedWindows ,
              'additional_services' => $summedAdditionalServices ,
              'assembly_services' => $summedAssemblyServices ,
