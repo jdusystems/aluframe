@@ -170,9 +170,10 @@
           width: 100%;
           max-width: 716px;
           margin: 80px auto;
+          display: inline-block;
       }
       .card3{
-          width:42%;
+          width:50%;
           list-style: none;
           padding-top: 20px;
           padding-bottom: 37px;
