@@ -173,7 +173,7 @@
           margin: 80px auto;
       }
       .card3{
-          width:calc((100% - 21px) / 2);
+          width:calc((100% - 40px) / 2);
           list-style: none;
           padding-top: 20px;
           padding-bottom: 37px;
@@ -181,7 +181,7 @@
           border-bottom: 1px dotted black;
           float: left;
       }
-      .card:nth-child(2n-1){
+      .card3:nth-child(2n-1){
           float: right;
       }
       .card-top3{
