@@ -373,6 +373,9 @@
 <div class="break-page">
 
 </div>
+<br>
+<br>
+<br>
 <div class="wrap3">
     @foreach($orderDetails as $orderDetail)
             <?php
@@ -416,18 +419,6 @@
                 <br>
             @endif
         @endfor
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
     @endforeach
 </div>
 
