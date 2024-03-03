@@ -118,7 +118,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
             'only' => ['store' , 'update' , 'destroy']
         ]);
 
-        Route::apiResource('statuses' , StatusController::class);
+        Route::apiResource('statuses' , StatusController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
         Route::apiResource('handler-positions' , HandlerPositionController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
@@ -216,6 +218,9 @@ Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class ,
     'only' => ['show' , 'index']
 ]);
 Route::apiResource('types' , TypeController::class , [
+    'only' => ['show' , 'index']
+]);
+Route::apiResource('statuses' , StatusController::class , [
     'only' => ['show' , 'index']
 ]);
 
