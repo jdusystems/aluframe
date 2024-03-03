@@ -311,10 +311,19 @@ class PdfController extends Controller
             }
             $additionalServicesData = [];
             if(array_key_exists('additional_service_id' ,$detail)){
+
                 $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
                 if($additionalServices){
                     foreach ($additionalServices as $additionalService){
                         $servicesData [] =  [
+                            'additional_service_id' => ($additionalService) ? $additionalService['id']  : 0,
+                            'additional_service_vendor_code' => ($additionalService) ? $additionalService['vendor_code']  : "",
+                            'additional_service_name' => ($additionalService) ? $additionalService['name']  : "",
+                            'additional_service_name_uz' => ($additionalService) ? $additionalService['uz_name']  : "",
+                            'additional_service_price' => ($additionalService) ? round($additionalService['price'] * $currency->rate , 2)  : 0,
+                            'additional_service_quantity' => ($additionalService) ? round($surface , 2)  : 0,
+                        ];
+                        $additionalServicesData [] =  [
                             'additional_service_id' => ($additionalService) ? $additionalService['id']  : 0,
                             'additional_service_vendor_code' => ($additionalService) ? $additionalService['vendor_code']  : "",
                             'additional_service_name' => ($additionalService) ? $additionalService['name']  : "",
