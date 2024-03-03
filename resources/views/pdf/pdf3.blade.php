@@ -251,9 +251,11 @@
                 </tr>
                 <tr class="list-item">
                     <th class="list-text">Дополнительные услуги для стекла:</th>
-                    @foreach($orderDetail->additionalServices as $additionalService)
-                        <th class="list-text">{{($additionalService) ? $additionalService->name: ""}}</th>
-                    @endforeach
+                    <th class="list-text">
+                        @foreach($orderDetail->additionalServices as $additionalService)
+                            {{($additionalService) ? $additionalService->name: ""}} ,
+                        @endforeach
+                    </th>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Тип открывания:</td>
