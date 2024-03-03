@@ -250,8 +250,8 @@
                     <td class="title">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name :""}}</td>
                 </tr>
                 <tr class="list-item">
-                    <td class="list-text">Дополнительные услуги для стекла:</td>
-                    <td class="list-text">
+                    <td class="text">Дополнительные услуги для стекла:</td>
+                    <td class="title">
                         @foreach($orderDetail->additionalServices as $additionalService)
                             {{($additionalService) ? $additionalService->name: ""}} ,
                         @endforeach
