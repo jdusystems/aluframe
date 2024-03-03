@@ -143,9 +143,35 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $additionalServices = OrderDetail::select('additional_service_id' ,
-            DB::raw('SUM(surface) as total_surface')
-        )->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
+        $additionalServices = [];
+        foreach ($orderDetails as $orderDetail){
+            foreach ($orderDetail->additionalServices as $additionalService){
+                $additionalServices [] =  [
+                    'additional_service_id' => ($additionalService) ? $additionalService->id  : 0,
+                    'vendor_code' => ($additionalService) ? $additionalService->vendor_code  : "",
+                    'name' => ($additionalService) ? $additionalService->name  : "",
+                    'quantity' => ($additionalService) ? round($orderDetail->surface , 2)  : 0.00,
+                ];
+            }
+        }
+        $additionalServices = collect($additionalServices);
+        $summedAdditionalServices = $additionalServices->mapToGroups(function ($item) {
+            return ["{$item['additional_service_id']}"=> [
+                'vendor_code' => $item['vendor_code'] ,
+                'name' => $item['name'] ,
+                'quantity' => $item['quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'vendor_code' => $group[0]['vendor_code'] ,
+                'name' => $group[0]['name'] ,
+                'total_quantity' => $group->sum('quantity'),
+            ];
+        });
+        $summedAdditionalServices = collect($summedAdditionalServices)->values()->toArray();
+
+
 
         $assemblyServices = OrderDetail::select('assembly_service_id' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
@@ -162,7 +188,7 @@ class PdfController extends Controller
         }
         $pdf = Pdf::loadView('pdf.pdf2' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
-            'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
+            'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices
         ]);
         $pdfContents = $pdf->output();
 

@@ -313,17 +313,14 @@
         @endforeach
 
         @foreach($additionalServices as $additionalService)
-                <?php
-                $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();
-                ?>
-            @if($additionalService->additionalService)
-                <tr class="list-item">
-                    <th class="list-text1">{{$additionalService->additionalService->vendor_code}}</th>
-                    <th class="list-text1">{{$additionalService->additionalService->name}}</th>
-                    <th class="list-text1">{{$additionalService->total_surface}}</th>
-                </tr>
-            @endif
-
+            {{--                <?php--}}
+            {{--                    $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();--}}
+            {{--                ?>--}}
+            <tr class="list-item">
+                <th class="list-text1">{{$additionalService['vendor_code']}}</th>
+                <th class="list-text1">{{$additionalService['name']}}</th>
+                <th class="list-text1">{{$additionalService['total_quantity']}}</th>
+            </tr>
         @endforeach
 
         @foreach($assemblyServices as $assemblyService)
