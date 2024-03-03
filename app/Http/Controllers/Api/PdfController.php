@@ -57,9 +57,38 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $additionalServices = OrderDetail::select('additional_service_id' ,
-            DB::raw('SUM(surface) as total_surface')
-        )->groupBy('additional_service_id')->where('order_id' , $order->id)->get();
+        $additionalServices = [];
+        foreach ($orderDetails as $orderDetail){
+            foreach ($orderDetail->additionalServices as $additionalService){
+                $additionalServices [] =  [
+                    'additional_service_id' => ($additionalService) ? $additionalService->id  : 0,
+                    'additional_service_vendor_code' => ($additionalService) ? $additionalService->vendor_code  : "",
+                    'additional_service_name' => ($additionalService) ? $additionalService->name  : "",
+                    'additional_service_name_uz' => ($additionalService) ? $additionalService->uz_name  : "",
+                    'additional_service_price' => ($additionalService) ? round($additionalService->price , 2)  : 0.00,
+                    'additional_service_quantity' => ($additionalService) ? round($orderDetail->surface , 2)  : 0.00,
+                ];
+            }
+        }
+        $summedAdditionalServices = $servicesData->mapToGroups(function ($item) {
+            return ["{$item['additional_service_id']}"=> [
+                'additional_service_vendor_code' => $item['additional_service_vendor_code'] ,
+                'additional_service_name' => $item['additional_service_name'] ,
+                'additional_service_name_uz' => $item['additional_service_name_uz'] ,
+                'additional_service_price' => $item['additional_service_price'] ,
+                'additional_service_quantity' => $item['additional_service_quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'additional_service_vendor_code' => $group[0]['additional_service_vendor_code'] ,
+                'additional_service_name' => $group[0]['additional_service_name'] ,
+                'additional_service_name_uz' =>$group[0]['additional_service_name_uz'] ,
+                'additional_service_price' => $group[0]['additional_service_price'] ,
+                'total_quantity' => $group->sum('additional_service_quantity'),
+            ];
+        });
+        $summedAdditionalServices = collect($summedAdditionalServices)->values()->toArray();
 
         $assemblyServices = OrderDetail::select('assembly_service_id' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
@@ -76,7 +105,7 @@ class PdfController extends Controller
         }
         $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
-            'additionalServices' => $additionalServices , 'assemblyServices' => $assemblyServices
+            'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices
         ]);
         $pdfContents = $pdf->output();
 
