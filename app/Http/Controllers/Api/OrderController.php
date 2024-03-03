@@ -276,14 +276,14 @@ class OrderController extends Controller
                     'handler_type_name' => $detail['handler_type_name'] ,
                     'handler_type_name_uz' => $detail['handler_type_name_uz'] ,
                 ]);
-                if(array_key_exists('additional_service_id' ,$detail)){
-                    $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
-                    if($additionalServices){
-                        foreach ($additionalServices as $additionalService){
-                            $orderDetail->additionalServices()->attach($additionalService['id'], ['price' => $additionalService['price']]);
-                        }
-                    }
-                }
+//                if(array_key_exists('additional_service_id' ,$detail)){
+//                    $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
+//                    if($additionalServices){
+//                        foreach ($additionalServices as $additionalService){
+//                            $orderDetail->additionalServices()->attach($additionalService['id'], ['price' => $additionalService['price']]);
+//                        }
+//                    }
+//                }
 
 
                 $totalPrice += $price * $currency->rate;
