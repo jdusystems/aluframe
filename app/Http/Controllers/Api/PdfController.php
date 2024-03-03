@@ -62,31 +62,31 @@ class PdfController extends Controller
             foreach ($orderDetail->additionalServices as $additionalService){
                 $additionalServices [] =  [
                     'additional_service_id' => ($additionalService) ? $additionalService->id  : 0,
-                    'additional_service_vendor_code' => ($additionalService) ? $additionalService->vendor_code  : "",
-                    'additional_service_name' => ($additionalService) ? $additionalService->name  : "",
-                    'additional_service_name_uz' => ($additionalService) ? $additionalService->uz_name  : "",
-                    'additional_service_price' => ($additionalService) ? round($additionalService->price , 2)  : 0.00,
-                    'additional_service_quantity' => ($additionalService) ? round($orderDetail->surface , 2)  : 0.00,
+                    'vendor_code' => ($additionalService) ? $additionalService->vendor_code  : "",
+                    'name' => ($additionalService) ? $additionalService->name  : "",
+                    'name_uz' => ($additionalService) ? $additionalService->uz_name  : "",
+                    'price' => ($additionalService) ? round($additionalService->price , 2)  : 0.00,
+                    'quantity' => ($additionalService) ? round($orderDetail->surface , 2)  : 0.00,
                 ];
             }
         }
         $additionalServices = collect($additionalServices);
         $summedAdditionalServices = $additionalServices->mapToGroups(function ($item) {
             return ["{$item['additional_service_id']}"=> [
-                'additional_service_vendor_code' => $item['additional_service_vendor_code'] ,
-                'additional_service_name' => $item['additional_service_name'] ,
-                'additional_service_name_uz' => $item['additional_service_name_uz'] ,
-                'additional_service_price' => $item['additional_service_price'] ,
-                'additional_service_quantity' => $item['additional_service_quantity'],
+                'vendor_code' => $item['vendor_code'] ,
+                'name' => $item['name'] ,
+                'name_uz' => $item['name_uz'] ,
+                'price' => $item['price'] ,
+                'quantity' => $item['quantity'],
             ]
             ];
         })->map(function ($group){
             return [
-                'additional_service_vendor_code' => $group[0]['additional_service_vendor_code'] ,
-                'additional_service_name' => $group[0]['additional_service_name'] ,
-                'additional_service_name_uz' =>$group[0]['additional_service_name_uz'] ,
-                'additional_service_price' => $group[0]['additional_service_price'] ,
-                'total_quantity' => $group->sum('additional_service_quantity'),
+                'vendor_code' => $group[0]['vendor_code'] ,
+                'name' => $group[0]['name'] ,
+                'name_uz' =>$group[0]['name_uz'] ,
+                'price' => $group[0]['price'] ,
+                'total_quantity' => $group->sum('quantity'),
             ];
         });
         $summedAdditionalServices = collect($summedAdditionalServices)->values()->toArray();

@@ -301,15 +301,15 @@
 
         @endforeach
         @foreach($additionalServices as $additionalService)
-                <?php
-                    $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();
-                ?>
+{{--                <?php--}}
+{{--                    $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();--}}
+{{--                ?>--}}
             <tr class="list-item">
-                <th class="list-text1">{{$additionalService->additionalService->vendor_code}}</th>
-                <th class="list-text1">{{$additionalService->additionalService->name}}</th>
-                <th class="list-text1">{{$additionalService->additionalService->price}}</th>
-                <th class="list-text1">{{$additionalService->total_surface}}</th>
-                <th class="list-text1">{{$additionalService->total_surface * $additionalService->additionalService->price}}</th>
+                <th class="list-text1">{{$additionalService['vendor_code']}}</th>
+                <th class="list-text1">{{$additionalService['name']}}</th>
+                <th class="list-text1">{{$additionalService['price']}}</th>
+                <th class="list-text1">{{$additionalService['total_quantity']}}</th>
+                <th class="list-text1">{{$additionalService['total_quantity'] * $additionalService['price']}}</th>
             </tr>
         @endforeach
         @foreach($assemblyServices as $assemblyService)
