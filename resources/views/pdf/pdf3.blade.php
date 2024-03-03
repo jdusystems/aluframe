@@ -249,9 +249,11 @@
                     <td class="text">Цвет стекла:</td>
                     <td class="title">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name :""}}</td>
                 </tr>
-                <tr class="card-item">
-                    <td class="text">Доп-услуги для стекла:</td>
-                    <td class="title">{{($orderDetail->additionalService) ? $orderDetail->additionalService->name : ""}}</td>
+                <tr class="list-item">
+                    <th class="list-text">Дополнительные услуги для стекла:</th>
+                    @foreach($orderDetail->additionalServices as $additionalService)
+                        <th class="list-text">{{($additionalService) ? $additionalService->name: ""}}</th>
+                    @endforeach
                 </tr>
                 <tr class="card-item">
                     <td class="text">Тип открывания:</td>

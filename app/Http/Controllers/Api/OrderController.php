@@ -222,10 +222,11 @@ class OrderController extends Controller
                     }
                 }
                 if(array_key_exists('additional_service_id' ,$detail)){
-                    $additionalService = AdditionalService::find($detail['additional_service_id']);
-                    if($additionalService){
-                        $price += $additionalService->price*$surface;
-                        $additionalServicePrice = $additionalService->price;
+                    $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
+                    if($additionalServices){
+                        foreach ($additionalServices as $additionalService){
+                            $price += $additionalService['price']*$surface;
+                        }
                     }
                 }
                 // Mana shu joyini ko'rish kerak balandlik yoki peremetr assembly service
@@ -243,14 +244,13 @@ class OrderController extends Controller
                         $assemblyServicePrice = $assemblyService->price;
                     }
                 }
-                OrderDetail::create([
+                $orderDetail = OrderDetail::create([
                     'order_id' => $order->id ,
                     'profile_type_id' => $detail['profile_type_id'] ,
                     'window_color_id' => $detail['window_color_id'] ,
                     'profile_color_id' => $detail['profile_color_id'] ,
                     'opening_type_id' => $detail['opening_type_id'] ,
                     'handler_position_id' => $detail['handler_position_id'] ,
-                    'additional_service_id' => (array_key_exists('additional_service_id' ,$detail)) ? $detail['additional_service_id'] : null ,
                     'assembly_service_id' => ($assemblyService) ? $assemblyService->id : null ,
                     'width' => $width ,
                     'height' => $height ,
@@ -269,7 +269,6 @@ class OrderController extends Controller
                     'window_handler_price' => $windowHandlerPrice * $currency->rate ,
                     'window_price' => $windowPrice * $currency->rate ,
                     'assembly_service_price' => $assemblyServicePrice * $currency->rate ,
-                    'additional_service_price' =>  $additionalServicePrice * $currency->rate,
                     'price' => $price * $currency->rate ,
                     'facade_quantity' => $profileNumber ,
                     'surface' => $surface ,
@@ -277,6 +276,16 @@ class OrderController extends Controller
                     'handler_type_name' => $detail['handler_type_name'] ,
                     'handler_type_name_uz' => $detail['handler_type_name_uz'] ,
                 ]);
+                if(array_key_exists('additional_service_id' ,$detail)){
+                    $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
+                    if($additionalServices){
+                        foreach ($additionalServices as $additionalService){
+                            $orderDetail->additionalServices()->attach($additionalService['id'], ['price' => $additionalService['price']]);
+                        }
+                    }
+                }
+
+
                 $totalPrice += $price * $currency->rate;
             }
             if($totalPrice > 0){
@@ -363,7 +372,8 @@ class OrderController extends Controller
     public function getOrderPrice(Request $request){
 
         $request->validate([
-            'currency_id' => ['required' , 'numeric' ,'min:1' , 'exists:currencies,id']
+            'currency_id' => ['required' , 'numeric' ,'min:1' , 'exists:currencies,id'] ,
+            'additional_service_id' => ['array'],
         ]);
         $currency = Currency::find($request->currency_id);
         $totalPrice = 0;
@@ -478,16 +488,20 @@ class OrderController extends Controller
                 }
             }
         }
+
         if($request->has('additional_service_id')){
-            $additionalService = AdditionalService::find($request->additional_service_id);
-            if($additionalService){
-                if($height && $width){
-                    $additionalServicePrice += $additionalService->price*$height*$width*$profileNumber;
-                }else{
-                    $additionalServicePrice += $additionalService->price;
+            $additionalServices = AdditionalService::whereIn('id' , $request['additional_service_id'])->get();
+            if($additionalServices){
+                foreach ($additionalServices as $additionalService){
+                    if($height && $width){
+                        $additionalServicePrice += $additionalService['price']*$height*$width*$profileNumber;
+                    }else{
+                        $additionalServicePrice += $additionalService['price'];
+                    }
                 }
             }
         }
+
         if($height < 1.8 ){
             $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '<')->first();
             if($assemblyService){
@@ -501,7 +515,6 @@ class OrderController extends Controller
         }
 
         $totalPrice += $sealantPrice + $cornerPrice+$windowHandlerPrice+$profilePrice+$windowPrice+$additionalServicePrice+$assemblyServicePrice;
-
         return response()->json([
             'totalPrice' => round($totalPrice * $currency->rate , 2) ,
             'sealant_price' => round($sealantPrice* $currency->rate , 2) ,

@@ -42,8 +42,9 @@ class OrderDetail extends Model
         return $this->belongsTo(ProfileColor::class);
     }
 
-    public function additionalService(){
-        return $this->belongsTo(AdditionalService::class);
+    public function additionalServices()
+    {
+        return $this->belongsToMany(AdditionalService::class);
     }
 
     public function assemblyService(){

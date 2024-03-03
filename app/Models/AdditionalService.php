@@ -12,7 +12,8 @@ class AdditionalService extends Model
 
     protected $fillable = ["name", 'uz_name' , 'uz_description' , "image_url" ,"image_name", "sort_index", "vendor_code", "price" ,'description'];
 
-    public function orderDetails(){
-        return $this->hasMany(OrderDetail::class);
+    public function orderDetails()
+    {
+        return $this->belongsToMany(OrderDetail::class);
     }
 }

@@ -222,9 +222,10 @@ class PdfController extends Controller
 
         $details = $request->input('orders');
         $currency = Currency::find($request->currency_id);
-        $totalPrice = 0;
 
         $data =  [];
+        $servicesData = [];
+
         foreach ($details as $detail){
             $price = 0;
             $profileNumber = 0;
@@ -308,12 +309,24 @@ class PdfController extends Controller
                     $price += $surface * $windowColor->price*$profileNumber;
                 }
             }
+            $additionalServicesData = [];
             if(array_key_exists('additional_service_id' ,$detail)){
-                $additionalService = AdditionalService::find($detail['additional_service_id']);
-                if($additionalService){
-                    $price += $additionalService->price*$surface; // Har bitta rom uchun alohida qo'shimcha xizmat xaqi mi yoki hammasiga bittami
+                $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
+                if($additionalServices){
+                    foreach ($additionalServices as $additionalService){
+                        $servicesData [] =  [
+                            'additional_service_id' => ($additionalService) ? $additionalService['id']  : 0,
+                            'additional_service_vendor_code' => ($additionalService) ? $additionalService['vendor_code']  : "",
+                            'additional_service_name' => ($additionalService) ? $additionalService['name']  : "",
+                            'additional_service_name_uz' => ($additionalService) ? $additionalService['uz_name']  : "",
+                            'additional_service_price' => ($additionalService) ? round($additionalService['price'] * $currency->rate , 2)  : 0,
+                            'additional_service_quantity' => ($additionalService) ? round($surface , 2)  : 0,
+                        ];
+                        $price += $additionalService['price']*$surface;
+                    }
                 }
             }
+
             $assemblyService = null;
             $perimeter = 2*($width + $height);
             if($height < 1.8 ){
@@ -330,9 +343,7 @@ class PdfController extends Controller
             $windowColor1 = WindowColor::find($detail['window_color_id']);
             $profileColor1 = ProfileColor::find($detail['profile_color_id']);
             $openingType1 = OpeningType::find($detail['opening_type_id']);
-            if(array_key_exists('additional_service_id' ,$detail)){
-                $additionalService1 = AdditionalService::find($detail['additional_service_id']);
-            }
+
              if(array_key_exists('handler_position_id' ,$detail)){
                 $handlerPosition1 = HandlerPosition::find($detail['handler_position_id']);
             }
@@ -361,12 +372,7 @@ class PdfController extends Controller
                 'opening_type_position' => $openingType1->position ,
                 'handler_position_name' => ($handlerPosition1) ? $handlerPosition1->name :"",
                 'handler_position_name_uz' => ($handlerPosition1) ? $handlerPosition1->uz_name :"",
-                'additional_service_id' => ($additionalService1) ? $additionalService1->id  : 0,
-                'additional_service_vendor_code' => ($additionalService1) ? $additionalService1->vendor_code  : "",
-                'additional_service_name' => ($additionalService1) ? $additionalService1->name  : "",
-                'additional_service_name_uz' => ($additionalService1) ? $additionalService1->uz_name  : "",
-                'additional_service_price' => ($additionalService1) ? round($additionalService1->price * $currency->rate , 2)  : 0,
-                'additional_service_quantity' => ($additionalService1) ? round($surface , 2)  : 0,
+                'additional_services' => $additionalServicesData ,
                 'assembly_service_id' => ($assemblyService) ? $assemblyService->id : 0 ,
                 'assembly_service_vendor_code' => ($assemblyService) ? $assemblyService->vendor_code : "" ,
                 'assembly_service_name' => ($assemblyService) ? $assemblyService->name : "" ,
@@ -404,6 +410,7 @@ class PdfController extends Controller
         }
 
         $data = collect($data);
+        $servicesData = collect($servicesData);
    // Profiles
         $summedProfiles = $data->mapToGroups(function ($item) {
             return ["{$item['profile_id']}"=> [
@@ -447,7 +454,7 @@ class PdfController extends Controller
         });
         $summedWindows = collect($summedWindows)->values()->toArray();
         // Additional Services
-        $summedAdditionalServices = $data->mapToGroups(function ($item) {
+        $summedAdditionalServices = $servicesData->mapToGroups(function ($item) {
             return ["{$item['additional_service_id']}"=> [
                 'additional_service_vendor_code' => $item['additional_service_vendor_code'] ,
                 'additional_service_name' => $item['additional_service_name'] ,
@@ -629,9 +636,11 @@ class PdfController extends Controller
                 }
             }
             if(array_key_exists('additional_service_id' ,$detail)){
-                $additionalService = AdditionalService::find($detail['additional_service_id']);
-                if($additionalService){
-                    $price += $additionalService->price*$surface*$profileNumber;
+                $additionalServices = AdditionalService::whereIn('id', $detail['additional_service_id'])->get();
+                if($additionalServices){
+                    foreach ( $additionalServices as $additionalService) {
+                        $price += $additionalService['price']*$surface*$profileNumber;
+                    }
                 }
             }
             if($height < 1.8 ){
