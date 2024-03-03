@@ -398,6 +398,8 @@ class PdfController extends Controller
                 'number_of_loops' => ($detail['number_of_loops']) ? $detail['number_of_loops'] : 1 ,
                 'comment' => ($detail['comment']) ? $detail['comment'] : "" ,
                 'additive_sizes' => (array_key_exists('additive_sizes' , $detail)) ? $detail['additive_sizes'] : "" ,
+                'handler_type_name' => (array_key_exists('handler_type_name' , $detail)) ? $detail['handler_type_name'] : "" ,
+                'handler_type_name_uz' => (array_key_exists('handler_type_name_uz' , $detail)) ? $detail['handler_type_name_uz'] : "" ,
             ];
         }
 

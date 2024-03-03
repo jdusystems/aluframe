@@ -273,7 +273,9 @@ class OrderController extends Controller
                     'price' => $price * $currency->rate ,
                     'facade_quantity' => $profileNumber ,
                     'surface' => $surface ,
-                    'profile_length' => $profilePeremetr*$profileNumber
+                    'profile_length' => $profilePeremetr*$profileNumber ,
+                    'handler_type_name' => $detail['handler_type_name'] ,
+                    'handler_type_name_uz' => $detail['handler_type_name_uz'] ,
                 ]);
                 $totalPrice += $price * $currency->rate;
             }
