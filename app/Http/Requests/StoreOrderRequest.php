@@ -39,7 +39,7 @@ class StoreOrderRequest extends FormRequest
             })] ,
             'orders.*.opening_type_id' => ['required' ,'integer', 'exists:opening_types,id'] ,
             'orders.*.handler_position_id' => ['required' ,'integer', 'exists:handler_positions,id'] ,
-            'orders.*.additional_service_id' => ['array|required'] ,
+            'orders.*.additional_service_id' => ['required' , 'array'] ,
             'orders.*.additional_service_id.*' => [ Rule::exists('additional_services' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
