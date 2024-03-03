@@ -250,12 +250,12 @@
                     <td class="title">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name :""}}</td>
                 </tr>
                 <tr class="list-item">
-                    <th class="list-text">Дополнительные услуги для стекла:</th>
-                    <th class="list-text">
+                    <td class="list-text">Дополнительные услуги для стекла:</td>
+                    <td class="list-text">
                         @foreach($orderDetail->additionalServices as $additionalService)
                             {{($additionalService) ? $additionalService->name: ""}} ,
                         @endforeach
-                    </th>
+                    </td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Тип открывания:</td>
