@@ -70,6 +70,7 @@ class PdfController extends Controller
                 ];
             }
         }
+        $additionalServices = collect($additionalServices);
         $summedAdditionalServices = $additionalServices->mapToGroups(function ($item) {
             return ["{$item['additional_service_id']}"=> [
                 'additional_service_vendor_code' => $item['additional_service_vendor_code'] ,
