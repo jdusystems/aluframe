@@ -352,7 +352,7 @@
         </li>
         <li class="cardConent-item">
             <p>Cтекло:</p>
-            <p>{{$orderDetail->windowColor->name}}</p>
+            <p>{{$orderDetail->windowColor->name}}ijd</p>
         </li>
     </ul>
             @if($i%2==0)
