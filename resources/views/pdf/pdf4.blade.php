@@ -35,10 +35,10 @@
             padding-bottom: 37px;
             border-top: 1px dotted black;
             border-bottom: 1px dotted black;
-            float: left;
+            float: right;
         }
         .card:nth-child(2n-1){
-            float: right;
+            float: left;
         }
         .card-top{
             width: 100%;
