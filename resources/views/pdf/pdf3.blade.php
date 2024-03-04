@@ -183,7 +183,7 @@
           float: left;
       }
 
-      .card5:nth-child(8){
+      .wrap:nth-child(8){
           page-break-after: always;
       }
       .card-top5{
