@@ -157,32 +157,29 @@
 
        */
 
-      .wrap3{
+      .wrap5{
           width: 100%;
           max-width: 716px;
-          display: inline-block;
+          gap: 21px;
+          margin: 80px auto;
       }
-      .card3{
-          width:50%;
+      .card5{
+          width:calc((100% - 21px) / 2);
           list-style: none;
           padding-top: 20px;
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
-      }
-
-      .wrap3:nth-child(2n-1){
-          float: left;
-      }
-      .wrap3:nth-child(even){
           float: right;
       }
-
-      .card-top3{
+      .card5:nth-child(2n-1){
+          float: left;
+      }
+      .card-top5{
           width: 100%;
           padding-bottom: 22px;
       }
-      .card-top3 td {
+      .card-top5 td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 13px;
@@ -192,13 +189,13 @@
           padding-bottom: 22px;
           /*padding-right: 10px;*/
       }
-      .card-top3 td:last-child{
+      .card-top5 td:last-child{
           margin-left: auto;
       }
-      .card-item3{
+      .card-item5{
           width: 100%;
       }
-      .card-item3 td {
+      .card-item5 td {
           color: #4B3E32;
           font-family: Inter;
           font-size: 14px;
@@ -207,13 +204,13 @@
           line-height: normal;
           padding-bottom: 12px;
       }
-      .card-item3 td:last-child{
+      .card-item5 td:last-child{
           text-align: end;
       }
-      .card-item3:nth-child(5) td:first-child {
+      .card-item5:nth-child(5) td:first-child {
           font-weight: 700;
       }
-      .card-item3:nth-child(4) td:first-child {
+      .card-item5:nth-child(4) td:first-child {
           font-weight: 700;
       }
   </style>
@@ -367,36 +364,34 @@
 <br>
 <br>
 <br>
-<div class="WrapConent">
+<div class="wrap5">
     @foreach($orderDetails as $orderDetail)
             <?php
-            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
+            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right  + 1;
             ?>
         @for($i = 1;$i <= $facades;$i++)
-
-            <ul class="cardConent">
-                <li class="cardConent-top">
-                    <p>{{$orderDetail->id}}</p>
-                    <p>{{$order->created_at}}</p>
-                    <p>Фасад {{$i}}/{{$facades}}</p>
-                </li>
-                <li class="cardConent-item">
-                    <p>Высота:</p>
-                    <p>{{$orderDetail->height*1000}}</p>
-                </li>
-                <li class="cardConent-item">
-                    <p>Ширина:</p>
-                    <p>{{$orderDetail->width*1000}}</p>
-                </li>
-                <li class="cardConent-item">
-                    <p>Профиль:</p>
-                    <p>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}̆</p>
-                </li>
-                <li class="cardConent-item">
-                    <p>Cтекло:</p>
-                    <p>{{$orderDetail->windowColor->name}}ijd</p>
-                </li>
-            </ul>
+            <table class="card5">
+                <tr class="card-top5">
+                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
+                    <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Высота:</td>
+                    <td>{{$orderDetail->height*1000}} mm</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Ширина:</td>
+                    <td>{{$orderDetail->width*1000}} mm</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Профиль:</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Cтекло:</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
+                </tr>
+            </table>
             @if($i%2==0)
                 <br>
                 <br>
@@ -412,6 +407,18 @@
                 <br>
             @endif
         @endfor
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     @endforeach
 </div>
 </body>
