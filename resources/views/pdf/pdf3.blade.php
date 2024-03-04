@@ -231,7 +231,11 @@
 <br><br>
 <div class="full">
     <div class="wrap">
+        <?php
+        $i = 0;
+        ?>
         @foreach($orderDetails as $orderDetail)
+            <?php $i = $i + 1; ?>
             <table class="card">
                 <tr class="card-item">
                     <td class="text">Профиль:</td>
@@ -291,6 +295,7 @@
                     <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</td>
                 </tr>
             </table>
+            @if($i % 2 == 0) <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> @endif
         @endforeach
     </div>
 </div>
