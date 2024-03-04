@@ -168,11 +168,10 @@
           padding-top: 20px;
           padding-bottom: 37px;
           border-top: 1px dotted black;
-          border-bottom: 1px dotted black;
-
+          border-bottom: 1px dotted black;=
       }
       .card3:nth-child(2n-1){
-          float: right;
+          float: left;
       }
       .card-top3{
           width: 100%;
