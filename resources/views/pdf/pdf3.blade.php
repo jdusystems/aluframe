@@ -169,13 +169,11 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
+          float: left;
       }
-      /*.card:nth-child(2n-1){*/
-      /*    float: right;*/
-      /*}*/
-      /*.card3:nth-child(1){*/
-      /*    float: left;*/
-      /*}*/
+      .wrap3:nth-child(even){
+          float: left;
+      }
 
       .card-top3{
           width: 100%;
@@ -372,7 +370,7 @@
                 $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
             ?>
         @for($i = 1;$i <= $facades;$i++)
-            <table class="card3" @if($i%2==0) style="float: right !important;" @endif>
+            <table class="card3">
                 <tr class="card-top3">
                     <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
                     <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
