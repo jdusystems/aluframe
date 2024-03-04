@@ -47,14 +47,14 @@
           float: left;
       }
       .wrap1{
-          width: 90%;
+          width: 100%;
           max-width: 876px;
           margin: 0 auto;
           display: inline-block;
           text-align: left;
       }
       .card1{
-          width: 45%;
+          width: 50%;
           padding-top:30px ;
           padding-bottom:30px ;
           border-top: 1px dotted #121212;
@@ -157,7 +157,65 @@
 
        */
 
-
+      .wrap5{
+          width: 100%;
+          max-width: 716px;
+          gap: 21px;
+          /*margin: 80px auto;*/
+          margin-right: auto;
+          margin-left: auto;
+          margin-top: 50px;
+      }
+      .card5{
+          width:calc((100% - 21px) / 2);
+          list-style: none;
+          padding-top: 20px;
+          padding-bottom: 37px;
+          border-top: 1px dotted black;
+          border-bottom: 1px dotted black;
+          float: left;
+      }
+      .card5:nth-child(2n-1){
+          float: right;
+      }
+      .card-top5{
+          width: 100%;
+          padding-bottom: 22px;
+      }
+      .card-top5 td {
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          padding-bottom: 22px;
+          /*padding-right: 10px;*/
+      }
+      .card-top5 td:last-child{
+          margin-left: auto;
+      }
+      .card-item5{
+          width: 100%;
+      }
+      .card-item5 td {
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          padding-bottom: 12px;
+      }
+      .card-item5 td:last-child{
+          text-align: end;
+      }
+      .card-item5:nth-child(5) td:first-child {
+          font-weight: 700;
+      }
+      .card-item5:nth-child(4) td:first-child {
+          font-weight: 700;
+      }
   </style>
 </head>
 
@@ -306,54 +364,62 @@
 
 </div>
 
-<div class="wrap1">
-    <div class="card1">
-        <table class="card-item1">
-            <tr class="card-title" style="margin-left: 20px">
-                <td style=" padding-left: 30px;">Профиль</td>
-                <td style=" padding-left: 20px;">{{$order->order_id}}</td>
-                <td style=" padding-left: 20px;">{{$order->created_at}}</td>
-            </tr>
-            <tr class="card-top">
-                <td style=" padding-left: 30px;">Код товара</td>
-                <td style=" padding-left: 20px;">Высота</td>
-                <td style=" padding-left: 20px;">Кол-во</td>
-            </tr>
-            @foreach($profiles as $profile)
-                <tr class="card-list">
-                    <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
-                    <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)}}</td>
-                    <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
+<div class="wrap5">
+    @foreach($orderDetails as $orderDetail)
+            <?php
+            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
+            ?>
+        @for($i = 1;$i <= $facades;$i++)
+            <table class="card5">
+                <tr class="card-top5">
+                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
+                    <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
                 </tr>
-            @endforeach
-        </table>
-    </div>
-    <div class="card2">
-        <table class="card-item1">
-            <tr class="card-title" >
-                <td style="padding-left: 30px;">Стекло</td>
-                <td style=" padding-left: 20px;">{{$order->order_id}}</td>
-                <td style=" padding-left: 20px; " colspan="2">{{$order->created_at}}</td>
-            </tr>
-            <tr class="card-top">
-                <td style=" padding-left: 30px;">Код товара</td>
-                <td style=" padding-left: 20px;">Высота</td>
-                <td style=" padding-left: 20px;">Ширина</td>
-                <td style=" padding-left: 20px;">Кол-во</td>
-            </tr>
-            @foreach($windowColors as $windowColor)
-                    <?php
-                    $profiles = \App\Models\OrderDetail::where('window_color_id' , $windowColor->window_color_id)->where('order_id' , $order->id)->get();
-                    ?>
-                <tr class="card-list">
-                    <td style=" padding-left: 30px;">{{$windowColor->windowColor->name}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_width}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_height}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_facade_quantity}}</td>
+                <tr class="card-item5">
+                    <td>Высота:</td>
+                    <td>{{$orderDetail->height*1000}} mm</td>
                 </tr>
-            @endforeach
-        </table>
-    </div>
+                <tr class="card-item5">
+                    <td>Ширина:</td>
+                    <td>{{$orderDetail->width*1000}} mm</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Профиль:</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Cтекло:</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
+                </tr>
+            </table>
+            @if($i%2==0)
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            @endif
+        @endfor
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    @endforeach
 </div>
 </body>
 
