@@ -169,13 +169,12 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
-          float: left;
       }
 
-      .wrap3:nth-child(2n-1){
+      .wrap3:nth-child(1){
           float: left;
       }
-      .wrap3:nth-child(even){
+      .wrap3:nth-child(2){
           float: right;
       }
 
@@ -400,6 +399,17 @@
             </div>
 
             @if($i%2==0)
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
                 <br>
             @endif
         @endfor
