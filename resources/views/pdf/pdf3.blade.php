@@ -376,7 +376,7 @@
                     ?>
                 @for($i = 1;$i <= $facades;$i++)
                     @if($i%2==1)
-                    <td>
+                    <td style="width: 50%;">
                         <div class="card3">
                             <table>
                                 <tr class="card-top3">
@@ -404,7 +404,7 @@
                     </td>
                     @endif
                         @if($i%2==0)
-                            <td>
+                            <td style="width: 50%">
                                 <div class="card3">
                                     <table>
                                         <tr class="card-top3">
