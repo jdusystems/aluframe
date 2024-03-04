@@ -419,8 +419,7 @@
                 <br>
                 <br>
                 <br>
-                <br>
-                <br>
+
             @endif
         @endfor
         <br>
