@@ -373,7 +373,7 @@
                 $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
             ?>
         @for($i = 1;$i <= $facades;$i++)
-            <div class="card3" style="float: right">
+            <div class="card3" style="float: left">
                 <table>
                     <tr class="card-top3">
                         <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
