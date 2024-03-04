@@ -400,17 +400,6 @@
 
             @if($i%2==0)
                 <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
             @endif
         @endfor
     @endforeach
