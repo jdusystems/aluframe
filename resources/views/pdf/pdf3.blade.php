@@ -162,6 +162,8 @@
           max-width: 716px;
           gap: 21px;
           /*margin: 80px auto;*/
+          margin-right: auto;
+          margin-left: auto;
           margin-top: 50px;
       }
       .card5{
