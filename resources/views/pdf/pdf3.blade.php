@@ -161,7 +161,8 @@
           width: 100%;
           max-width: 716px;
           gap: 21px;
-          margin: 80px auto;
+          /*margin: 80px auto;*/
+          margin-top: 50px;
       }
       .card5{
           width:calc((100% - 21px) / 2);
@@ -360,7 +361,7 @@
 <div class="break-page">
 
 </div>
-<br>
+
 <div class="wrap5">
     @foreach($orderDetails as $orderDetail)
             <?php
