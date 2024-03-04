@@ -168,13 +168,14 @@
           padding-top: 20px;
           padding-bottom: 37px;
           border-top: 1px dotted black;
-          border-bottom: 1px dotted black;=
+          border-bottom: 1px dotted black;
       }
-      .card3:nth-child(2n-1){
+
+      .wrap3:nth-child(2n-1){
           float: left;
       }
-      .card3:nth-child(2n){
-          float: left;
+      .wrap3:nth-child(even){
+          float: right;
       }
 
       .card-top3{
@@ -365,41 +366,6 @@
 <br>
 <br>
 <br>
-
-<div class="wrap3">
-    @foreach($orderDetails as $orderDetail)
-            <?php
-                $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
-            ?>
-        @for($i = 1;$i <= $facades;$i++)
-            <table class="card3">
-                <tr class="card-top3">
-                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
-                    <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
-                </tr>
-                <tr class="card-item3">
-                    <td>Высота:</td>
-                    <td>{{$orderDetail->height*1000}} mm</td>
-                </tr>
-                <tr class="card-item3">
-                    <td>Ширина:</td>
-                    <td>{{$orderDetail->width*1000}} mm</td>
-                </tr>
-                <tr class="card-item3">
-                    <td>Профиль:</td>
-                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
-                </tr>
-                <tr class="card-item3">
-                    <td>Cтекло:</td>
-                    <td>{{$orderDetail->windowColor->name}}</td>
-                </tr>
-            </table>
-            @if($i%2==0)
-                <br>
-            @endif
-        @endfor
-    @endforeach
-</div>
 
 </body>
 
