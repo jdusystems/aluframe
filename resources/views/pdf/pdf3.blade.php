@@ -173,6 +173,10 @@
       .card3:nth-child(2n-1){
           float: left;
       }
+      .card3:nth-child(2n){
+          float: left;
+      }
+
       .card-top3{
           width: 100%;
           padding-bottom: 22px;
