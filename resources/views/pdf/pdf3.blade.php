@@ -186,9 +186,7 @@
       .wrap5:nth-child(8){
           page-break-after: always;
       }
-      .wrap1:nth-child(4){
-          page-break-after: always;
-      }
+
       .card-top5{
           width: 100%;
           padding-bottom: 22px;
@@ -300,6 +298,11 @@
                     <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</td>
                 </tr>
             </table>
+           @if($i%4==0 || $i%3==0)
+               <div class="break-page">
+
+               </div>
+           @endif
             @if($i % 2 == 0) <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> @endif
         @endforeach
     </div>
