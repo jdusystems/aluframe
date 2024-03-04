@@ -170,10 +170,9 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
-          float: right;
       }
       .card5:nth-child(2n-1){
-          float: left;
+          float: right;
       }
       .card-top5{
           width: 100%;
