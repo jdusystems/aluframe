@@ -363,10 +363,57 @@
 <div class="break-page">
 
 </div>
-<br>
-<br>
-<br>
 
+<br>
+<br>
+<br>
+<div class="WrapConent">
+    @foreach($orderDetails as $orderDetail)
+            <?php
+            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
+            ?>
+        @for($i = 1;$i <= $facades;$i++)
+
+            <ul class="cardConent">
+                <li class="cardConent-top">
+                    <p>{{$orderDetail->id}}</p>
+                    <p>{{$order->created_at}}</p>
+                    <p>Фасад {{$i}}/{{$facades}}</p>
+                </li>
+                <li class="cardConent-item">
+                    <p>Высота:</p>
+                    <p>{{$orderDetail->height*1000}}</p>
+                </li>
+                <li class="cardConent-item">
+                    <p>Ширина:</p>
+                    <p>{{$orderDetail->width*1000}}</p>
+                </li>
+                <li class="cardConent-item">
+                    <p>Профиль:</p>
+                    <p>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}̆</p>
+                </li>
+                <li class="cardConent-item">
+                    <p>Cтекло:</p>
+                    <p>{{$orderDetail->windowColor->name}}ijd</p>
+                </li>
+            </ul>
+            @if($i%2==0)
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            @endif
+        @endfor
+    @endforeach
+</div>
 </body>
 
 </html>
