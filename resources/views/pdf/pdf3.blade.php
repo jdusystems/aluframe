@@ -360,6 +360,9 @@
     </div>
 </div>
 
+<div class="break-page">
+
+</div>
 <br>
 <br>
 <br>
@@ -372,6 +375,7 @@
                     $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
                     ?>
                 @for($i = 1;$i <= $facades;$i++)
+                    @if($i%2==1)
                     <td>
                         <div class="card3">
                             <table>
@@ -398,6 +402,36 @@
                             </table>
                         </div>
                     </td>
+                    @endif
+                        @if($i%2==0)
+                            <td>
+                                <div class="card3">
+                                    <table>
+                                        <tr class="card-top3">
+                                            <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
+                                            <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
+                                        </tr>
+                                        <tr class="card-item3">
+                                            <td>Высота:</td>
+                                            <td>{{$orderDetail->height*1000}} mm</td>
+                                        </tr>
+                                        <tr class="card-item3">
+                                            <td>Ширина:</td>
+                                            <td>{{$orderDetail->width*1000}} mm</td>
+                                        </tr>
+                                        <tr class="card-item3">
+                                            <td>Профиль:</td>
+                                            <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                                        </tr>
+                                        <tr class="card-item3">
+                                            <td>Cтекло:</td>
+                                            <td>{{$orderDetail->windowColor->name}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        @endif
+
                     @if($i%2==0)
                         <br>
                     @endif
