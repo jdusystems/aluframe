@@ -160,7 +160,7 @@
       .wrap3{
           width: 100%;
           max-width: 716px;
-          display: inline-block;
+          display: table;
       }
       .card3{
           width:50%;
@@ -169,15 +169,8 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
+          display: table-cell;
       }
-
-      .wrap3:nth-child(2n-1){
-          float: left;
-      }
-      .wrap3:nth-child(even){
-          float: right;
-      }
-
       .card-top3{
           width: 100%;
           padding-bottom: 22px;
