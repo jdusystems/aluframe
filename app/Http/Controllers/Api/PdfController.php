@@ -220,11 +220,11 @@ class PdfController extends Controller
 
         $filename = 'invoice3_' . $order->order_id . '.pdf';
 
-        if (Storage::disk('pdf')->exists($filename)) {
-            // If the file exists, return its URL
-            $url = url(Storage::url($filename));
-            return response()->json(['pdf' => $url]);
-        }
+//        if (Storage::disk('pdf')->exists($filename)) {
+//            // If the file exists, return its URL
+//            $url = url(Storage::url($filename));
+//            return response()->json(['pdf' => $url]);
+//        }
 
         $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
         $pdfContents = $pdf->output();
