@@ -174,8 +174,12 @@
           border-bottom: 1px dotted black;
           float: left;
       }
-      .card5:nth-child(2n-1){
+
+      .card5:nth-child(even){
           float: right;
+      }
+      .card5:nth-child(2n-1){
+          float: left;
       }
       .card-top5{
           width: 100%;
