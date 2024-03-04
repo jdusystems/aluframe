@@ -171,10 +171,10 @@
           border-bottom: 1px dotted black;
       }
 
-      .wrap3:nth-child(1){
+      .wrap3:nth-child(2n-1){
           float: left;
       }
-      .wrap3:nth-child(2){
+      .wrap3:nth-child(even){
           float: right;
       }
 
@@ -373,32 +373,40 @@
                 $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
             ?>
         @for($i = 1;$i <= $facades;$i++)
-            <div class="card3" style="float: left">
-                <table>
-                    <tr class="card-top3">
-                        <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
-                        <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
-                    </tr>
-                    <tr class="card-item3">
-                        <td>Высота:</td>
-                        <td>{{$orderDetail->height*1000}} mm</td>
-                    </tr>
-                    <tr class="card-item3">
-                        <td>Ширина:</td>
-                        <td>{{$orderDetail->width*1000}} mm</td>
-                    </tr>
-                    <tr class="card-item3">
-                        <td>Профиль:</td>
-                        <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
-                    </tr>
-                    <tr class="card-item3">
-                        <td>Cтекло:</td>
-                        <td>{{$orderDetail->windowColor->name}}</td>
-                    </tr>
-                </table>
-            </div>
-
+            <table class="card3">
+                <tr class="card-top3">
+                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
+                    <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
+                </tr>
+                <tr class="card-item3">
+                    <td>Высота:</td>
+                    <td>{{$orderDetail->height*1000}} mm</td>
+                </tr>
+                <tr class="card-item3">
+                    <td>Ширина:</td>
+                    <td>{{$orderDetail->width*1000}} mm</td>
+                </tr>
+                <tr class="card-item3">
+                    <td>Профиль:</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                </tr>
+                <tr class="card-item3">
+                    <td>Cтекло:</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
+                </tr>
+            </table>
             @if($i%2==0)
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
                 <br>
             @endif
         @endfor
