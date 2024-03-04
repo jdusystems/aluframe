@@ -170,6 +170,7 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
+          float: left;
       }
       .card5:nth-child(2n-1){
           float: right;
@@ -360,8 +361,6 @@
 
 </div>
 
-<br>
-<br>
 <br>
 <div class="wrap5">
     @foreach($orderDetails as $orderDetail)
