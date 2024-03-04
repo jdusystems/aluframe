@@ -172,12 +172,12 @@
           float: left;
       }
 
-      .wrap3:nth-child(2n-1){
-          float: left;
-      }
-      .wrap3:nth-child(even){
-          float: right;
-      }
+      /*.wrap3:nth-child(2n-1){*/
+      /*    float: left;*/
+      /*}*/
+      /*.wrap3:nth-child(even){*/
+      /*    float: right;*/
+      /*}*/
 
       .card-top3{
           width: 100%;
