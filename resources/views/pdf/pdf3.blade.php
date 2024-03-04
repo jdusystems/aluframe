@@ -178,8 +178,13 @@
       .card5:nth-child(even){
           float: right;
       }
+
       .card5:nth-child(2n-1){
           float: left;
+      }
+
+      .card5:nth-child(8){
+          page-break-after: always;
       }
       .card-top5{
           width: 100%;
@@ -419,7 +424,6 @@
             @endif
         @endfor
         <br>
-
     @endforeach
 </div>
 </body>
