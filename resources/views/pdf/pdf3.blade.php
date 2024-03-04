@@ -183,7 +183,10 @@
           float: left;
       }
 
-      .wrap:nth-child(8){
+      .wrap5:nth-child(8){
+          page-break-after: always;
+      }
+      .wrap1:nth-child(4){
           page-break-after: always;
       }
       .card-top5{
@@ -224,6 +227,8 @@
       .card-item5:nth-child(4) td:first-child {
           font-weight: 700;
       }
+
+
   </style>
 </head>
 
