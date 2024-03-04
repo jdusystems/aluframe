@@ -405,7 +405,17 @@
             </table>
             @if($i%2==0)
                 <br>
-
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             @endif
         @endfor
         <br>
@@ -417,7 +427,9 @@
         <br>
         <br>
         <br>
-
+        <br>
+        <br>
+        <br>
     @endforeach
 </div>
 </body>
