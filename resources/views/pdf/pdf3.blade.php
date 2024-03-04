@@ -169,10 +169,12 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
+      }
+      .wrap:nth-child(odd){
           float: left;
       }
       .wrap3:nth-child(even){
-          float: left;
+          float: right;
       }
 
       .card-top3{
