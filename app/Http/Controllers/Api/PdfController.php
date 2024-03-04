@@ -188,7 +188,6 @@ class PdfController extends Controller
             'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices
         ]);
         $pdfContents = $pdf->output();
-
         Storage::disk('pdf')->put($filename , $pdfContents);
         $url = url(Storage::url($filename));
         return response()->json(

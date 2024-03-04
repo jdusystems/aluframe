@@ -323,13 +323,13 @@
                     <td style=" padding-left: 20px;">Высота</td>
                     <td style=" padding-left: 20px;">Кол-во</td>
                 </tr>
-             @foreach($profiles as $profile)
-                <tr class="card-list">
-                    <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
-                    <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)}}</td>
-                    <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
-                </tr>
-                 @endforeach
+                @foreach($profiles as $profile)
+                    <tr class="card-list">
+                        <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
+                        <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)}}</td>
+                        <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
+                    </tr>
+                @endforeach
             </table>
     </div>
     <div class="card2">
@@ -338,7 +338,6 @@
                 <td style="padding-left: 30px;">Стекло</td>
                 <td style=" padding-left: 20px;">{{$order->order_id}}</td>
                 <td style=" padding-left: 20px; " colspan="2">{{$order->created_at}}</td>
-
             </tr>
             <tr class="card-top">
                 <td style=" padding-left: 30px;">Код товара</td>
@@ -369,7 +368,6 @@
 <br>
 
 <div class="wrap3">
-
     @foreach($orderDetails as $orderDetail)
             <?php
             $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
