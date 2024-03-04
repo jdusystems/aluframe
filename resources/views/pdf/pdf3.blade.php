@@ -364,7 +364,7 @@
 <div class="wrap5">
     @foreach($orderDetails as $orderDetail)
             <?php
-            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right  + 1;
+            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
             ?>
         @for($i = 1;$i <= $facades;$i++)
             <table class="card5">
