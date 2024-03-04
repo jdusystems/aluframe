@@ -367,12 +367,12 @@
 <div class="wrap3">
     <table style="width: 100%">
         <tr>
-            <td>
-                @foreach($orderDetails as $orderDetail)
-                        <?php
-                        $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
-                        ?>
-                    @for($i = 1;$i <= $facades;$i++)
+            @foreach($orderDetails as $orderDetail)
+                    <?php
+                    $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
+                    ?>
+                @for($i = 1;$i <= $facades;$i++)
+                    <td>
                         <div class="card3">
                             <table>
                                 <tr class="card-top3">
@@ -397,14 +397,12 @@
                                 </tr>
                             </table>
                         </div>
-
-                        @if($i%2==0)
-                            <br>
-                        @endif
-                    @endfor
-                @endforeach
-            </td>
-            <td></td>
+                    </td>
+                    @if($i%2==0)
+                        <br>
+                    @endif
+                @endfor
+            @endforeach
         </tr>
     </table>
 
