@@ -368,7 +368,7 @@
 <br>
 
 <div class="wrap3">
-    <table>
+    <table style="width: 100%">
         <tr>
             <td>
                 @foreach($orderDetails as $orderDetail)
