@@ -419,17 +419,7 @@
             @endif
         @endfor
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+
     @endforeach
 </div>
 </body>
