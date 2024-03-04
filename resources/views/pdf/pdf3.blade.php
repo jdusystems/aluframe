@@ -18,10 +18,9 @@
           margin: 0;
           box-sizing: border-box;
       }
-      /*.break-page{*/
-      /*    page-break-after: always;*/
-      /*}*/
-
+      .break-page{
+          page-break-after: always;
+      }
       body{
           font-family: "Inter";
           text-align: center;

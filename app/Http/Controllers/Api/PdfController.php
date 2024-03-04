@@ -170,9 +170,6 @@ class PdfController extends Controller
             ];
         });
         $summedAdditionalServices = collect($summedAdditionalServices)->values()->toArray();
-
-
-
         $assemblyServices = OrderDetail::select('assembly_service_id' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
         )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
