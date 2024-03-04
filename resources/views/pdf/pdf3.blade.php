@@ -295,10 +295,11 @@
                     <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</td>
                 </tr>
             </table>
-            @if($i % 2 == 0) <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> @endif
+            @if($i % 2 == 0) <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> @endif
         @endforeach
     </div>
 </div>
+<br>
 <br>
 <br>
 <br>
