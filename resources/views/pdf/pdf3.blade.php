@@ -171,7 +171,7 @@
           border-bottom: 1px dotted black;
 
       }
-      .card:nth-child(2n-1){
+      .card3:nth-child(2n-1){
           float: right;
       }
       .card-top3{
