@@ -369,10 +369,10 @@
 <div class="wrap3">
     @foreach($orderDetails as $orderDetail)
             <?php
-            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
+                $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
             ?>
         @for($i = 1;$i <= $facades;$i++)
-            <table class="card3">
+            <table class="card3" @if($i%2==0) style="float: right" @endif>
                 <tr class="card-top3">
                     <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
                     <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
