@@ -176,7 +176,7 @@
           float: left;
       }
       .wrap3:nth-child(even){
-          float: left;
+          float: right;
       }
 
       .card-top3{
