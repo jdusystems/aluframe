@@ -226,7 +226,7 @@ class PdfController extends Controller
             return response()->json(['pdf' => $url]);
         }
 
-        $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
+        $pdf = PDF::loadView('pdf.pdf3d' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
         $pdfContents = $pdf->output();
 
         Storage::disk('pdf')->put($filename , $pdfContents);
