@@ -160,7 +160,7 @@
       .wrap3{
           width: 100%;
           max-width: 716px;
-          display: table;
+          display: inline-block;
       }
       .card3{
           width:50%;
@@ -169,7 +169,6 @@
           padding-bottom: 37px;
           border-top: 1px dotted black;
           border-bottom: 1px dotted black;
-          display: table-cell;
       }
       .card-top3{
           width: 100%;
