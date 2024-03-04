@@ -47,14 +47,14 @@
           float: left;
       }
       .wrap1{
-          width: 100%;
+          width: 90%;
           max-width: 876px;
           margin: 0 auto;
           display: inline-block;
           text-align: left;
       }
       .card1{
-          width: 50%;
+          width: 45%;
           padding-top:30px ;
           padding-bottom:30px ;
           border-top: 1px dotted #121212;
@@ -62,7 +62,7 @@
           float: left;
       }
       .card2{
-          width: 50%;
+          width: 45%;
           padding-top: 30px ;
           padding-bottom:30px ;
           border-top: 1px dotted #121212;
@@ -160,7 +160,6 @@
       .wrap5{
           width: 100%;
           max-width: 716px;
-          gap: 21px;
           /*margin: 80px auto;*/
           margin-right: auto;
           margin-left: auto;
