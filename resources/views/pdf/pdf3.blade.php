@@ -299,7 +299,7 @@
                 </tr>
             </table>
            @if($i%4==0 || $i%3==0)
-               <br><br><br><br><br><br>
+               <br><br><br><br><br><br><br><br>
            @endif
             @if($i % 2 == 0) <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> @endif
         @endforeach
