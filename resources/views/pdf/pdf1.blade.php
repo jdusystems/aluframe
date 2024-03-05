@@ -243,7 +243,6 @@
             </tr>
         </table>
 
-
         @if($loop->last && $i != 1)
             <div class="page-break">
 
