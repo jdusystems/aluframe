@@ -272,8 +272,8 @@
                     <th class="list-text1">{{$profile->profileType->calCulationType->name}}</th>
                     <th class="list-text1">{{$profile->profileType->name}}</th>
                     <th class="list-text1">{{$profile->profileType->price}}</th>
-                    <th class="list-text1">{{$profile->total_profile_length}}</th>
-                    <th class="list-text1">{{$profile->total_profile_length*$profile->profileType->price}}</th>
+                    <th class="list-text1">{{round($profile->total_profile_length , 2)}}</th>
+                    <th class="list-text1">{{round($profile->total_profile_length*$profile->profileType->price , 2)}}</th>
                 </tr>
             @endif
 
@@ -284,8 +284,8 @@
                     <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
                     <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
                     <th class="list-text1">{{$profile->profileType->sealant->price}}</th>
-                    <th class="list-text1">{{$profile->total_sealant_length}}</th>
-                    <th class="list-text1">{{$profile->total_sealant_length*$profile->profileType->sealant->price}}</th>
+                    <th class="list-text1">{{round($profile->total_sealant_length , 2)}}</th>
+                    <th class="list-text1">{{round($profile->total_sealant_length*$profile->profileType->sealant->price ,2)}}</th>
                 </tr>
             @endif
 
@@ -297,8 +297,8 @@
                     <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
                     <th class="list-text1">{{$profile->profileType->corner->name}}</th>
                     <th class="list-text1">{{$profile->profileType->corner->price}}</th>
-                    <th class="list-text1">{{$profile->total_corner_quantity}}</th>
-                    <th class="list-text1">{{$profile->total_corner_quantity*$profile->profileType->corner->price}}</th>
+                    <th class="list-text1">{{round($profile->total_corner_quantity , 2)}}</th>
+                    <th class="list-text1">{{round($profile->total_corner_quantity*$profile->profileType->corner->price , 2)}}</th>
                 </tr>
             @endif
 
@@ -309,8 +309,8 @@
                     <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
                     <th class="list-text1">{{$windowColor->windowColor->name}}</th>
                     <th class="list-text1">{{$windowColor->windowColor->price}}</th>
-                    <th class="list-text1">{{$windowColor->total_surface}}</th>
-                    <th class="list-text1">{{$windowColor->total_surface * $windowColor->windowColor->price}}</th>
+                    <th class="list-text1">{{round($windowColor->total_surface , 2)}}</th>
+                    <th class="list-text1">{{round($windowColor->total_surface * $windowColor->windowColor->price , 2)}}</th>
                 </tr>
             @endif
 
@@ -323,8 +323,8 @@
                 <th class="list-text1">{{$additionalService['vendor_code']}}</th>
                 <th class="list-text1">{{$additionalService['name']}}</th>
                 <th class="list-text1">{{$additionalService['price']}}</th>
-                <th class="list-text1">{{$additionalService['total_quantity']}}</th>
-                <th class="list-text1">{{$additionalService['total_quantity'] * $additionalService['price']}}</th>
+                <th class="list-text1">{{round($additionalService['total_quantity'] , 2)}}</th>
+                <th class="list-text1">{{round($additionalService['total_quantity'] * $additionalService['price'] , 2)}}</th>
             </tr>
         @endforeach
         @foreach($assemblyServices as $assemblyService)
@@ -337,25 +337,23 @@
                     <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->price}}</th>
-                    <th class="list-text1">{{$services->count() * $assemblyService->total_facade_quantity}}</th>
-                    <th class="list-text1">{{$assemblyService->total_facade_quantity * $services->count() * $assemblyService->assemblyService->price}}</th>
+                    <th class="list-text1">{{round($assemblyService->total_facade_quantity , 2)}}</th>
+                    <th class="list-text1">{{round($assemblyService->total_facade_quantity * $assemblyService->assemblyService->price , 2)}}</th>
                 </tr>
         @endif
         @endforeach
 
-        @foreach($profiles as $profile)
-                <?php
-                $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
-                ?>
-             @if($windowHandler)
-                    <tr class="list-item">
-                        <th class="list-text1">{{$windowHandler->vendor_code}}</th>
-                        <th class="list-text1">{{$windowHandler->name}}</th>
-                        <th class="list-text1">{{$windowHandler->price}}</th>
-                        <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>
-                        <th class="list-text1">{{$windowHandler->price * $profile->total_window_handler_quantity}}</th>
-                    </tr>
-            @endif
+        @foreach($windowHandlers as $windowHandler)
+
+        @if($windowHandler->windowHandler)
+                <tr class="list-item">
+                    <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
+                    <th class="list-text1">{{$windowHandler->windowHandler->name}}</th>
+                    <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
+                    <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
+                    <th class="list-text1">{{round($assemblyService->total_window_handler_quantity * $assemblyService->assemblyService->price , 2)}}</th>
+                </tr>
+        @endif
         @endforeach
         <tr class="list-item">
             <th colspan="4" class="list-text1">Итого:</th>

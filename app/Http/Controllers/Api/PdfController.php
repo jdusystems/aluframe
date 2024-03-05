@@ -95,6 +95,10 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
         )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
 
+        $windowHandlers = OrderDetail::select('window_handler_id' ,
+            DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity') ,
+        )->groupBy('window_handler_id')->where('order_id' , $order->id)->get();
+
         $user = User::find($order->user_id);
 
         $filename = 'invoice1_' . $order->order_id . '.pdf';
@@ -106,7 +110,8 @@ class PdfController extends Controller
 //        }
         $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
-            'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices
+            'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices ,
+            'windowHandlers' => $windowHandlers ,
         ]);
         $pdfContents = $pdf->output();
 
