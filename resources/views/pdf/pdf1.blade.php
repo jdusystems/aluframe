@@ -244,12 +244,13 @@
         </table>
 
 
+        @if($loop->last && $i != 1)
             <div class="page-break">
 
             </div>
-
+        @endif
         @if($i % 2 == 0)
-            <div style="page-break-after: always">
+            <div class="page-break">
 
             </div>
         @endif
