@@ -244,7 +244,7 @@
         </table>
 
 
-        @if($i % 2 == 0 ||($loop->last && $i != 1))
+        @if($i % 2 == 0 || ($loop->last && $i != 1))
             <div class="page-break">
 
             </div>
