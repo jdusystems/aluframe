@@ -99,11 +99,11 @@ class PdfController extends Controller
 
         $filename = 'invoice1_' . $order->order_id . '.pdf';
 
-        if (Storage::disk('pdf')->exists($filename)) {
-            // If the file exists, return its URL
-            $url = url(Storage::url($filename));
-            return response()->json(['pdf' => $url]);
-        }
+//        if (Storage::disk('pdf')->exists($filename)) {
+//            // If the file exists, return its URL
+//            $url = url(Storage::url($filename));
+//            return response()->json(['pdf' => $url]);
+//        }
         $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices
@@ -178,11 +178,11 @@ class PdfController extends Controller
 
         $filename = 'invoice2_' . $order->order_id . '.pdf';
 
-        if (Storage::disk('pdf')->exists($filename)) {
-            // If the file exists, return its URL
-            $url = url(Storage::url($filename));
-            return response()->json(['pdf' => $url]);
-        }
+//        if (Storage::disk('pdf')->exists($filename)) {
+//            // If the file exists, return its URL
+//            $url = url(Storage::url($filename));
+//            return response()->json(['pdf' => $url]);
+//        }
         $pdf = Pdf::loadView('pdf.pdf2' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices
