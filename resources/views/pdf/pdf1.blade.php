@@ -356,9 +356,6 @@
                         <th class="list-text1">{{$windowHandler->price * $profile->total_window_handler_quantity}}</th>
                     </tr>
             @endif
-            <tr class="list-item">
-                <th class="list-text1">{{$order->total_price}}</th>
-            </tr>
         @endforeach
         <tr class="list-item">
             <th colspan="4" class="list-text1">Итого:</th>
