@@ -173,7 +173,7 @@
     <header class="header">
         <h2 class="title">Накладная</h2>
         <div class="header-left" style="margin-right: 200px">
-            <span class="text">{{$order->order_id}}</span>
+            <span class="text">{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
     </header>
@@ -356,7 +356,14 @@
                         <th class="list-text1">{{$windowHandler->price * $profile->total_window_handler_quantity}}</th>
                     </tr>
             @endif
+            <tr class="list-item">
+                <th class="list-text1">{{$order->total_price}}</th>
+            </tr>
         @endforeach
+        <tr class="list-item">
+            <th colspan="4" class="list-text1">Итого:</th>
+            <th class="list-text1">{{$order->total_price}}</th>
+        </tr>
     </table>
     <p class="pdf-text" style="margin-top: 50px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в
         свой аккаунт</p>

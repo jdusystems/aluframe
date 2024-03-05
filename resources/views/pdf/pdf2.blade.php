@@ -199,7 +199,7 @@
     <header class="header">
         <h2 class="title">Накладная</h2>
         <div class="header-left">
-            <span class="text">{{$order->order_id}}</span>
+            <span class="text">{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
     </header>
