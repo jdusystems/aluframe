@@ -26,6 +26,9 @@
            max-width: 716px;
            margin: 0 auto;
        }
+       .page-break{
+           page-break-after: always;
+       }
        .header{
            display: inline-block;
            width: 100%;
@@ -240,11 +243,11 @@
             </tr>
         </table>
 
-        @if($loop->last)
-            <div style="page-break-after: always">
+
+            <div class="page-break">
 
             </div>
-        @endif
+
         @if($i % 2 == 0)
             <div style="page-break-after: always">
 

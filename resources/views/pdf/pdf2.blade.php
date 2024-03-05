@@ -22,6 +22,9 @@
         body{
             font-family: "Inter";
         }
+        .page-break{
+            page-break-after: always;
+        }
         .container{
             width: 100%;
             max-width: 716px;
@@ -263,13 +266,13 @@
             </tr>
         </table>
 
-        @if($loop->last)
-            <div style="page-break-after: always">
+        @if($loop->last && $i != 1)
+            <div class="page-break">
 
             </div>
         @endif
         @if($i % 2 == 0)
-            <div style="page-break-after: always">
+            <div class="page-break">
 
             </div>
         @endif
