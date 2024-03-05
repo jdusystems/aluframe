@@ -20,4 +20,7 @@ class WindowHandler extends Model
     public function profileColor(){
         return $this->belongsTo(ProfileColor::class);
     }
+    public function orderDetails(){
+        return $this->hasMany(OrderDetail::class);
+    }
 }

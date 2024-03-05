@@ -251,6 +251,7 @@ class OrderController extends Controller
                     'opening_type_id' => $detail['opening_type_id'] ,
                     'handler_position_id' => $detail['handler_position_id'] ,
                     'assembly_service_id' => ($assemblyService) ? $assemblyService->id : null ,
+                    'window_handler_id' => ($windowHandler) ? $windowHandler->id : null ,
                     'width' => $width ,
                     'height' => $height ,
                     'quantity_right' => (array_key_exists('quantity_right', $detail)) ? $detail['quantity_right'] : 0 ,
