@@ -351,7 +351,7 @@
                     <th class="list-text1">{{$windowHandler->windowHandler->name}}</th>
                     <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
-                    <th class="list-text1">{{round($assemblyService->total_window_handler_quantity * $assemblyService->assemblyService->price , 2)}}</th>
+                    <th class="list-text1">{{round($windowHandler->total_window_handler_quantity * $windowHandler->windowHandler->price , 2)}}</th>
                 </tr>
         @endif
         @endforeach
