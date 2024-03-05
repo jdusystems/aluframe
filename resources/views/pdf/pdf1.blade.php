@@ -338,7 +338,7 @@
                     <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->price}}</th>
                     <th class="list-text1">{{round($assemblyService->total_facade_quantity , 2)}}</th>
-                    <th class="list-text1">{{round($assemblyService->total_facade_quantity * $assemblyService->assemblyService->price , 2)}}</th>
+                    <th class="list-text1">{{$assemblyService->total_facade_quantity * $assemblyService->assemblyService->price}}</th>
                 </tr>
         @endif
         @endforeach
