@@ -99,7 +99,6 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $currency = Currency::find($request->currency_id);
-            $user_id = 3;
             $client =  User::where('phone_number' , $request->phone_number)->first();
 
             if(!$client){
@@ -121,7 +120,7 @@ class OrderController extends Controller
             $nextOrderId = $lastOrderId ? $lastOrderId + 1 : $startingOrderId;
             $status = Status::where('slug' , 'pending')->first();
             $order = Order::create([
-                'currency_id' => $currency->id ,
+                'currency_id' => $request->currency_id ,
                 'language' => $request->language,
                 'order_id' => $nextOrderId,
                 'user_id' =>$user_id ,
