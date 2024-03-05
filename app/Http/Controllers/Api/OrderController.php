@@ -252,8 +252,8 @@ class OrderController extends Controller
                     'handler_position_id' => $detail['handler_position_id'] ,
                     'assembly_service_id' => ($assemblyService) ? $assemblyService->id : null ,
                     'window_handler_id' => ($windowHandler) ? $windowHandler->id : null ,
-                    'width' => $width ,
-                    'height' => $height ,
+                    'width' => $detail['width']/1000 ,
+                    'height' => $detail['height']/1000 ,
                     'quantity_right' => (array_key_exists('quantity_right', $detail)) ? $detail['quantity_right'] : 0 ,
                     'quantity_left' => (array_key_exists('quantity_left' , $detail)) ? $detail['quantity_left'] : 0 ,
                     'number_of_loops' => ($detail['number_of_loops']) ? $detail['number_of_loops'] : 0 ,
@@ -284,7 +284,6 @@ class OrderController extends Controller
                         }
                     }
                 }
-
 
                 $totalPrice += $price * $currency->rate;
             }
