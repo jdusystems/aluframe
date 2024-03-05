@@ -174,7 +174,13 @@
             <span class="text">{{$order->created_at}}</span>
         </div>
     </header>
+    <?php
+    $i = 0;
+    ?>
     @foreach($orderDetails as $orderDetail)
+            <?php
+            $i = $i + 1;
+            ?>
         <table class="list">
             <tr class="list-item">
                 <th class="list-text">Профиль</th>
@@ -233,7 +239,17 @@
                 <th class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</th>
             </tr>
         </table>
-        <br>
+
+        @if($loop->last)
+            <div style="page-break-after: always">
+
+            </div>
+        @endif
+        @if($i % 2 == 0)
+            <div style="page-break-after: always">
+
+            </div>
+        @endif
     @endforeach
     <div class="wrap">
         <h3 class="wrap-tile">Спецификация</h3>
