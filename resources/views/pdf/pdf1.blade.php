@@ -212,11 +212,11 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Высота:</th>
-                <th class="list-text">{{$orderDetail->height}}</th>
+                <th class="list-text">{{$orderDetail->height*1000}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Ширина:</th>
-                <th class="list-text">{{$orderDetail->width}}</th>
+                <th class="list-text">{{$orderDetail->width*1000}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Кол-во L:</th>
@@ -253,7 +253,7 @@
     <div class="wrap">
         <h3 class="wrap-tile">Спецификация</h3>
         <div class="header-left" style="margin-right: 200px">
-            <span class="text">{{$order->order_id}}</span>
+            <span class="text">{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
     </div>
@@ -361,13 +361,13 @@
         </tr>
     </table>
     <p class="pdf-text" style="margin-top: 50px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в
-        свой аккаунт</p>
+        свой аккаунт: {{$user->name}}</p>
     <p class="pdf-text">Логин и пароль для входа в аккаунт: логин:
         <span>{{$user->phone_number}}</span> пароль:
         <span>{{$user->parol}}</span></p>
+    <a class="pdf-link" href="https://aluframe.vercel.app/auth/login">Link</a>
     <div style="margin-bottom: 50px;">
 
-        <a class="pdf-link" href="/">Link</a>
     </div>
 </div>
 </body>

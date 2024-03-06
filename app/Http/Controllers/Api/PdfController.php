@@ -179,6 +179,10 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
         )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
 
+        $windowHandlers = OrderDetail::select('window_handler_id' ,
+            DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity') ,
+        )->groupBy('window_handler_id')->where('order_id' , $order->id)->get();
+
         $user = User::find($order->user_id);
 
         $filename = 'invoice2_' . $order->order_id . '.pdf';
@@ -190,7 +194,8 @@ class PdfController extends Controller
 //        }
         $pdf = Pdf::loadView('pdf.pdf2' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
-            'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices
+            'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices ,
+            'windowHandlers' => $windowHandlers
         ]);
         $pdfContents = $pdf->output();
         Storage::disk('pdf')->put($filename , $pdfContents);
@@ -313,7 +318,8 @@ class PdfController extends Controller
                 $windowHandlerQuantity = 0;
 
                 //
-                $surface = $profileNumber * ($width * $height);
+                $thickness = $profileType->thiclness/1000;
+                $surface = $profileNumber * ($width-$thickness) *( $height - $thickness);
 
                 if($profileType->sealant){
                     $sealant = Sealant::where('profile_type_id' , $profileType->id)->first();
@@ -392,7 +398,6 @@ class PdfController extends Controller
                     }
                 }
             }
-
             $assemblyService = null;
             $perimeter = 2*($width + $height);
             if($height < 1.8 ){
@@ -430,7 +435,7 @@ class PdfController extends Controller
                 'window_color_name' => $windowColor1->name ,
                 'window_color_name_uz' => $windowColor1->uz_name ,
                 'window_color_price' => $windowColor1->price*$currency->rate ,
-                'window_color_surface' => round(($width*$height)*($quantity_left + $quantity_right) , 2 ),
+                'window_color_surface' => round((($width - $thickness)*($height - $thickness))*($quantity_left + $quantity_right) , 2 ),
                 'profile_color_id' =>  $profileColor1->id,
                 'profile_color_name' =>  $profileColor1->name,
                 'profile_color_name_uz' =>  $profileColor1->uz_name,

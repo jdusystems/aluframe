@@ -266,11 +266,11 @@
                 </tr>
                 <tr class="card-item">
                     <td class="text">Высота:</td>
-                    <td class="title">{{$orderDetail->height}}</td>
+                    <td class="title">{{$orderDetail->height*1000}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Ширина:</td>
-                    <td class="title">{{$orderDetail->width}}</td>
+                    <td class="title">{{$orderDetail->width*1000}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Кол-во L:</td>
@@ -334,18 +334,18 @@
             <table class="card-item1">
                 <tr class="card-title" style="margin-left: 20px">
                     <td style=" padding-left: 30px;">Профиль</td>
-                    <td style=" padding-left: 20px;">{{$order->order_id}}</td>
+                    <td style=" padding-left: 20px;">{{$order->id}}</td>
                     <td style=" padding-left: 20px;">{{$order->created_at}}</td>
                 </tr>
                 <tr class="card-top">
                     <td style=" padding-left: 30px;">Код товара</td>
-                    <td style=" padding-left: 20px;">Высота</td>
+                    <td style=" padding-left: 20px;">Длина</td>
                     <td style=" padding-left: 20px;">Кол-во</td>
                 </tr>
                 @foreach($profiles as $profile)
                     <tr class="card-list">
                         <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
-                        <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)}}</td>
+                        <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)*1000}}</td>
                         <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
                     </tr>
                 @endforeach
@@ -355,7 +355,7 @@
         <table class="card-item1">
             <tr class="card-title" >
                 <td style="padding-left: 30px;">Стекло</td>
-                <td style=" padding-left: 20px;">{{$order->order_id}}</td>
+                <td style=" padding-left: 20px;">{{$order->id}}</td>
                 <td style=" padding-left: 20px; " colspan="2">{{$order->created_at}}</td>
             </tr>
             <tr class="card-top">
@@ -370,8 +370,8 @@
                     ?>
                 <tr class="card-list">
                     <td style=" padding-left: 30px;">{{$windowColor->windowColor->name}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_width}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_height}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_width*1000}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_height*1000}}</td>
                     <td style=" padding-left: 20px;">{{$windowColor->total_facade_quantity}}</td>
                 </tr>
             @endforeach
@@ -399,7 +399,7 @@
         @for($i = 1;$i <= $facades;$i++)
             <table class="card5">
                 <tr class="card-top5">
-                    <td style="padding-right: 30px"><b>{{$orderDetail->id}}</b> {{$order->created_at}}</td>
+                    <td style="padding-right: 30px"><b>{{$order->id}}</b> {{$order->created_at}}</td>
                     <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
                 </tr>
                 <tr class="card-item5">

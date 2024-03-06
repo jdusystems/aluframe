@@ -237,11 +237,11 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Высота:</th>
-                <th class="list-text">{{$orderDetail->height}}</th>
+                <th class="list-text">{{$orderDetail->height*1000}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Ширина:</th>
-                <th class="list-text">{{$orderDetail->width}}</th>
+                <th class="list-text">{{$orderDetail->width*1000}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Кол-во L:</th>
@@ -274,7 +274,7 @@
     <div class="wrap">
         <h3 class="wrap-tile">Спецификация</h3>
         <div class="header-left">
-            <span class="text">{{$order->order_id}}</span>
+            <span class="text">{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
     </div>
@@ -348,17 +348,14 @@
                 </tr>
         @endif
         @endforeach
-        @foreach($profiles as $profile)
-                <?php
-                $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
-                ?>
-        @if($windowHandler)
 
-            <tr class="list-item">
-                <th class="list-text1">{{$windowHandler->vendor_code}}</th>
-                <th class="list-text1">{{$windowHandler->name}}</th>
-                <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>
-            </tr>
+        @foreach($windowHandlers as $windowHandler)
+            @if($windowHandler->windowHandler)
+                <tr class="list-item">
+                    <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
+                    <th class="list-text1">{{$windowHandler->windowHandler->name}}</th>
+                    <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
+                </tr>
             @endif
         @endforeach
     </table>

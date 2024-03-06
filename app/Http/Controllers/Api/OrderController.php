@@ -477,11 +477,12 @@ class OrderController extends Controller
             }
                 $profilePrice = $profileNumber * $profileType->price*$profilePerimeter;
         }
+        $thickness = $profileType->thickness/1000;
         if($request->has('window_color_id')){
             $windowColor = WindowColor::find($request->window_color_id);
             if($windowColor){
                 if($width > 0 && $height > 0){
-                $windowPrice = $windowPrice + $profileNumber*$width*$height*$windowColor->price;
+                $windowPrice = $windowPrice + $profileNumber*($width - $thickness)*($height - $thickness)*$windowColor->price;
                 }else{
                    $windowPrice +=  $windowColor->price;
                 }
@@ -493,7 +494,7 @@ class OrderController extends Controller
             if($additionalServices){
                 foreach ($additionalServices as $additionalService){
                     if($height && $width){
-                        $additionalServicePrice += $additionalService['price']*$height*$width*$profileNumber;
+                        $additionalServicePrice += $additionalService['price']*($width - $thickness)*($height - $thickness)*$profileNumber;
                     }else{
                         $additionalServicePrice += $additionalService['price'];
                     }
