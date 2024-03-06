@@ -40,6 +40,7 @@ class ProfileColorController extends Controller
             'image_name' => $request->image_name,
             'image_url' => $request->image_url,
             'name' => $request->name,
+            'uz_name' => $request->uz_name ,
             'sort_index' => $request->sort_index,
             'color_from' => $request->color_from,
             'color_to' => $request->color_to ,
@@ -89,13 +90,14 @@ class ProfileColorController extends Controller
             ]);
         }
         $profileColor->update([
-            'image_name' => $request->image_name,
-            'image_url' => $request->image_url,
-            'name' => $request->name,
-            'sort_index' => $request->sort_index,
-            'color_from' => $request->color_from,
+            'image_name' => $request->image_name ,
+            'image_url' => $request->image_url ,
+            'name' => $request->name ,
+            'uz_name' => $request->uz_name ,
+            'sort_index' => $request->sort_index ,
+            'color_from' => $request->color_from ,
             'color_to' => $request->color_to ,
-            'profile_type_id' => $request->profile_type_id,
+            'profile_type_id' => $request->profile_type_id ,
         ]);
 
         return new ShowProfileColorResource($profileColor);

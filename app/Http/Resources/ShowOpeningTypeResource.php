@@ -17,6 +17,7 @@ class ShowOpeningTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ,
+            'position' => $this->position ,
             'sort_index' => $this->sort_index ,
             'image_url' => $this->image_url ,
             'image_name' => $this->image_name ,

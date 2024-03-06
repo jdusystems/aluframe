@@ -21,7 +21,7 @@ class OrderDetailResource extends JsonResource
             'profile_type' => ($this->profileType) ? $this->profileType->name : " ",
             'profile_color' => ($this->profileColor) ? $this->profileColor->name : " ",
             'window_color' => ($this->windowColor) ? $this->windowColor->name : " ",
-            'additional_service' => ($this->additionalService) ? $this->additionalService->name : " ",
+            'additional_service' => ($this->additionalServices) ? AdditionalServiceResource::collection($this->additionalServices) : [],
             'assembly_service' => ($this->assemblyService) ? $this->assemblyService->name : " ",
             'opening_type' => ($this->openingType) ? $this->openingType->name : " ",
             'handler_type' => ($this->handlerPosition) ? $this->handlerPosition->name : " ",
@@ -35,9 +35,9 @@ class OrderDetailResource extends JsonResource
             'number_of_loops' => $this->number_of_loops ,
             'price' => $this->price ,
             'comment' => $this->comment ,
-            'X1' => $this->X1,
-            'X2' => $this->X2,
-            'Y1' => $this->Y1,
+            'additive_sizes' => $this->additive_sizes ,
+            'handler_type_name' => $this->handler_type_name,
+            'handler_type_name_uz' => $this->handler_type_name_uz,
         ];
     }
 }

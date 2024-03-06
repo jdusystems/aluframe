@@ -10,19 +10,24 @@ use App\Http\Resources\ShowOrderResource;
 use App\Models\AdditionalService;
 use App\Models\AssemblyService;
 use App\Models\Corner;
+use App\Models\Currency;
 use App\Models\HandlerPosition;
 use App\Models\HandlerType;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\PhoneNumber;
 use App\Models\ProfileColor;
 use App\Models\ProfileType;
 use App\Models\Sealant;
 use App\Models\Status;
+use App\Models\User;
 use App\Models\WindowColor;
 use App\Models\WindowHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -44,6 +49,44 @@ class OrderController extends Controller
         }
         return new OrderCollection($orders);
     }
+
+    public function sendSms($phone , $parol){
+
+
+        $token = $this->getToken();
+
+        $headers = [
+            'Authorization' => "Bearer ".$token ,
+            'Accept' => 'application/json',
+        ];
+        $payload = [
+            'mobile_phone' => $phone,
+            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ."<br>"."Логин:". $phone ."<br></br>". "Пароль:" . $parol,
+        ];
+        $url = 'notify.eskiz.uz/api/message/sms/send';
+        try {
+            Http::withHeaders($headers)
+                ->post($url, $payload);
+            return response()->json(['message' => "Telefon raqamingizga login va parolingiz jo'natildi!", 'status_code' => 200]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+    }
+
+    public function getToken(){
+        $url = env('SMS_URL');
+        $username = env('SMS_USERNAME');
+        $password = env('SMS_PASSWORD');
+
+        $response = Http::post($url, [
+            'email' => $username,
+            'password' => $password,
+        ]);
+        $token = $response['data']['token'];
+        return $token;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -55,22 +98,51 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
+            $currency = Currency::find($request->currency_id);
+            $client =  User::where('phone_number' , $request->phone_number)->first();
+
+            if(!$client){
+                $password = Str::random(10);
+                $user = User::create([
+                    'name' => $request->name ,
+                    'phone_number' => $request->phone_number ,
+                    'password' => $password ,
+                    'registered' => true ,
+                    'parol' => $password ,
+                ]);
+                $user_id = $user->id;
+                $this->sendSms($user->phone_number , $user->parol);
+            }else{
+                $user_id = $client->id;
+            }
             $startingOrderId = 1000;
             $lastOrderId = Order::max('order_id');
             $nextOrderId = $lastOrderId ? $lastOrderId + 1 : $startingOrderId;
             $status = Status::where('slug' , 'pending')->first();
             $order = Order::create([
+                'currency_id' => $request->currency_id ,
+                'language' => $request->language,
                 'order_id' => $nextOrderId,
-                'user_id' => $request->user_id ,
+                'user_id' =>$user_id ,
                 'status_id' => $status->id
             ]);
             $details = $request->input('orders');
             $totalPrice = 0;
             foreach ($details as $detail){
+                $profilePrice = 0;
+                $cornerPrice = 0;
+                $sealantPrice = 0;
+                $windowPrice = 0;
+                $windowHandlerPrice = 0;
+                $assemblyServicePrice = 0;
+                $additionalServicePrice = 0;
                 $price = 0;
                 $profileNumber = 0;
+                $handlerPositionType = $detail['handler_position_type_id'];
+
                 if($detail['profile_type_id']){
                     $profileType = ProfileType::find($detail['profile_type_id']);
+                    $profilePrice = $profileType->price;
                     $profileNumber = 0;
                     if(array_key_exists('quantity_right' , $detail)){
                         $profileNumber += $detail['quantity_right'];
@@ -78,6 +150,7 @@ class OrderController extends Controller
                     if(array_key_exists('quantity_left' , $detail)){
                         $profileNumber += $detail['quantity_left'];
                     }
+
                     $width = $detail['width']/1000;
                     $height = $detail['height']/1000;
                     $peremetr = 2*($width + $height) * $profileNumber;
@@ -88,16 +161,19 @@ class OrderController extends Controller
                     //
                     $windowHandlerQuantity = 0;
                     //
-                    $surface = $profileNumber * ($width * $height);
+                    $thickness = $profileType->thickness/1000;
+                    $surface = $profileNumber * (($width -$thickness) * ($height - $thickness));
 
                     if($profileType->sealant){
                         $sealant = Sealant::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                         $price += $peremetr*$sealant->price;
+                        $sealantPrice = $sealant->price;
                     }
-                    if($profileType->window_handler){
-                        $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
-                        $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
+                    $windowHandler = WindowHandler::where('profile_type_id' , $profileType->id)->where('profile_color_id' , $detail['profile_color_id'])->whereNull('deleted_at')->first();
 
+                    if($windowHandler){
+                        $windowHandlerPrice = $windowHandler->price;
+                        $handlerPosition = HandlerPosition::find($detail['handler_position_id']);
                         if($handlerPosition->slug == "no_handler"){
                             $windowHandlerQuantity += 0;
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
@@ -106,22 +182,22 @@ class OrderController extends Controller
                             if($handlerPosition->slug == "opposite"){
                                 $price += $height*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $height;
-                                $profilePeremetr = $profilePeremetr + 2*$width + $height;
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                             if($handlerPosition->slug == "top"){
                                 $price += $width*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $width;
-                                $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                             if($handlerPosition->slug == "below"){
                                 $price += $width*$windowHandler->price*$profileNumber;
                                 $windowHandlerQuantity = $width;
-                                $profilePeremetr = $profilePeremetr + 2*$height + $width;
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                             if($handlerPosition->slug == "round"){
                                 $price += $profileNumber * 2*($width + $height)*$windowHandler->price;
-                                $windowHandlerQuantity = $peremetr;
-                                $profilePeremetr += 0;
+                                $windowHandlerQuantity = 2*($width + $height);
+                                $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
                             }
                         }else{
                             return new ReturnResponseResource([
@@ -134,7 +210,11 @@ class OrderController extends Controller
                         $corner = Corner::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                         if($corner){
                             $price += 4 * $profileNumber * $corner->price;
+                            $cornerPrice = $corner->price;
                         }
+                    }
+                    if($handlerPositionType==1){
+                        $profilePeremetr = $profilePeremetr - $windowHandlerQuantity;
                     }
                     $price += $profileNumber*$profilePeremetr*$profileType->price;
                 }
@@ -142,36 +222,41 @@ class OrderController extends Controller
                     $windowColor = WindowColor::find($detail['window_color_id']);
                     if($windowColor){
                         $price += $surface * $windowColor->price;
+                        $windowPrice = $windowColor->price;
                     }
                 }
                 if(array_key_exists('additional_service_id' ,$detail)){
-                    $additionalService = AdditionalService::find($detail['additional_service_id']);
-                    if($additionalService){
-                        $price += $additionalService->price*$surface;
+                    $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
+                    if($additionalServices){
+                        foreach ($additionalServices as $additionalService){
+                            $price += $additionalService['price']*$surface;
+                        }
                     }
                 }
                 // Mana shu joyini ko'rish kerak balandlik yoki peremetr assembly service
-                $p = 2*($width + $height);
-                if($height >= 1.8 && $height < 2.4){
-                    $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+                $assemblyService = null;
+                if($height <= 1.8){
+                    $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator', '<')->first();
                     if($assemblyService){
                         $price += $assemblyService->price*$profileNumber;
+                        $assemblyServicePrice = $assemblyService->price;
                     }
-                }elseif($height >=2.4){
-                    $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+                }elseif($height > 1.8){
+                    $assemblyService = AssemblyService::where('facade_height' , 2400)->where('condition_operator', '>')->first();
                     if($assemblyService){
                         $price += $assemblyService->price*$profileNumber;
+                        $assemblyServicePrice = $assemblyService->price;
                     }
                 }
-                OrderDetail::create([
+                $orderDetail = OrderDetail::create([
                     'order_id' => $order->id ,
                     'profile_type_id' => $detail['profile_type_id'] ,
                     'window_color_id' => $detail['window_color_id'] ,
                     'profile_color_id' => $detail['profile_color_id'] ,
                     'opening_type_id' => $detail['opening_type_id'] ,
                     'handler_position_id' => $detail['handler_position_id'] ,
-                    'additional_service_id' => (array_key_exists('additional_service_id' ,$detail)) ? $detail['additional_service_id'] : null ,
                     'assembly_service_id' => ($assemblyService) ? $assemblyService->id : null ,
+                    'window_handler_id' => ($windowHandler) ? $windowHandler->id : null ,
                     'width' => $width ,
                     'height' => $height ,
                     'quantity_right' => (array_key_exists('quantity_right', $detail)) ? $detail['quantity_right'] : 0 ,
@@ -182,15 +267,31 @@ class OrderController extends Controller
                     'sealant_quantity' =>  $sealantQuantity,
                     'window_handler_quantity' =>  $windowHandlerQuantity*$profileNumber,
                     'status_id' =>  1,
-                    'X1' => (array_key_exists('X1' , $detail)) ? $detail['X1'] : 100 ,
-                    'X2' => (array_key_exists('X2' , $detail)) ? $detail['X2'] : 100 ,
-                    'Y1' => (array_key_exists('Y1' , $detail)) ? $detail['Y1'] : 100 ,
-                    'price' => $price ,
+                    'additive_sizes' => (array_key_exists('additive_sizes' , $detail)) ? $detail['additive_sizes'] : "",
+                    'profile_price' => $profilePrice * $currency->rate ,
+                    'corner_price' => $cornerPrice * $currency->rate,
+                    'sealant_price' => $sealantPrice * $currency->rate ,
+                    'window_handler_price' => $windowHandlerPrice * $currency->rate ,
+                    'window_price' => $windowPrice * $currency->rate ,
+                    'assembly_service_price' => $assemblyServicePrice * $currency->rate ,
+                    'price' => $price * $currency->rate ,
                     'facade_quantity' => $profileNumber ,
                     'surface' => $surface ,
-                    'profile_length' => $profilePeremetr*$profileNumber
+                    'profile_length' => $profilePeremetr*$profileNumber ,
+                    'handler_type_name' => $detail['handler_type_name'] ,
+                    'handler_type_name_uz' => $detail['handler_type_name_uz'] ,
+                    'handler_position_type_id' => $detail['handler_position_type_id']
                 ]);
-                $totalPrice += $price;
+                if(array_key_exists('additional_service_id' ,$detail)){
+                    $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
+                    if($additionalServices){
+                        foreach ($additionalServices as $additionalService){
+                            $orderDetail->additionalServices()->attach($additionalService['id'], ['price' => $additionalService['price']]);
+                        }
+                    }
+                }
+
+                $totalPrice += $price * $currency->rate;
             }
             if($totalPrice > 0){
                 $order->update([
@@ -275,6 +376,11 @@ class OrderController extends Controller
 
     public function getOrderPrice(Request $request){
 
+        $request->validate([
+            'currency_id' => ['required' , 'numeric' ,'min:1' , 'exists:currencies,id'] ,
+            'additional_service_id' => ['array'],
+        ]);
+        $currency = Currency::find($request->currency_id);
         $totalPrice = 0;
         $profilePrice = 0;
         $windowPrice = 0;
@@ -310,12 +416,17 @@ class OrderController extends Controller
                 'total_price' => $price
             ]);
         }
+
         $profileNumber = 1;
+
         if($request->has('quantity_left')){
             $profileNumber += $request->quantity_left;
         }
         if($request->has('quantity_right')){
             $profileNumber += $request->quantity_right;
+        }
+        if($profileNumber > 1){
+            $profileNumber = $profileNumber - 1;
         }
         $perimeter = 2*($width + $height);
 
@@ -346,19 +457,19 @@ class OrderController extends Controller
                                             $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                         }
                                         if($handlerPosition->slug =="opposite"){
-                                         $profilePerimeter = $profilePerimeter + 2*$width + $height;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                          $windowHandlerPrice += $height*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug=="top"){
-                                            $profilePerimeter = $profilePerimeter + 2*$height + $width;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice =+ $width*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug == "below"){
-                                            $profilePerimeter = $profilePerimeter + 2*$height + $width;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice += $width*$windowHandler->price*$profileNumber;
                                         }
                                         if($handlerPosition->slug=="round"){
-                                            $profilePerimeter += 0;
+                                            $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice += 2*($width + $height)*$profileNumber*$windowHandler->price;
                                         }
                                     }
@@ -370,47 +481,56 @@ class OrderController extends Controller
                     $profilePerimeter = 2*($width + $height);
                 }
             }
+
                 $profilePrice = $profileNumber * $profileType->price*$profilePerimeter;
         }
+        $thickness = $profileType->thickness/1000;
         if($request->has('window_color_id')){
             $windowColor = WindowColor::find($request->window_color_id);
             if($windowColor){
                 if($width > 0 && $height > 0){
-                $windowPrice = $windowPrice + $profileNumber*$width*$height*$windowColor->price;
+                $windowPrice = $windowPrice + $profileNumber*($width - $thickness)*($height - $thickness)*$windowColor->price;
                 }else{
                    $windowPrice +=  $windowColor->price;
                 }
             }
         }
+
         if($request->has('additional_service_id')){
-            $additionalService = AdditionalService::find($request->additional_service_id);
-            if($additionalService){
-                $additionalServicePrice += $additionalService->price;
+            $additionalServices = AdditionalService::whereIn('id' , $request['additional_service_id'])->get();
+            if($additionalServices){
+                foreach ($additionalServices as $additionalService){
+                    if($height && $width){
+                        $additionalServicePrice += $additionalService['price']*($width - $thickness)*($height - $thickness)*$profileNumber;
+                    }else{
+                        $additionalServicePrice += $additionalService['price'];
+                    }
+                }
             }
         }
-        if($perimeter >= 1.8 && $perimeter < 2.4){
-            $assemblyService = AssemblyService::where('facade_height' , 1800)->first();
+
+        if($height < 1.8 ){
+            $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '<')->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
             }
-        }elseif($perimeter >=2.4){
-            $assemblyService = AssemblyService::where('facade_height' , 2400)->first();
+        }elseif($height >= 1.8){
+            $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '>')->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
             }
         }
 
         $totalPrice += $sealantPrice + $cornerPrice+$windowHandlerPrice+$profilePrice+$windowPrice+$additionalServicePrice+$assemblyServicePrice;
-
         return response()->json([
-            'totalPrice' => $totalPrice ,
-            'sealant_price' => $sealantPrice ,
-            'corner_price' => $cornerPrice ,
-            'window_handler_price' =>$windowHandlerPrice ,
-            'profile_price' => $profilePrice ,
-            'window_price' => $windowPrice ,
-            'additional_service_price' => $additionalServicePrice ,
-            'assembly_service_price' => $assemblyServicePrice
+            'totalPrice' => round($totalPrice * $currency->rate , 2) ,
+            'sealant_price' => round($sealantPrice* $currency->rate , 2) ,
+            'corner_price' => round($cornerPrice * $currency->rate , 2),
+            'window_handler_price' => round($windowHandlerPrice* $currency->rate , 2) ,
+            'profile_price' => round($profilePrice* $currency->rate , 2) ,
+            'window_price' => round($windowPrice* $currency->rate , 2),
+            'additional_service_price' => round($additionalServicePrice* $currency->rate , 2) ,
+            'assembly_service_price' => round($assemblyServicePrice* $currency->rate , 2)
         ]);
     }
 

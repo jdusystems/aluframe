@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\PdfController;
 use App\Http\Controllers\Api\HandlerPositionController;
 use App\Http\Controllers\Api\OpeningTypeNumberController;
+use App\Http\Controllers\CurrencyController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -75,6 +76,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     // Super Admin
     Route::middleware(['superadmin'])->group(function (){
+
+        Route::apiResource('currencies' , CurrencyController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
+
         Route::apiResource('profile-colors' , ProfileColorController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
@@ -112,7 +118,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
             'only' => ['store' , 'update' , 'destroy']
         ]);
 
-        Route::apiResource('statuses' , StatusController::class);
+        Route::apiResource('statuses' , StatusController::class , [
+            'only' => ['store' , 'update' , 'destroy']
+        ]);
         Route::apiResource('handler-positions' , HandlerPositionController::class , [
             'only' => ['store' , 'update' , 'destroy']
         ]);
@@ -151,6 +159,12 @@ Route::middleware(['auth:sanctum'])->group( function () {
 //profiles
 Route::get('/all-profiles', [ProfileTypeController::class , 'all']);
 Route::apiResource('profiles' , ProfileTypeController::class , [
+    'only' => ['show' , 'index']
+]);
+//profile-colors
+//Currencies
+Route::get('/all-currencies', [CurrencyController::class , 'allData']);
+Route::apiResource('currencies' , CurrencyController::class , [
     'only' => ['show' , 'index']
 ]);
 //profile-colors
@@ -206,14 +220,27 @@ Route::apiResource('opening-type-numbers' , OpeningTypeNumberController::class ,
 Route::apiResource('types' , TypeController::class , [
     'only' => ['show' , 'index']
 ]);
+Route::apiResource('statuses' , StatusController::class , [
+    'only' => ['show' , 'index']
+]);
 
 Route::post('/order-details' , [PdfController::class , 'orderDetails']);
 Route::post('/total-price' , [PdfController::class , 'totalPrice']);
 Route::post('/order-price' , [OrderController::class ,'getOrderPrice']);
 
+Route::post('/send-sms' , [\App\Http\Controllers\SmsController::class , 'sendSms']);
+Route::post('/check-sms' , [\App\Http\Controllers\SmsController::class , 'getToken']);
+
 Route::get('/image' , function (){
     return view('image');
 });
+Route::get('/handler-position-types' , function (){
+    $handlerPositionTypes = \App\Models\HandlerPositionType::all();
+    return response()->json([
+        'data' => $handlerPositionTypes
+    ]);
+});
+
 
 // API CRUD for Posts , Just for Fun
 Route::apiResource('posts' , PostController::class);

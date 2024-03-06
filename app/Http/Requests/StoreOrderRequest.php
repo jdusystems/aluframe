@@ -23,8 +23,11 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'language' => ['required' , 'in:ru,uz'] ,
+            'currency_id' => ['required' , 'numeric' , 'min:1' , 'exists:currencies,id'] ,
+//            'user_id' => ['required' , 'numeric' , 'min:1' , 'exists:users,id'] ,
             'orders' => 'required|array|min:1' ,
-            'user_id' => ['required' ,'integer', 'exists:users,id'] ,
+            'phone_number' => ['required' ,'string' , 'max:12'] ,
             'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
@@ -36,18 +39,20 @@ class StoreOrderRequest extends FormRequest
             })] ,
             'orders.*.opening_type_id' => ['required' ,'integer', 'exists:opening_types,id'] ,
             'orders.*.handler_position_id' => ['required' ,'integer', 'exists:handler_positions,id'] ,
-            'orders.*.additional_service_id' => ['integer', Rule::exists('additional_services' , 'id')->where(function($query){
+            'orders.*.additional_service_id' => ['required' , 'array'] ,
+            'orders.*.additional_service_id.*' => [ Rule::exists('additional_services' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
             'orders.*.assembly_service_id' => ['integer', 'exists:assembly_services,id'] ,
             'orders.*.width' => ['required' , 'numeric' , 'min:1' ],
             'orders.*.height' => ['required' , 'numeric' , 'min:1' ],
-            'orders.*.X1' => ['numeric' ],
-            'orders.*.X2' => ['numeric' ],
-            'orders.*.Y1' => ['numeric' ],
-            'orders.*.quantity_right' => ['integer' , 'min:0'],
-            'orders.*.quantity_left' => ['integer' , 'min:0'],
+            'orders.*.additive_sizes' => ['string' , 'max:1000'],
+            'orders.*.handler_type_name' => ['string' , 'max:30'],
+            'orders.*.handler_type_name_uz' => ['string' , 'max:30'],
+            'orders.*.quantity_left'  => 'required_without:orders.*.quantity_right|numeric|min:0',
+            'orders.*.quantity_right' => 'required_without:orders.*.quantity_left|numeric|min:0',
             'orders.*.number_of_loops' => ['integer' , 'min:0'],
+            'orders.*.handler_position_type_id' => ['required' , 'integer' , 'exists:handler_position_types'],
         ];
     }
 }

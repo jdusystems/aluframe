@@ -17,6 +17,7 @@ class ShowWindowHandlerResource extends JsonResource
         return [
             'id' => $this->id ,
             'name' => $this->name ,
+            'name_uz' => $this->name_uz ,
             'vendor_code' => $this->vendor_code ,
             'price' => $this->price ,
             'profile_type_name' =>($this->profileType) ? $this->profileType->name :" " ,

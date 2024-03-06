@@ -18,7 +18,9 @@
           margin: 0;
           box-sizing: border-box;
       }
-
+      .break-page{
+          page-break-after: always;
+      }
       body{
           font-family: "Inter";
           text-align: center;
@@ -57,7 +59,7 @@
           padding-bottom:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
-          float: right;
+          float: left;
       }
       .card2{
           width: 50%;
@@ -65,15 +67,14 @@
           padding-bottom:30px ;
           border-top: 1px dotted #121212;
           border-bottom: 1px dotted #121212;
-          float: left;
+          float: right;
       }
-      .card1:nth-child(2n-1){
-          border-right: 1px dotted #121212;
-          float: left;
-      }
+      /*.card1:nth-child(2n-1){*/
+      /*    border-right: 1px dotted #121212;*/
+      /*    float: left;*/
+      /*}*/
       .card-item{
           width: 100%;
-
       }
       .card-item:last-child{
           margin-top: 0;
@@ -106,7 +107,6 @@
       }
 
       .card-title td:nth-child(1){
-
           color: #4B3E32;
           font-family: Inter;
           font-size: 13px;
@@ -117,9 +117,7 @@
       }
       .card-title td{
           width: 33%;
-
           color: #4B3E32;
-
           font-family: Inter;
           font-size: 13px;
           font-style: normal;
@@ -132,7 +130,6 @@
 
       }
       .card-top td{
-
           color: #4B3E32;
           font-family: Inter;
           font-size: 11px;
@@ -142,14 +139,11 @@
       }
       .card-list{
           width: 100%;
-
       }
       .card-list1{
           width: 100%;
-
       }
       .card-list td{
-
           margin-bottom: 4px;
           color: #4B3E32;
           font-family: Inter;
@@ -158,29 +152,113 @@
           font-weight: 400;
           line-height: normal;
       }
+
+      /*
+
+       */
+
+      .wrap5{
+          width: 100%;
+          max-width: 716px;
+          /*margin: 80px auto;*/
+          margin-right: auto;
+          margin-left: auto;
+          margin-top: 50px;
+      }
+      .card5{
+          width:calc((100% - 21px) / 2);
+          list-style: none;
+          padding-top: 20px;
+          padding-bottom: 37px;
+          border-top: 1px dotted black;
+          border-bottom: 1px dotted black;
+          float: left;
+      }
+
+      .card5:nth-child(even){
+          float: right;
+      }
+
+      .card5:nth-child(2n-1){
+          float: left;
+      }
+
+      .wrap5:nth-child(8){
+          page-break-after: always;
+      }
+
+      .card-top5{
+          width: 100%;
+          padding-bottom: 22px;
+      }
+      .card-top5 td {
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          padding-bottom: 22px;
+          /*padding-right: 10px;*/
+      }
+      .card-top5 td:last-child{
+          margin-left: auto;
+      }
+      .card-item5{
+          width: 100%;
+      }
+      .card-item5 td {
+          color: #4B3E32;
+          font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          padding-bottom: 12px;
+      }
+      .card-item5 td:last-child{
+          text-align: end;
+      }
+      .card-item5:nth-child(5) td:first-child {
+          font-weight: 700;
+      }
+      .card-item5:nth-child(4) td:first-child {
+          font-weight: 700;
+      }
+
+
   </style>
 </head>
 
 <body>
+<br><br>
 <div class="full">
     <div class="wrap">
+        <?php
+        $i = 0;
+        ?>
         @foreach($orderDetails as $orderDetail)
+            <?php $i = $i + 1; ?>
             <table class="card">
                 <tr class="card-item">
                     <td class="text">Профиль:</td>
-                    <td class="title">{{$orderDetail->profileType->name}}, {{$orderDetail->profileColor->name}}</td>
+                    <td class="title">{{($orderDetail->profileType) ? $orderDetail->profileType->name: ""}}, {{($orderDetail->profileColor) ? $orderDetail->profileColor->name : ""}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Цвет стекла:</td>
-                    <td class="title">{{$orderDetail->windowColor->name}}</td>
+                    <td class="title">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name :""}}</td>
                 </tr>
-                <tr class="card-item">
-                    <td class="text">Доп-услуги для стекла:</td>
-                    <td class="title">{{$orderDetail->additionalService->name}}</td>
+                <tr class="list-item">
+                    <td class="text">Дополнительные услуги для стекла:</td>
+                    <td class="title">
+                        @foreach($orderDetail->additionalServices as $additionalService)
+                            {{($additionalService) ? $additionalService->name: ""}} ,
+                        @endforeach
+                    </td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Тип открывания:</td>
-                    <td class="title">{{$orderDetail->openingType->name}}</td>
+                    <td class="title">{{($orderDetail->openingType) ? $orderDetail->openingType->name : ""}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Количество петель:</td>
@@ -188,11 +266,11 @@
                 </tr>
                 <tr class="card-item">
                     <td class="text">Высота:</td>
-                    <td class="title">{{$orderDetail->height}}</td>
+                    <td class="title">{{$orderDetail->height*1000}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Ширина:</td>
-                    <td class="title">{{$orderDetail->width}}</td>
+                    <td class="title">{{$orderDetail->width*1000}}</td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Кол-во L:</td>
@@ -213,13 +291,17 @@
                 </tr>
                 <tr class="card-item">
                     <td class="text">Присака станд.?:</td>
-                    <td class="title">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </td>
+                    <td class="title">{{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes : ""}} </td>
                 </tr>
                 <tr class="card-item">
                     <td class="text">Комментарий:</td>
-                    <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</td>
+                    <td class="title">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</td>
                 </tr>
             </table>
+           @if($i%4==0 || $i%3==0)
+               <br><br><br><br><br><br><br><br>
+           @endif
+            @if($i % 2 == 0) <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> @endif
         @endforeach
     </div>
 </div>
@@ -246,36 +328,35 @@
 <br>
 <br>
 <br>
-<br>
+
 <div class="wrap1">
     <div class="card1">
             <table class="card-item1">
                 <tr class="card-title" style="margin-left: 20px">
                     <td style=" padding-left: 30px;">Профиль</td>
-                    <td style=" padding-left: 20px;">{{$order->order_id}}</td>
+                    <td style=" padding-left: 20px;">{{$order->id}}</td>
                     <td style=" padding-left: 20px;">{{$order->created_at}}</td>
                 </tr>
                 <tr class="card-top">
                     <td style=" padding-left: 30px;">Код товара</td>
-                    <td style=" padding-left: 20px;">Высота</td>
+                    <td style=" padding-left: 20px;">Длина</td>
                     <td style=" padding-left: 20px;">Кол-во</td>
                 </tr>
-             @foreach($profiles as $profile)
-                <tr class="card-list">
-                    <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
-                    <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)}}</td>
-                    <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
-                </tr>
-                 @endforeach
+                @foreach($profiles as $profile)
+                    <tr class="card-list">
+                        <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
+                        <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)*1000}}</td>
+                        <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
+                    </tr>
+                @endforeach
             </table>
     </div>
     <div class="card2">
         <table class="card-item1">
             <tr class="card-title" >
                 <td style="padding-left: 30px;">Стекло</td>
-                <td style=" padding-left: 20px;">{{$order->order_id}}</td>
+                <td style=" padding-left: 20px;">{{$order->id}}</td>
                 <td style=" padding-left: 20px; " colspan="2">{{$order->created_at}}</td>
-
             </tr>
             <tr class="card-top">
                 <td style=" padding-left: 30px;">Код товара</td>
@@ -289,13 +370,72 @@
                     ?>
                 <tr class="card-list">
                     <td style=" padding-left: 30px;">{{$windowColor->windowColor->name}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_width}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_height}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_width*1000}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_height*1000}}</td>
                     <td style=" padding-left: 20px;">{{$windowColor->total_facade_quantity}}</td>
                 </tr>
             @endforeach
         </table>
     </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="break-page">
+
+</div>
+
+<div class="wrap5">
+    @foreach($orderDetails as $orderDetail)
+            <?php
+            $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
+            ?>
+        @for($i = 1;$i <= $facades;$i++)
+            <table class="card5">
+                <tr class="card-top5">
+                    <td style="padding-right: 30px"><b>{{$order->id}}</b> {{$order->created_at}}</td>
+                    <td style="padding-left: 20px">Фасад {{$i}}/{{$facades}}</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Высота:</td>
+                    <td>{{$orderDetail->height*1000}} mm</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Ширина:</td>
+                    <td>{{$orderDetail->width*1000}} mm</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Профиль:</td>
+                    <td>{{$orderDetail->profileType->name}} , {{$orderDetail->profileColor->name}}</td>
+                </tr>
+                <tr class="card-item5">
+                    <td>Cтекло:</td>
+                    <td>{{$orderDetail->windowColor->name}}</td>
+                </tr>
+            </table>
+            @if($i%2==0)
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            @endif
+        @endfor
+        <br><br><br>
+    @endforeach
 </div>
 </body>
 

@@ -41,13 +41,15 @@ class AdditionalServiceController extends Controller
     {
 
         return new AdditionalServiceResource(AdditionalService::create([
+            'name' => $request->name,
+            'uz_name' => $request->uz_name,
             'image_name' => $request->image_name ,
             'image_url' => $request->image_url,
-            'name' => $request->name ,
-            'vendor_code' => $request->vendor_code ,
-            'price' => $request->price ,
-            'sort_index' => $request->sort_index ,
-            'description' => $request->description
+            'sort_index' => $request->sort_index,
+            'vendor_code' => $request->vendor_code,
+            'price' => $request->price,
+            'description' => $request->description ,
+            'uz_description' => $request->uz_description
         ]));
     }
 
@@ -84,12 +86,13 @@ class AdditionalServiceController extends Controller
 
         $additionalService->update([
             'name' => $request->name,
+            'uz_name' => $request->uz_name,
             'image_name' => $request->image_name ,
             'image_url' => $request->image_url,
             'sort_index' => $request->sort_index,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price,
-            'description' => $request->description
+            'uz_description' => $request->uz_description
         ]);
 
         return new AdditionalServiceResource($additionalService);

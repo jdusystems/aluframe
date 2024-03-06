@@ -82,6 +82,10 @@ class ProfileTypeController extends Controller
             'image_name' => $request->image_name ,
             'image_url' => $request->image_url ,
             'name' => $request->name ,
+            'vendor_code' => $request->vendor_code ,
+            'uz_name' => $request->uz_name ,
+            'size_name' => $request->size_name ,
+            'thickness' => $request->thickness ,
             'calculation_type_id' => $request->calculation_type_id ,
             'price' => $request->price ,
             'sort_index' => $request->sort_index

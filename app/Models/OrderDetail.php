@@ -18,12 +18,12 @@ class OrderDetail extends Model
 
     protected $table = "order_details";
     protected $fillable = [
-        'order_id' , 'profile_type_id' , 'window_color_id' ,'profile_color_id',
+        'order_id' , 'profile_type_id' , 'window_color_id' ,'profile_color_id','window_handler_id',
         'additional_service_id' , 'assembly_service_id' , 'opening_type_id' ,
         'handler_type_id' , 'width' ,'height' ,'quantity_right' ,'quantity_left' ,'number_of_loops' ,'comment' ,
         'price' ,'X1' , 'X2' ,'Y1' , 'sealant_quantity' ,
         'corner_quantity' ,'window_handler_quantity' ,'handler_position_id' ,
-        'profile_length' , 'sealant_length' , 'surface' , 'facade_quantity' , 'corner_quantity'
+        'profile_length' , 'sealant_length' , 'surface' , 'facade_quantity' , 'corner_quantity' , 'handler_position_type_id'
     ];
 
     public function order(){
@@ -42,8 +42,13 @@ class OrderDetail extends Model
         return $this->belongsTo(ProfileColor::class);
     }
 
-    public function additionalService(){
-        return $this->belongsTo(AdditionalService::class);
+    public function additionalServices()
+    {
+        return $this->belongsToMany(AdditionalService::class);
+    }
+
+    public function windowHandler(){
+        return $this->belongsTo(WindowHandler::class);
     }
 
     public function assemblyService(){
@@ -61,5 +66,8 @@ class OrderDetail extends Model
      return $this->belongsTo(HandlerPosition::class);
     }
 
+    public function handlerPositionType(){
+        return $this->belongsTo(HandlerPositionType::class);
+    }
 
 }

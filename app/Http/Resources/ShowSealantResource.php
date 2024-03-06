@@ -17,6 +17,7 @@ class ShowSealantResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ,
+            'uz_name' => $this->uz_name ,
             'vendor_code' => $this->vendor_code ,
             'price' => $this->price,
             'profile_type_name' =>($this->profileType) ? $this->profileType->name :" " ,

@@ -10,7 +10,7 @@ class AssemblyService extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name' , 'condition_operator' , 'facade_height' , 'vendor_code' , 'price'
+        'name' , 'uz_name' , 'condition_operator' , 'facade_height' , 'vendor_code' , 'price'
     ];
 
     public function orderDetails(){

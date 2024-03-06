@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('order_details', function (Blueprint $table) {
             $table->integer('facade_quantity')->default(0);
-            $table->double('profile_length')->default(0.00);
-            $table->double('surface')->default(0.00);
+            $table->double('profile_length' , 10 ,2)->default(0.00);
+            $table->double('surface' , 10 , 2)->default(0.00);
         });
     }
 

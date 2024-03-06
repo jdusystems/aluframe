@@ -9,7 +9,7 @@ class Type extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name' , 'name_uz'];
 
     public function openingTypes(){
         return $this->hasMany(OpeningType::class);

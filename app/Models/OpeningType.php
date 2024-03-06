@@ -10,7 +10,7 @@ class OpeningType extends Model
 {
     use HasFactory;
     protected $table = "opening_types";
-    protected $fillable = ['name' , 'type_id' , 'sort_index' , "image_url" ,"image_name"];
+    protected $fillable = ['name' ,'position' , 'type_id' , 'sort_index' , "image_url" ,"image_name"];
 
 
     public function type(){
@@ -24,7 +24,7 @@ class OpeningType extends Model
         return $this->hasMany(OpeningTypeNumber::class);
     }
     public function handlerPositions(){
-        return $this->belongsToMany(HandlerPosition::class , 'handlerposition_openingtype' , );
+        return $this->belongsToMany(HandlerPosition::class , 'handlerposition_openingtype')->orderBy('sort_index');
     }
 
 }

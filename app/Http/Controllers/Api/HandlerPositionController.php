@@ -45,6 +45,7 @@ class HandlerPositionController extends Controller
     {
         $handlerPosition = HandlerPosition::create([
             'name' => $request->name ,
+            'uz_name' => $request->uz_name ,
             'image_name' => $request->image_name ,
             'image_url' => $request->image_url ,
             'sort_index' => $request->sort_index
@@ -86,6 +87,7 @@ class HandlerPositionController extends Controller
         }
         $handlerPosition->update([
             'name' => $request->name ,
+            'uz_name' => $request->uz_name ,
             'image_name' => $request->image_name ,
             'image_url' => $request->image_url ,
             'sort_index' => $request->sort_index

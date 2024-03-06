@@ -85,6 +85,7 @@ class WindowHandlerController extends Controller
         }
         $windowHandler->update([
             'name' => $request->name,
+            'name_uz' => $request->name_uz,
             'vendor_code' => $request->vendor_code,
             'price' => $request->price,
             'profile_type_id' => $request->profile_type_id,

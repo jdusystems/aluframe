@@ -28,5 +28,9 @@ class Order extends Model
         return $this->belongsTo(Status::class);
     }
 
+    public function currency(){
+        return $this->belongsTo(Currency::class);
+    }
+
 
 }

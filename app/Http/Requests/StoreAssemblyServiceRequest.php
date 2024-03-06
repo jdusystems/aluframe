@@ -23,6 +23,7 @@ class StoreAssemblyServiceRequest extends FormRequest
     {
         return [
             'name' => "required" ,
+            'uz_name' => "required" ,
             'vendor_code' => "required" ,
             'condition_operator' => "required" ,
             'facade_height' => "required" ,

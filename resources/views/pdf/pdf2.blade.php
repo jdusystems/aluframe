@@ -22,6 +22,9 @@
         body{
             font-family: "Inter";
         }
+        .page-break{
+            page-break-after: always;
+        }
         .container{
             width: 100%;
             max-width: 716px;
@@ -60,11 +63,10 @@
             line-height: normal;
         }
         .list{
-
             width: 100%;
             padding-bottom: 27px;
             border-bottom: 1px dotted rgb(18, 18, 18,.2);
-
+            margin-top: 20px;
         }
         .list-item{
             width: 100%;
@@ -197,27 +199,37 @@
     <header class="header">
         <h2 class="title">Накладная</h2>
         <div class="header-left">
-            <span class="text">{{$order->order_id}}</span>
+            <span class="text">{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
     </header>
+    <?php
+    $i = 0;
+    ?>
     @foreach($orderDetails as $orderDetail)
+            <?php
+               $i = $i + 1;
+            ?>
         <table class="list">
             <tr class="list-item">
                 <th class="list-text">Профиль</th>
-                <th class="list-text">{{$orderDetail->profileType->name}},{{$orderDetail->profileColor->name}}</th>
+                <th class="list-text">{{($orderDetail->profileType) ? $orderDetail->profileType->name : ""}},{{($orderDetail->profileColor) ? $orderDetail->profileColor->name : ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Цвет стекла:</th>
-                <th class="list-text">{{$orderDetail->windowColor->name}}</th>
+                <th class="list-text">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name : ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Дополнительные услуги для стекла:</th>
-                <th class="list-text">{{$orderDetail->additionalService->name}}</th>
+                <th class="list-text">
+                    @foreach($orderDetail->additionalServices as $additionalService)
+                        {{($additionalService) ? $additionalService->name: ""}} ,
+                    @endforeach
+                </th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Тип открывания:</th>
-                <th class="list-text">{{$orderDetail->openingType->name}}</th>
+                <th class="list-text">{{($orderDetail->openingType) ? $orderDetail->openingType->name : ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Количество петель:</th>
@@ -225,11 +237,11 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Высота:</th>
-                <th class="list-text">{{$orderDetail->height}}</th>
+                <th class="list-text">{{$orderDetail->height*1000}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Ширина:</th>
-                <th class="list-text">{{$orderDetail->width}}</th>
+                <th class="list-text">{{$orderDetail->width*1000}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Кол-во L:</th>
@@ -241,23 +253,28 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{$orderDetail->handlerPosition->name}}</th>
+                <th class="list-text">{{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name : ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
-                <th class="list-text">X1 = {{($orderDetail->X1) ? $orderDetail->X1: 0}} mm, X1 = {{($orderDetail->X2) ? $orderDetail->X2 : 0}} mm , Y1 = {{($orderDetail->Y1) ? $orderDetail->Y1 :0}} mm </th>
+                <th class="list-text">{{($orderDetail->additive_sizes) ? $orderDetail->additive_sizes: "Стандарт"}} </th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Комментарий:</th>
-                <th class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : " "}}</th>
+                <th class="list-text">{{ ($orderDetail->comment) ? $orderDetail->comment : ""}}</th>
             </tr>
         </table>
-        <br>
+
+        @if($i % 2 == 0 ||($loop->last && $i != 1))
+            <div class="page-break">
+
+            </div>
+        @endif
     @endforeach
     <div class="wrap">
         <h3 class="wrap-tile">Спецификация</h3>
         <div class="header-left">
-            <span class="text">{{$order->order_id}}</span>
+            <span class="text">{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
     </div>
@@ -270,54 +287,60 @@
         </tr>
 
         @foreach($profiles as $profile)
-            <tr class="list-item">
-                <th class="list-text1">{{$profile->profileType->vendor_code}}</th>
-                <th class="list-text1">{{$profile->profileType->name}}</th>
-                <th class="list-text1">{{$profile->total_profile_length}}</th>
-            </tr>
-        @endforeach
-
-        @foreach($profiles as $profile)
-            <tr class="list-item">
-                <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
-                <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
-                <th class="list-text1">{{$profile->total_sealant_length}}</th>
-            </tr>
-        @endforeach
-        @foreach($profiles as $profile)
-            <tr class="list-item">
-                <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
-                <th class="list-text1">{{$profile->profileType->corner->name}}</th>
-                <th class="list-text1">{{$profile->total_corner_quantity}}</th>
-            </tr>
-        @endforeach
-        @foreach($windowColors as $windowColor)
-            <tr class="list-item">
-                <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
-                <th class="list-text1">{{$windowColor->windowColor->name}}</th>
-                <th class="list-text1">{{$windowColor->total_surface}}</th>
-            </tr>
-        @endforeach
-
-        @foreach($additionalServices as $additionalService)
-                <?php
-                $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();
-                ?>
-            @if($additionalService)
+            @if($profile->profileType)
                 <tr class="list-item">
-                    <th class="list-text1">{{$additionalService->additionalService->vendor_code}}</th>
-                    <th class="list-text1">{{$additionalService->additionalService->name}}</th>
-                    <th class="list-text1">{{$services->count()}}</th>
+                    <th class="list-text1">{{$profile->profileType->calCulationType->name}}</th>
+                    <th class="list-text1">{{$profile->profileType->name}}</th>
+                    <th class="list-text1">{{$profile->total_profile_length}}</th>
                 </tr>
             @endif
 
         @endforeach
 
+        @foreach($profiles as $profile)
+            @if($profile->profileType->sealant)
+                <tr class="list-item">
+                    <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
+                    <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
+                    <th class="list-text1">{{$profile->total_sealant_length}}</th>
+                </tr>
+            @endif
+        @endforeach
+        @foreach($profiles as $profile)
+           @if($profile->profileType->corner)
+                <tr class="list-item">
+                    <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
+                    <th class="list-text1">{{$profile->profileType->corner->name}}</th>
+                    <th class="list-text1">{{$profile->total_corner_quantity}}</th>
+                </tr>
+           @endif
+        @endforeach
+        @foreach($windowColors as $windowColor)
+           @if($windowColor->windowColor)
+                <tr class="list-item">
+                    <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
+                    <th class="list-text1">{{$windowColor->windowColor->name}}</th>
+                    <th class="list-text1">{{$windowColor->total_surface}}</th>
+                </tr>
+           @endif
+        @endforeach
+
+        @foreach($additionalServices as $additionalService)
+            {{--                <?php--}}
+            {{--                    $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();--}}
+            {{--                ?>--}}
+            <tr class="list-item">
+                <th class="list-text1">{{$additionalService['vendor_code']}}</th>
+                <th class="list-text1">{{$additionalService['name']}}</th>
+                <th class="list-text1">{{$additionalService['total_quantity']}}</th>
+            </tr>
+        @endforeach
+
         @foreach($assemblyServices as $assemblyService)
                 <?php
-                $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
+                    $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
                 ?>
-        @if($assemblyService)
+        @if($assemblyService->assemblyService)
                 <tr class="list-item">
                     <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
@@ -325,17 +348,14 @@
                 </tr>
         @endif
         @endforeach
-        @foreach($profiles as $profile)
-                <?php
-                $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
-                ?>
-        @if($windowHandler)
 
-            <tr class="list-item">
-                <th class="list-text1">{{$windowHandler->vendor_code}}</th>
-                <th class="list-text1">{{$windowHandler->name}}</th>
-                <th class="list-text1">{{$profile->total_window_handler_quantity}}</th>
-            </tr>
+        @foreach($windowHandlers as $windowHandler)
+            @if($windowHandler->windowHandler)
+                <tr class="list-item">
+                    <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
+                    <th class="list-text1">{{$windowHandler->windowHandler->name}}</th>
+                    <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
+                </tr>
             @endif
         @endforeach
     </table>

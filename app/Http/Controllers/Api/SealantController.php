@@ -40,6 +40,7 @@ class SealantController extends Controller
     {
         $sealant = Sealant::create([
             'name' => $request->name ,
+            'uz_name' => $request->uz_name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
             'profile_type_id' => $request->profile_type_id
@@ -84,6 +85,7 @@ class SealantController extends Controller
         }
         $sealant->update([
             'name' => $request->name ,
+            'uz_name' => $request->uz_name ,
             'vendor_code' => $request->vendor_code ,
             'price' => $request->price ,
             'profile_type_id' => $request->profile_type_id

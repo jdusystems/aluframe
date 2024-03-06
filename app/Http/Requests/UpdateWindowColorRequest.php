@@ -24,6 +24,7 @@ class UpdateWindowColorRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'uz_name' => ['required'],
             'image_url' => ['required'],
             'image_name' => ['required'],
             'second_image_url' => ['required'],
