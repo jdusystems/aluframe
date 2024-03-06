@@ -23,7 +23,7 @@ class OrderDetail extends Model
         'handler_type_id' , 'width' ,'height' ,'quantity_right' ,'quantity_left' ,'number_of_loops' ,'comment' ,
         'price' ,'X1' , 'X2' ,'Y1' , 'sealant_quantity' ,
         'corner_quantity' ,'window_handler_quantity' ,'handler_position_id' ,
-        'profile_length' , 'sealant_length' , 'surface' , 'facade_quantity' , 'corner_quantity' , 'handler_type_name' , 'handler_type_name_uz'
+        'profile_length' , 'sealant_length' , 'surface' , 'facade_quantity' , 'corner_quantity' , 'handler_position_type_id'
     ];
 
     public function order(){
@@ -66,5 +66,8 @@ class OrderDetail extends Model
      return $this->belongsTo(HandlerPosition::class);
     }
 
+    public function handlerPositionType(){
+        return $this->belongsTo(HandlerPositionType::class);
+    }
 
 }
