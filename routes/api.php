@@ -234,6 +234,13 @@ Route::post('/check-sms' , [\App\Http\Controllers\SmsController::class , 'getTok
 Route::get('/image' , function (){
     return view('image');
 });
+Route::get('/handler-position-types' , function (){
+    $handlerPositionTypes = \App\Models\HandlerPositionType::all();
+    return response()->json([
+        'data' => $handlerPositionTypes
+    ]);
+});
+
 
 // API CRUD for Posts , Just for Fun
 Route::apiResource('posts' , PostController::class);

@@ -138,6 +138,8 @@ class OrderController extends Controller
                 $additionalServicePrice = 0;
                 $price = 0;
                 $profileNumber = 0;
+                $handlerPositionType = $detail['handler_position_type_id'];
+
                 if($detail['profile_type_id']){
                     $profileType = ProfileType::find($detail['profile_type_id']);
                     $profilePrice = $profileType->price;
@@ -211,6 +213,9 @@ class OrderController extends Controller
                             $cornerPrice = $corner->price;
                         }
                     }
+                    if($handlerPositionType==1){
+                        $profilePeremetr = $profilePeremetr - $windowHandlerQuantity;
+                    }
                     $price += $profileNumber*$profilePeremetr*$profileType->price;
                 }
                 if($detail['window_color_id']){
@@ -275,6 +280,7 @@ class OrderController extends Controller
                     'profile_length' => $profilePeremetr*$profileNumber ,
                     'handler_type_name' => $detail['handler_type_name'] ,
                     'handler_type_name_uz' => $detail['handler_type_name_uz'] ,
+                    'handler_position_type_id' => $detail['handler_position_type_id']
                 ]);
                 if(array_key_exists('additional_service_id' ,$detail)){
                     $additionalServices = AdditionalService::whereIn('id' , $detail['additional_service_id'])->get();
@@ -475,6 +481,7 @@ class OrderController extends Controller
                     $profilePerimeter = 2*($width + $height);
                 }
             }
+
                 $profilePrice = $profileNumber * $profileType->price*$profilePerimeter;
         }
         $thickness = $profileType->thickness/1000;
