@@ -12,8 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('order_details', function (Blueprint $table) {
-            $table->dropColumn('handler_type_name');
-            $table->dropColumn('handler_type_name_uz');
             $table->unsignedBigInteger('handler_position_type_id');
             $table->foreign('handler_position_type_id')->references('id')->on('handler_position_types');
         });
