@@ -11,6 +11,7 @@ use App\Models\AssemblyService;
 use App\Models\Corner;
 use App\Models\Currency;
 use App\Models\HandlerPosition;
+use App\Models\HandlerPositionType;
 use App\Models\OpeningType;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -304,9 +305,9 @@ class PdfController extends Controller
                     $profileNumber += $detail['quantity_left'];
                     $quantity_left = $detail['quantity_left'];
                 }
-                if(array_key_exists('quantity_left' , $detail)){
-                    $profileNumber += $detail['quantity_left'];
-                    $quantity_left = $detail['quantity_left'];
+                $handlerPositionType = null;
+                if(array_key_exists('handler_position_type_id' , $detail)){
+                   $handlerPositionType = HandlerPositionType::find($detail['handler_position_type_id']);
                 }
 
                 $width = $detail['width']/1000;
@@ -341,16 +342,25 @@ class PdfController extends Controller
                             $price += $height*$windowHandler->price*$profileNumber;
                             $windowHandlerQuantity = $height*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                            if($handlerPositionType->id == 1){
+                              $profilePeremetr = $profilePeremetr - $height;
+                            }
                         }
                         if($handlerPosition->slug == "top"){
                             $price += $width*$windowHandler->price*$profileNumber;
                             $windowHandlerQuantity = $width*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                            if($handlerPositionType->id == 1){
+                                $profilePeremetr = $profilePeremetr - $width;
+                            }
                         }
                         if($handlerPosition->slug == "below"){
                             $price += $width*$windowHandler->price*$profileNumber;
                             $windowHandlerQuantity = $width*$profileNumber;
                             $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                            if($handlerPositionType->id == 1){
+                                $profilePeremetr = $profilePeremetr - $width;
+                            }
                         }
                         if($handlerPosition->slug == "round"){
                             $price += $peremetr*$windowHandler->price;
@@ -479,8 +489,8 @@ class PdfController extends Controller
                 'number_of_loops' => ($detail['number_of_loops']) ? $detail['number_of_loops'] : 1 ,
                 'comment' => ($detail['comment']) ? $detail['comment'] : "" ,
                 'additive_sizes' => (array_key_exists('additive_sizes' , $detail)) ? $detail['additive_sizes'] : "" ,
-                'handler_type_name' => (array_key_exists('handler_type_name' , $detail)) ? $detail['handler_type_name'] : "" ,
-                'handler_type_name_uz' => (array_key_exists('handler_type_name_uz' , $detail)) ? $detail['handler_type_name_uz'] : "" ,
+                'handler_type_name' => ($handlerPositionType) ? $handlerPositionType->handler_type_name : "" ,
+                'handler_type_name_uz' => ($handlerPositionType) ? $handlerPositionType->handler_type_name_uz : "" ,
             ];
         }
 
@@ -657,6 +667,7 @@ class PdfController extends Controller
                 if(array_key_exists('quantity_left' , $detail) && $detail['quantity_left'] > 0){
                     $profileNumber += $detail['quantity_left'];
                 }
+                $handlerPositionType = HandlerPositionType::find($detail['handler_position_type_id']);
 
                 $width = $detail['width']/1000;
                 $height = $detail['height']/1000;
@@ -681,14 +692,23 @@ class PdfController extends Controller
                        if($handlerPosition->slug == "opposite"){
                            $price += $height*$windowHandler->price*$profileNumber;
                            $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                           if($handlerPositionType->id == 1){
+                               $profilePeremetr = $profilePeremetr - $height;
+                           }
                        }
                        if($handlerPosition->slug == "top"){
                            $price += $width*$windowHandler->price*$profileNumber;
                            $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                           if($handlerPositionType->id == 1){
+                               $profilePeremetr = $profilePeremetr - $width;
+                           }
                        }
                        if($handlerPosition->slug == "below"){
                            $price += $width*$windowHandler->price*$profileNumber;
                            $profilePeremetr = $profilePeremetr + 2 * $width + 2 * $height;
+                           if($handlerPositionType->id == 1){
+                               $profilePeremetr = $profilePeremetr - $width;
+                           }
                        }
                        if($handlerPosition->slug == "round"){
                            $price += $peremetr*$windowHandler->price;

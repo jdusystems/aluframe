@@ -48,6 +48,7 @@ class GetOrderDetailRequest extends FormRequest
             'orders.*.quantity_left'  => 'required_without:orders.*.quantity_right|numeric|min:0',
             'orders.*.quantity_right' => 'required_without:orders.*.quantity_left|numeric|min:0',
             'orders.*.number_of_loops' => ['integer' , 'min:1'],
+            'orders.*.handler_position_type_id' => ['required' , 'integer' , 'exists:handler_position_types,id'],
         ];
     }
 }
