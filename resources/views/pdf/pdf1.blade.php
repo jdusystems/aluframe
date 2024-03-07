@@ -38,12 +38,12 @@
            padding-bottom: 30px;
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
            margin-bottom:20px;
-           border: 2px solid red;
-           background-color: pink;
        }
        .header-left{
-           /* width: 100%; */
-           float: right;
+            width: 100%;
+           border: 2px solid red;
+           background-color: pink;
+           /*float: right;*/
        }
        .title{
            float: left;
