@@ -45,7 +45,7 @@
            height: 24px;
            width: 100%;
            border-bottom: 1px dotted rgb(18, 18, 18,.2);
-           font-size: 20px;
+           font-size: 24px;
            margin-bottom: 10px;
            padding-bottom: 5px;
        }
@@ -59,7 +59,7 @@
            /* width: 100%; */
            color: #121212;
            font-family: Inter;
-           font-size: 32px;
+           font-size: 30px;
            font-style: normal;
            font-weight: 500;
            line-height: normal;
@@ -191,7 +191,7 @@
         <span class="text" style="padding-left: 3px">{{$user->name}}, </span>
         <span class="text" style="padding-left: 10px">+{{$user->phone_number}}</span>
         <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
-        <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y  H:i')}}</span>
+        <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y H:i')}}</span>
     </div>
     <?php
     $i = 0;
