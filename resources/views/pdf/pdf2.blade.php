@@ -228,7 +228,7 @@
         <table class="list">
             <tr class="list-item">
                 <th class="list-text">Профиль</th>
-                <th class="list-text">{{($orderDetail->profileType) ? $orderDetail->profileType->name : ""}},{{($orderDetail->profileColor) ? $orderDetail->profileColor->name : ""}}</th>
+                <th class="list-text">{{($orderDetail->profileType) ? $orderDetail->profileType->name : ""}}  {{($orderDetail->profileColor) ? $orderDetail->profileColor->name : ""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Цвет стекла:</th>
@@ -272,7 +272,7 @@
 {{--            </tr>--}}
             <tr class="list-item">
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{ ($orderDetail->handlerPositionType) ? $orderDetail->handlerPositionType->handler_type_name:""}} , {{($orderDetail->windowHandler) ? $orderDetail->windowHandler->profileColor->name:""}} , {{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
+                <th class="list-text">{{ ($orderDetail->handlerPositionType) ? $orderDetail->handlerPositionType->handler_type_name:"" ." "}} {{($orderDetail->windowHandler) ? $orderDetail->windowHandler->profileColor->name:"" ." "}}  {{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>

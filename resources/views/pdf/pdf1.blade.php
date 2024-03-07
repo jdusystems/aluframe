@@ -206,7 +206,7 @@
         <table class="list">
             <tr class="list-item">
                 <th class="list-text">Профиль</th>
-                <th class="list-text">{{($orderDetail->profileType) ? $orderDetail->profileType->name: ""}},{{($orderDetail->profileColor) ? $orderDetail->profileColor->name : ""}}</th>
+                <th class="list-text">{{($orderDetail->profileType) ? $orderDetail->profileType->name: "" ." "}} {{($orderDetail->profileColor) ? $orderDetail->profileColor->name : "" ." "}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Цвет стекла:</th>
@@ -250,7 +250,7 @@
                     $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
                     ?>
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{($windowHandler) ? $orderDetail->handlerPositionType->handler_type_name .','. $orderDetail->windowHandler->profileColor->name.','.$orderDetail->handlerPosition->name:""}}</th>
+                <th class="list-text">{{($windowHandler) ? $orderDetail->handlerPositionType->handler_type_name .' '. $orderDetail->windowHandler->profileColor->name.' '.$orderDetail->handlerPosition->name:""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
@@ -367,7 +367,7 @@
         @if($windowHandler->windowHandler)
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    <th class="list-text1">{{($windowHandler->handlerPositionType) ? $windowHandler->handlerPositionType->handler_type_name:""}},{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->profileColor->name:""}},{{($windowHandler->handlerPosition) ? $windowHandler->handlerPosition->name:""}}</th>
+                    <th class="list-text1">{{($windowHandler->handlerPositionType) ? $windowHandler->handlerPositionType->handler_type_name:"" ." "}}{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->profileColor->name:"" . " "}},{{($windowHandler->handlerPosition) ? $windowHandler->handlerPosition->name:""}}</th>
                     <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity * $windowHandler->windowHandler->price , 2)}}</th>
