@@ -425,6 +425,10 @@ class OrderController extends Controller
         if($request->has('quantity_right')){
             $profileNumber += $request->quantity_right;
         }
+        $handlerPositionType = 0;
+        if($request->has('handler_position_type_id')){
+            $handlerPositionType = $request->handler_position_type_id;
+        }
         if($profileNumber > 1){
             $profileNumber = $profileNumber - 1;
         }
@@ -458,15 +462,24 @@ class OrderController extends Controller
                                         }
                                         if($handlerPosition->slug =="opposite"){
                                             $profilePerimeter = $profilePerimeter + 2*($width + $height);
-                                         $windowHandlerPrice += $height*$windowHandler->price*$profileNumber;
+                                             $windowHandlerPrice += $height*$windowHandler->price*$profileNumber;
+                                             if($handlerPositionType == 1){
+                                                 $profilePerimeter = $profilePerimeter - $height;
+                                             }
                                         }
                                         if($handlerPosition->slug=="top"){
                                             $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice =+ $width*$windowHandler->price*$profileNumber;
+                                            if($handlerPositionType == 1){
+                                                $profilePerimeter = $profilePerimeter - $width;
+                                            }
                                         }
                                         if($handlerPosition->slug == "below"){
                                             $profilePerimeter = $profilePerimeter + 2*($width + $height);
                                             $windowHandlerPrice += $width*$windowHandler->price*$profileNumber;
+                                            if($handlerPositionType == 1){
+                                                $profilePerimeter = $profilePerimeter - $width;
+                                            }
                                         }
                                         if($handlerPosition->slug=="round"){
                                             $profilePerimeter = $profilePerimeter + 2*($width + $height);

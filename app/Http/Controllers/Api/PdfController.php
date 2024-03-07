@@ -304,6 +304,10 @@ class PdfController extends Controller
                     $profileNumber += $detail['quantity_left'];
                     $quantity_left = $detail['quantity_left'];
                 }
+                if(array_key_exists('quantity_left' , $detail)){
+                    $profileNumber += $detail['quantity_left'];
+                    $quantity_left = $detail['quantity_left'];
+                }
 
                 $width = $detail['width']/1000;
                 $height = $detail['height']/1000;
