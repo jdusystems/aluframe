@@ -35,12 +35,17 @@
            height: 24px;
            margin-top: 25px;
            /*padding-top: 34px;*/
-           padding-bottom: 30px;
+           padding-bottom: 10px;
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
-           margin-bottom:20px;
-           border: 2px solid red;
-           background-color: pink;
+           margin-bottom:8px;
        }
+       .client{
+           border: 2px solid red;
+           background-color: lightpink;
+           height: 24px;
+           width: 100%;
+       }
+
        .header-left{
            /* width: 100%; */
            float: right;
@@ -178,6 +183,9 @@
         <h2 class="title">Накладная</h2>
     </header>
     <div class="client" style="margin-right: 200px;padding-top: 8px;" >
+        <span class="text">Zakazchik:</span>
+        <span class="text">{{$user->name}}</span>
+        <span class="text">{{$order->phone_number}}</span>
         <span class="text" style="margin-right: 30px">#{{$order->id}}</span>
         <span class="text">{{$order->created_at}}</span>
     </div>
