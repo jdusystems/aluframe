@@ -219,7 +219,7 @@
         </div>
     </div>
     <header class="header">
-        <h2 class="title">Накладная</h2>
+        <h3 class="wrap-tile">Спецификация</h3>
     </header>
     <?php
     $i = 0;
