@@ -278,8 +278,6 @@ class OrderController extends Controller
                     'facade_quantity' => $profileNumber ,
                     'surface' => $surface ,
                     'profile_length' => $profilePeremetr*$profileNumber ,
-                    'handler_type_name' => $detail['handler_type_name'] ,
-                    'handler_type_name_uz' => $detail['handler_type_name_uz'] ,
                     'handler_position_type_id' => $detail['handler_position_type_id']
                 ]);
                 if(array_key_exists('additional_service_id' ,$detail)){
