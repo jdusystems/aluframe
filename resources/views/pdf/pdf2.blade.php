@@ -237,11 +237,11 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Высота:</th>
-                <th class="list-text">{{$orderDetail->height*1000}}</th>
+                <th class="list-text">{{$orderDetail->height*1000}}мм</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Ширина:</th>
-                <th class="list-text">{{$orderDetail->width*1000}}</th>
+                <th class="list-text">{{$orderDetail->width*1000}}мм</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Кол-во L:</th>

@@ -183,9 +183,6 @@
 
 <body>
 <div class="container">
-    <header class="header">
-        <h2 class="title">Накладная</h2>
-    </header>
     <div class="client" style="margin-right: 200px;" >
         <span class="text" style="font-weight: bold;">Заказчик:</span>
         <span class="text" style="padding-left: 3px">{{$user->name}}, </span>
@@ -193,6 +190,9 @@
         <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
         <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y H:i')}}</span>
     </div>
+    <header class="header">
+        <h3 class="wrap-tile">Накладная</h3>
+    </header>
     <?php
     $i = 0;
     ?>
@@ -228,11 +228,11 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Высота:</th>
-                <th class="list-text">{{$orderDetail->height*1000}}mm</th>
+                <th class="list-text">{{$orderDetail->height*1000}}ммth>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Ширина:</th>
-                <th class="list-text">{{$orderDetail->width*1000}}mm</th>
+                <th class="list-text">{{$orderDetail->width*1000}}мм</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Кол-во L:</th>
@@ -247,7 +247,7 @@
                     $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
                     ?>
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{($windowHandler) ? $windowHandler->name:""}}</th>
+                <th class="list-text">{{($windowHandler) ? $orderDetail->handlerPositionType->name .','. $orderDetail->windowHandler->profileColor->name.','.$orderDetail->handlerPosition->name}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
@@ -268,9 +268,9 @@
     @endforeach
     <div class="wrap">
         <h3 class="wrap-tile">Спецификация</h3>
-        <div class="header-left" style="margin-right: 200px">
-            <span class="text">{{$order->id}}</span>
-            <span class="text">{{$order->created_at}}</span>
+        <div class="header-left">
+            <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
+            <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y H:i')}}</span>
         </div>
     </div>
 
@@ -364,7 +364,7 @@
         @if($windowHandler->windowHandler)
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    <th class="list-text1">{{$windowHandler->windowHandler->name}}</th>
+                    <th class="list-text1">{{$windowHandler->handlerPositionType->name}},{{$windowHandler->windowHandler->profileColor->name}},{{$windowHandler->handlerPosition->name}}</th>
                     <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity * $windowHandler->windowHandler->price , 2)}}</th>

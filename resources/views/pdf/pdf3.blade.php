@@ -345,7 +345,7 @@
                 @foreach($profiles as $profile)
                     <tr class="card-list">
                         <td style=" padding-left: 30px;">{{$profile->profileType->name}}</td>
-                        <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)*1000}}</td>
+                        <td style=" padding-left: 20px;">{{2*($profile->total_height + $profile->total_width)*1000}}мм</td>
                         <td style=" padding-left: 20px;">{{$profile->total_facade_quantity}}</td>
                     </tr>
                 @endforeach
@@ -370,8 +370,8 @@
                     ?>
                 <tr class="card-list">
                     <td style=" padding-left: 30px;">{{$windowColor->windowColor->name}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_width*1000}}</td>
-                    <td style=" padding-left: 20px;">{{$windowColor->total_height*1000}}</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_width*1000}}мм</td>
+                    <td style=" padding-left: 20px;">{{$windowColor->total_height*1000}}мм</td>
                     <td style=" padding-left: 20px;">{{$windowColor->total_facade_quantity}}</td>
                 </tr>
             @endforeach
@@ -404,11 +404,11 @@
                 </tr>
                 <tr class="card-item5">
                     <td>Высота:</td>
-                    <td>{{$orderDetail->height*1000}} mm</td>
+                    <td>{{$orderDetail->height*1000}}мм</td>
                 </tr>
                 <tr class="card-item5">
                     <td>Ширина:</td>
-                    <td>{{$orderDetail->width*1000}} mm</td>
+                    <td>{{$orderDetail->width*1000}}мм</td>
                 </tr>
                 <tr class="card-item5">
                     <td>Профиль:</td>
