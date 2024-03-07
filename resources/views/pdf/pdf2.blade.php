@@ -191,17 +191,35 @@
             opacity: 0.2;
             background: #121212;
         }
+        .client{
+            /*border: 2px solid red;*/
+            /*background-color: lightpink;*/
+            height: 24px;
+            width: 100%;
+            border-bottom: 1px dotted rgb(18, 18, 18,.2);
+            font-size: 24px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
     </style>
 </head>
 
 <body>
 <div class="container">
+    <div class="client" style="margin-right: 200px;" >
+        <div style="float: left">
+            <span class="text" style="font-weight: bold;">Заказчик:</span>
+            <span class="text" style="padding-left: 3px;max-width: 120px;">{{$user->name}}, </span>
+            <span class="text" style="padding-left: 10px">+{{$user->phone_number}}</span>
+        </div>
+        <div style="float: right">
+            <span class="text" style="margin-left: 230px">#{{$order->id}}</span>
+            <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y H:i')}}</span>
+        </div>
+    </div>
     <header class="header">
         <h2 class="title">Накладная</h2>
-        <div class="header-left">
-            <span class="text">{{$order->id}}</span>
-            <span class="text">{{$order->created_at}}</span>
-        </div>
     </header>
     <?php
     $i = 0;
