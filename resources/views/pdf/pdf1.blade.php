@@ -183,10 +183,10 @@
         <h2 class="title">Накладная</h2>
     </header>
     <div class="client" style="margin-right: 200px;padding-top: 8px;" >
-        <span class="text">Zakazchik:</span>
-        <span class="text" >{{$user->name}}</span>
-        <span class="text">{{$user->phone_number}}</span>
-        <span class="text" style="margin-left: 150px">#{{$order->id}}</span>
+        <span class="text" style="padding-left: 10px">Zakazchik:</span>
+        <span class="text" style="padding-left: 10px">{{$user->name}}</span>
+        <span class="text" style="padding-left: 10px">{{$user->phone_number}}</span>
+        <span class="text" style="margin-left: 200px">#{{$order->id}}</span>
         <span class="text">{{$order->created_at}}</span>
     </div>
     <?php
