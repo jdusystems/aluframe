@@ -46,6 +46,8 @@
            width: 100%;
            border-bottom: 1px dotted rgb(18, 18, 18,.2);
            font-size: 20px;
+           margin-bottom: 10px;
+           padding-bottom: 5px;
        }
 
        .header-left{
@@ -189,7 +191,7 @@
         <span class="text" style="padding-left: 10px">{{$user->name}}</span>
         <span class="text" style="padding-left: 10px">{{$user->phone_number}}</span>
         <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
-        <span class="text">{{$order->created_at}}</span>
+        <span class="text" style="margin-left: 10px">{{$order->created_at}}</span>
     </div>
     <?php
     $i = 0;
