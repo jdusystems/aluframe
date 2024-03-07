@@ -372,15 +372,12 @@
             <th class="list-text1">{{round($order->total_price , 2)}}</th>
         </tr>
     </table>
-    <p class="pdf-text" style="margin-top: 50px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в
+    <p class="pdf-text" style="margin-top: 10px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в
         свой аккаунт: {{$user->name}}</p>
     <p class="pdf-text">Логин и пароль для входа в аккаунт: логин:
         <span>{{$user->phone_number}}</span> пароль:
         <span>{{$user->parol}}</span></p>
     <a class="pdf-link" href="https://aluframe.vercel.app/auth/login">Link</a>
-    <div style="margin-bottom: 50px;">
-
-    </div>
 </div>
 </body>
 
