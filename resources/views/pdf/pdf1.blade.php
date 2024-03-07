@@ -37,7 +37,6 @@
            /*padding-top: 34px;*/
            padding-bottom: 10px;
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
-           margin-bottom: -10px;
        }
 
 
