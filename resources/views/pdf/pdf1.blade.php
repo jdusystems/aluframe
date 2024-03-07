@@ -34,8 +34,11 @@
            width: 100%;
            padding-top: 34px;
            padding-bottom: 30px;
-           border-bottom: 1px dotted rgb(18, 18, 18,.2);
+           /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
            margin-bottom:20px;
+           border: 2px solid red;
+           background-color: pink;
+
        }
        .header-left{
            /* width: 100%; */
