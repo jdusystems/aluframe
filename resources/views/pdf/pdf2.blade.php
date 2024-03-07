@@ -33,9 +33,7 @@
         .header{
             display: inline-block;
             width: 100%;
-            padding-top: 34px;
             padding-bottom: 30px;
-            margin-bottom:20px;
             border-bottom: 1px dotted rgb(18, 18, 18,.2);
         }
         .header-left{
@@ -219,7 +217,7 @@
         </div>
     </div>
     <header class="header">
-        <h3 class="wrap-tile">Спецификация</h3>
+        <h3 class="wrap-tile">Накладная</h3>
     </header>
     <?php
     $i = 0;
