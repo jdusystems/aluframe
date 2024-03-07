@@ -761,5 +761,4 @@ class PdfController extends Controller
             'totalPrice' => round($totalPrice * $currency->rate , 2) ,
         ]);
     }
-
 }

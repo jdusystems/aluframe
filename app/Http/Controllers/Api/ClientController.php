@@ -25,12 +25,12 @@ class ClientController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new ClientCollection(User::paginate($itemsPerPage));
+        return new ClientCollection(User::latest()->paginate($itemsPerPage));
     }
 
     public function all()
     {
-        return new ClientCollection(User::all());
+        return new ClientCollection(User::orderBy('created_at')->get());
     }
 
     /**
