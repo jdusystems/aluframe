@@ -242,7 +242,7 @@ class OrderController extends Controller
                         $assemblyServicePrice = $assemblyService->price;
                     }
                 }elseif($height > 1.8){
-                    $assemblyService = AssemblyService::where('facade_height' , 2400)->where('condition_operator', '>')->first();
+                    $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator', '>')->first();
                     if($assemblyService){
                         $price += $assemblyService->price*$profileNumber;
                         $assemblyServicePrice = $assemblyService->price;
