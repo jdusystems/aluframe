@@ -186,7 +186,7 @@
         <span class="text">Zakazchik:</span>
         <span class="text" >{{$user->name}}</span>
         <span class="text">{{$user->phone_number}}</span>
-        <span class="text" style="margin-right: 80px">#{{$order->id}}</span>
+        <span class="text" style="margin-left: 150px">#{{$order->id}}</span>
         <span class="text">{{$order->created_at}}</span>
     </div>
     <?php
