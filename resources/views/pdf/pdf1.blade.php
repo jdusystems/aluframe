@@ -191,7 +191,7 @@
         <span class="text" style="padding-left: 3px">{{$user->name}}, </span>
         <span class="text" style="padding-left: 10px">+{{$user->phone_number}}</span>
         <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
-        <span class="text" style="margin-left: 20px">{{$order->created_at->format('Y.m.d H:i')}}</span>
+        <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y  H:i')}}</span>
     </div>
     <?php
     $i = 0;
