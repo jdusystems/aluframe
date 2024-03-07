@@ -9,7 +9,7 @@ class HandlerPositionType extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name' , 'name_uz'
+        'handler_type_name' , 'handler_type_name_uz'
     ];
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);
