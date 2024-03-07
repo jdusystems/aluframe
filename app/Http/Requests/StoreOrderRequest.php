@@ -28,6 +28,7 @@ class StoreOrderRequest extends FormRequest
 //            'user_id' => ['required' , 'numeric' , 'min:1' , 'exists:users,id'] ,
             'orders' => 'required|array|min:1' ,
             'phone_number' => ['required' ,'string' , 'max:12'] ,
+            'name' => ['required' ,'string' , 'max:50'] ,
             'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,

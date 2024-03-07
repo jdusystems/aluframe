@@ -113,6 +113,9 @@ class OrderController extends Controller
                 $user_id = $user->id;
                 $this->sendSms($user->phone_number , $user->parol);
             }else{
+                $client->update([
+                    'name' => $request->name
+                ]);
                 $user_id = $client->id;
             }
             $startingOrderId = 1000;
