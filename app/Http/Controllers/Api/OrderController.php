@@ -433,7 +433,7 @@ class OrderController extends Controller
             $profileNumber = $profileNumber - 1;
         }
         $perimeter = 2*($width + $height);
-
+        $thickness = 0;
         if($request->has('profile_type_id')){
             $profileType = ProfileType::find($request->profile_type_id);
             if($profileType){
@@ -496,8 +496,9 @@ class OrderController extends Controller
             }
 
                 $profilePrice = $profileNumber * $profileType->price*$profilePerimeter;
+            $thickness = $profileType->thickness/1000;
         }
-        $thickness = $profileType->thickness/1000;
+
         if($request->has('window_color_id')){
             $windowColor = WindowColor::find($request->window_color_id);
             if($windowColor){
