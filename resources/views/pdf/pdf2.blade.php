@@ -294,7 +294,7 @@
         <h3 class="wrap-tile">Спецификация</h3>
         <div class="header-left">
             <span class="text" style="margin-right: 30px;">#{{$order->id}}</span>
-            <span class="text">{{$order->created_at}}</span>
+            <span class="text">{{$order->created_at->format('d.m.Y H:i')}}</span>
         </div>
     </div>
 
