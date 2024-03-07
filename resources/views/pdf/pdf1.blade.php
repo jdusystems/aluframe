@@ -188,8 +188,8 @@
     </header>
     <div class="client" style="margin-right: 200px;" >
         <span class="text" style="padding-left: 10px;font-weight: bold;">Заказчик:</span>
-        <span class="text" style="padding-left: 10px">{{$user->name}}</span>
-        <span class="text" style="padding-left: 10px">{{$user->phone_number}}</span>
+        <span class="text" style="padding-left: 3px">{{$user->name}}, </span>
+        <span class="text" style="padding-left: 10px">+{{$user->phone_number}}</span>
         <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
         <span class="text" style="margin-left: 20px">{{$order->created_at->format('Y-m-d H:i')}}</span>
     </div>
