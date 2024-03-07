@@ -39,16 +39,7 @@
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
            margin-bottom:8px;
        }
-       .client{
-           /*border: 2px solid red;*/
-           /*background-color: lightpink;*/
-           height: 24px;
-           width: 100%;
-           border-bottom: 1px dotted rgb(18, 18, 18,.2);
-           font-size: 24px;
-           margin-bottom: 10px;
-           padding-bottom: 5px;
-       }
+
 
        .header-left{
            /* width: 100%; */
@@ -73,6 +64,16 @@
            font-style: normal;
            font-weight: 500;
            line-height: normal;
+       }
+       .client{
+           /*border: 2px solid red;*/
+           /*background-color: lightpink;*/
+           height: 24px;
+           width: 100%;
+           border-bottom: 1px dotted rgb(18, 18, 18,.2);
+           font-size: 24px;
+           margin-bottom: 10px;
+           padding-bottom: 5px;
        }
 
        .list{
