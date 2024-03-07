@@ -217,7 +217,7 @@
 
                     <th class="list-text">
                         @foreach($orderDetail->additionalServices as $additionalService)
-                        {{($additionalService) ? $additionalService->name: ""}} ,
+                        {{($additionalService) ? $additionalService->name: "" ." "}}
                         @endforeach
                     </th>
             </tr>
