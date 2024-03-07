@@ -34,7 +34,7 @@
            width: 100%;
            height: 24px;
            /*padding-top: 34px;*/
-           padding-bottom: 10px;
+           padding-bottom: 20px;
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
        }
 
@@ -46,7 +46,7 @@
        .title{
            float: left;
            /* width: 100%; */
-           color: #121212;
+           color: black;
            font-family: Inter;
            font-size: 25px;
            font-style: normal;
@@ -55,7 +55,7 @@
            text-transform: uppercase;
        }
        .text{
-           color: #121212;
+           color: black;
            text-align: right;
            font-family: Inter;
            font-size: 14px;
@@ -76,10 +76,10 @@
        }
 
        .list{
-
            width: 100%;
            padding-bottom: 27px;
            border-bottom: 1px dotted rgb(18, 18, 18,.2);
+           margin-bottom: 30px;
 
        }
        .list-item{
@@ -97,7 +97,7 @@
        .list-text{
 
            text-align: left;
-           color: #121212;
+           color: black;
            font-family: Inter;
            font-size: 12px;
            font-style: normal;
@@ -110,7 +110,7 @@
            padding: 8px 10px;
            /* width: 100%; */
            text-align:left;
-           color: #121212;
+           color: black;
            font-family: Inter;
            font-size: 12px;
            font-style: normal;
@@ -120,7 +120,7 @@
        }
        .list-text2{
            padding: 9px;
-           color: rgb(18, 18, 18,.5);
+           color: black;
        }
 
        .list-text1:first-child{
@@ -145,11 +145,11 @@
            display: inline-block;
            width: 100%;
            margin-top: 40px;
-           margin-bottom: 20px;
+           margin-bottom: 40px;
        }
 
        .wrap-tile{
-           color: #121212;
+           color: black;
            font-family: Inter;
            font-size: 20px;
            font-style: normal;
@@ -161,7 +161,7 @@
        .pdf-text{
            width: 100%;
            max-width: 419px;
-           color: #484038;
+           color: black;
            font-family: Inter;
            font-size: 13px;
            font-style: normal;
@@ -170,14 +170,14 @@
            margin-bottom: 8px;
        }
        .pdf-text span{
-           color: #484038;
+           color: black;
            font-family:Inter;
            font-size: 13px;
            font-style: normal;
            font-weight: 700;
            line-height: 18px;
-
        }
+
    </style>
 </head>
 
@@ -187,7 +187,7 @@
         <span class="text" style="font-weight: bold;">Заказчик:</span>
         <span class="text" style="padding-left: 3px">{{$user->name}}, </span>
         <span class="text" style="padding-left: 10px">+{{$user->phone_number}}</span>
-        <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
+        <span class="text" style="margin-left: 230px">#{{$order->id}}</span>
         <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y H:i')}}</span>
     </div>
     <header class="header">
@@ -380,8 +380,10 @@
         свой аккаунт:</p>
     <p class="pdf-text">Логин и пароль для входа в аккаунт: логин:
         <span>{{$user->phone_number}}</span> пароль:
-        <span>{{$user->parol}}</span></p>
-    <a class="pdf-link" href="https://aluframe.vercel.app/auth/login">Link</a>
+        <span>{{$user->parol}}</span>
+        <a class="pdf-link" href="https://aluframe.vercel.app/auth/login">Ссылка</a>
+    </p>
+
 </div>
 </body>
 
