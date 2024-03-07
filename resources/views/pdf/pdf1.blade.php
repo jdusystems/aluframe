@@ -184,9 +184,9 @@
     </header>
     <div class="client" style="margin-right: 200px;padding-top: 8px;" >
         <span class="text">Zakazchik:</span>
-        <span class="text">{{$user->name}}</span>
+        <span class="text" >{{$user->name}}</span>
         <span class="text">{{$user->phone_number}}</span>
-        <span class="text" style="margin-right: 30px">#{{$order->id}}</span>
+        <span class="text" style="margin-right: 80px">#{{$order->id}}</span>
         <span class="text">{{$order->created_at}}</span>
     </div>
     <?php
