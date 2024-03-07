@@ -32,7 +32,7 @@
        .header{
            display: inline-block;
            width: 100%;
-           height: 30px;
+           height: 24px;
            margin-top: 25px;
            /*padding-top: 34px;*/
            padding-bottom: 30px;
@@ -40,7 +40,6 @@
            margin-bottom:20px;
            border: 2px solid red;
            background-color: pink;
-
        }
        .header-left{
            /* width: 100%; */
@@ -177,7 +176,7 @@
 <div class="container">
     <header class="header">
         <h2 class="title">Накладная</h2>
-        <div class="header-left" style="margin-right: 200px">
+        <div class="header-left" style="margin-right: 200px;padding-top: 8px;" >
             <span class="text" style="margin-right: 30px">#{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
