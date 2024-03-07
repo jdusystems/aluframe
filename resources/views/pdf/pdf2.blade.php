@@ -42,7 +42,7 @@
         }
         .title{
             float: left;
-            color: #121212;
+            color: black;
             font-family: Inter;
             font-size: 32px;
             font-style: normal;
@@ -52,7 +52,7 @@
         }
         .text{
 
-            color: #121212;
+            color: black;
             text-align: right;
             font-family: Inter;
             font-size: 14px;
@@ -64,7 +64,7 @@
             width: 100%;
             padding-bottom: 27px;
             border-bottom: 1px dotted rgb(18, 18, 18,.2);
-            margin-top: 20px;
+            margin-top: 30px;
         }
         .list-item{
             width: 100%;
@@ -81,7 +81,7 @@
         .list-text{
 
             text-align: left;
-            color: #121212;
+            color: black;
             font-family: Inter;
             font-size: 12px;
             font-style: normal;
@@ -93,7 +93,7 @@
         .list-text1{
             padding: 8px 10px;
             text-align:left;
-            color: #121212;
+            color: black;
             font-family: Inter;
             font-size: 12px;
             font-style: normal;
@@ -103,7 +103,7 @@
         }
         .list-text2{
             padding: 9px;
-            color: rgb(18, 18, 18,.5);
+            color: black;
         }
 
 
@@ -128,7 +128,7 @@
         }
 
         .wrap-tile{
-            color: #121212;
+            color: black;
             float: left;
             font-family: Inter;
             font-size: 20px;
@@ -147,7 +147,7 @@
         .pdf-text{
             float: left;
             width: 310px;
-            color: #121212;
+            color: black;
             font-family: Inter;
             font-size: 13px;
             font-style: normal;
@@ -160,7 +160,7 @@
             width: 300px;
         }
         .pdf-imzo{
-            color: rgb(18, 18, 18,.3);
+            color: black;
             font-family: Inter;
             font-size: 12px;
             font-style: normal;
@@ -175,7 +175,7 @@
             width: 100%;
         }
         .pdf-line-wrap p {
-            color: #121212;
+            color: black;
             font-family: Inter;
             font-size: 12px;
             font-style: normal;
@@ -194,7 +194,6 @@
             /*background-color: lightpink;*/
             height: 24px;
             width: 100%;
-            border-bottom: 1px dotted rgb(18, 18, 18,.2);
             font-size: 24px;
             margin-bottom: 10px;
             padding-bottom: 5px;
@@ -267,9 +266,13 @@
                 <th class="list-text">Кол-во R:</th>
                 <th class="list-text">{{$orderDetail->quantity_right}}</th>
             </tr>
+{{--            <tr class="list-item">--}}
+{{--                <th class="list-text">Ручка:</th>--}}
+{{--                <th class="list-text">{{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name : ""}}</th>--}}
+{{--            </tr>--}}
             <tr class="list-item">
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name : ""}}</th>
+                <th class="list-text">{{ ($orderDetail->handlerPositionType) ? $orderDetail->handlerPositionType->handler_type_name:""}} , {{($orderDetail->windowHandler) ? $orderDetail->windowHandler->profileColor->name:""}} , {{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>

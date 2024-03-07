@@ -68,7 +68,6 @@
            /*background-color: lightpink;*/
            height: 24px;
            width: 100%;
-           border-bottom: 1px dotted rgb(18, 18, 18,.2);
            font-size: 24px;
            margin-bottom: 10px;
            padding-bottom: 5px;
