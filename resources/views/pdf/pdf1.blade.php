@@ -38,12 +38,12 @@
            padding-bottom: 30px;
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
            margin-bottom:20px;
-       }
-       .header-left{
-            width: 100%;
            border: 2px solid red;
            background-color: pink;
-           /*float: right;*/
+       }
+       .header-left{
+           /* width: 100%; */
+           float: right;
        }
        .title{
            float: left;
@@ -176,11 +176,11 @@
 <div class="container">
     <header class="header">
         <h2 class="title">Накладная</h2>
-        <div class="header-left" style="margin-right: 200px;padding-top: 8px;" >
-            <span class="text" style="margin-right: 30px">#{{$order->id}}</span>
-            <span class="text">{{$order->created_at}}</span>
-        </div>
     </header>
+    <div class="client" style="margin-right: 200px;padding-top: 8px;" >
+        <span class="text" style="margin-right: 30px">#{{$order->id}}</span>
+        <span class="text">{{$order->created_at}}</span>
+    </div>
     <?php
     $i = 0;
     ?>
