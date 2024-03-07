@@ -187,7 +187,7 @@
         <span class="text" style="font-weight: bold;">Заказчик:</span>
         <span class="text" style="padding-left: 3px">{{$user->name}}, </span>
         <span class="text" style="padding-left: 10px">+{{$user->phone_number}}</span>
-        <span class="text" style="margin-left: 230px">#{{$order->id}}</span>
+        <span class="text" style="margin-left: 250px">#{{$order->id}}</span>
         <span class="text" style="margin-left: 20px">{{$order->created_at->format('d.m.Y H:i')}}</span>
     </div>
     <header class="header">
@@ -381,7 +381,7 @@
     <p class="pdf-text">Логин и пароль для входа в аккаунт: логин:
         <span>{{$user->phone_number}}</span> пароль:
         <span>{{$user->parol}}</span>
-        <a class="pdf-link" href="https://aluframe.vercel.app/auth/login">Ссылка</a>
+        <a class="pdf-link" style="font-weight: bold" href="https://aluframe.vercel.app/auth/login">Ссылка</a>
     </p>
 
 </div>
