@@ -272,7 +272,7 @@
 {{--            </tr>--}}
             <tr class="list-item">
                 <th class="list-text">Ручка:</th>
-                <th class="list-text">{{ ($orderDetail->handlerPositionType) ? $orderDetail->handlerPositionType->handler_type_name:""}} , {{($orderDetail->windowHandler) ? $orderDetail->windowHandler->profileColor->name:""}} , {{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}}}</th>
+                <th class="list-text">{{ ($orderDetail->handlerPositionType) ? $orderDetail->handlerPositionType->handler_type_name:""}} , {{($orderDetail->windowHandler) ? $orderDetail->windowHandler->profileColor->name:""}} , {{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
@@ -293,7 +293,7 @@
     <div class="wrap">
         <h3 class="wrap-tile">Спецификация</h3>
         <div class="header-left">
-            <span class="text">{{$order->id}}</span>
+            <span class="text" style="margin-right: 30px;">#{{$order->id}}</span>
             <span class="text">{{$order->created_at}}</span>
         </div>
     </div>
