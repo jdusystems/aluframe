@@ -32,7 +32,8 @@
        .header{
            display: inline-block;
            width: 100%;
-           padding-top: 34px;
+           margin-top: 25px;
+           /*padding-top: 34px;*/
            padding-bottom: 30px;
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
            margin-bottom:20px;
