@@ -620,25 +620,29 @@ class PdfController extends Controller
         });
         $summedCorners = collect($summedCorners)->values()->toArray();
         // Window Handlers
-        $summedWindowHandlers = $data->mapToGroups(function ($item) {
-            return ["{$item['window_handler_id']}"=> [
-                'window_handler_vendor_code' => $item['window_handler_vendor_code'] ,
-                'window_handler_name' => $item['window_handler_name'] ,
+        $summedWindowHandlers = [];
+        if($handlerPosition->slug != 'no_handler'){
+            $summedWindowHandlers = $data->mapToGroups(function ($item) {
+                return ["{$item['window_handler_id']}"=> [
+                    'window_handler_vendor_code' => $item['window_handler_vendor_code'] ,
+                    'window_handler_name' => $item['window_handler_name'] ,
 //                'window_handler_name_uz' => $item['window_handler_name_uz'] ,
-                'window_handler_price' => $item['window_handler_price'] ,
-                'window_handler_quantity' => $item['window_handler_quantity'],
-            ]
-            ];
-        })->map(function ($group){
-            return [
-                'window_handler_vendor_code' => $group[0]['window_handler_vendor_code'] ,
-                'window_handler_name' => $group[0]['window_handler_name'] ,
+                    'window_handler_price' => $item['window_handler_price'] ,
+                    'window_handler_quantity' => $item['window_handler_quantity'],
+                ]
+                ];
+            })->map(function ($group){
+                return [
+                    'window_handler_vendor_code' => $group[0]['window_handler_vendor_code'] ,
+                    'window_handler_name' => $group[0]['window_handler_name'] ,
 //                'window_handler_name_uz' =>$group[0]['window_handler_name_uz'] ,
-                'window_handler_price' => $group[0]['window_handler_price'] ,
-                'total_quantity' => $group->sum('window_handler_quantity') ,
-            ];
-        });
-        $summedWindowHandlers = collect($summedWindowHandlers)->values()->toArray();
+                    'window_handler_price' => $group[0]['window_handler_price'] ,
+                    'total_quantity' => $group->sum('window_handler_quantity') ,
+                ];
+            });
+            $summedWindowHandlers = collect($summedWindowHandlers)->values()->toArray();
+        }
+
         return response()->json([
              'data' => $data ,
              'profiles' => $summedProfiles ,
