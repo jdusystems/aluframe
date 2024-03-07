@@ -59,7 +59,7 @@
            /* width: 100%; */
            color: #121212;
            font-family: Inter;
-           font-size: 30px;
+           font-size: 25px;
            font-style: normal;
            font-weight: 500;
            line-height: normal;
