@@ -186,7 +186,7 @@
         <span class="text" style="padding-left: 10px">Zakazchik:</span>
         <span class="text" style="padding-left: 10px">{{$user->name}}</span>
         <span class="text" style="padding-left: 10px">{{$user->phone_number}}</span>
-        <span class="text" style="margin-left: 200px">#{{$order->id}}</span>
+        <span class="text" style="margin-left: 170px">#{{$order->id}}</span>
         <span class="text">{{$order->created_at}}</span>
     </div>
     <?php
@@ -373,7 +373,7 @@
         </tr>
     </table>
     <p class="pdf-text" style="margin-top: 10px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в
-        свой аккаунт: {{$user->name}}</p>
+        свой аккаунт:</p>
     <p class="pdf-text">Логин и пароль для входа в аккаунт: логин:
         <span>{{$user->phone_number}}</span> пароль:
         <span>{{$user->parol}}</span></p>
