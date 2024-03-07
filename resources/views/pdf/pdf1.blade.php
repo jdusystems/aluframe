@@ -364,7 +364,7 @@
         @if($windowHandler->windowHandler)
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    <th class="list-text1">{{($windowHandler->handlerPositionType)?$windowHandler->handlerPositionType->handler_type_name:""}},{{($windowHandler->windowHandler)?$windowHandler->windowHandler->profileColor->name:""}},{{($windowHandler->handlerPosition)?$windowHandler->handlerPosition->name:""}}</th>
+                    <th class="list-text1">{{($windowHandler->handlerPositionType) ? $windowHandler->handlerPositionType->handler_type_name:""}},{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->profileColor->name:""}},{{($windowHandler->handlerPosition) ? $windowHandler->handlerPosition->name:""}}</th>
                     <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity * $windowHandler->windowHandler->price , 2)}}</th>
