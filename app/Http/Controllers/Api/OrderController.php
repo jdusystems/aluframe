@@ -52,12 +52,12 @@ class OrderController extends Controller
             }else{
                 $orders = Order::when($status, function ($query) use ($status) {
                     $query->where('status', $status);
+                })->when($name , function ($query) use ($name){
+                    $query->where('id' , $name);
                 })->when($name, function ($query) use ($name){
                     $query->whereHas('user', function ($subquery) use ($name) {
                         $subquery->where('name', 'like', '%' . $name . '%');
                     });
-                })->when($name , function ($query) use ($name){
-                  $query->where('id' , $name);
                 })->when($phoneNumber, function ($query) use ($phoneNumber){
                     $query->whereHas('user', function ($subquery) use ($phoneNumber) {
                         $subquery->where('phone_number', 'like', '%' . $phoneNumber . '%');
