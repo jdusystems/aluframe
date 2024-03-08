@@ -34,7 +34,7 @@ class ClientController extends Controller
                 $query->where('phone_number','LIKE', '%'. $phoneNumber .'%');
             })->when($name, function ($query) use ($name) {
                     $query->where('name', 'LIKE','%'. $name.'%');
-                })->paginate($itemsPerPage);
+                })->latest()->paginate($itemsPerPage);
             return new ClientCollection($clients);
         }
 

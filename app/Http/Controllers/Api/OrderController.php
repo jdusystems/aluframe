@@ -42,10 +42,46 @@ class OrderController extends Controller
             $itemsPerPage = 10;
         }
         $user = Auth::user();
+        $name = $request->name;
+        $phoneNumber = $request->number;
+        $status = $request->status;
+
         if($user->is_admin == 1 || $user->superadmin == 1){
-            $orders = Order::latest()->paginate($itemsPerPage);
+            if(empty($name) && empty($phoneNumber) && empty($status)){
+                $orders = Order::latest()->paginate($itemsPerPage);
+            }else{
+                $orders = Order::when($status, function ($query) use ($status) {
+                    $query->where('status', $status);
+                })->when($name, function ($query) use ($name){
+                    $query->whereHas('client', function ($subquery) use ($name) {
+                        $subquery->where('name', 'like', '%' . $name . '%');
+                    });
+                })->when($name , function ($query) use ($name){
+                  $query->where('id' , $name);
+                })->when($phoneNumber, function ($query) use ($phoneNumber){
+                    $query->whereHas('client', function ($subquery) use ($phoneNumber) {
+                        $subquery->where('phone_number', 'like', '%' . $phoneNumber . '%');
+                    });
+                })->latest()->paginate($itemsPerPage);
+            }
         }else{
-            $orders = Order::where('user_id' , $user->id)->latest()->paginate($itemsPerPage);
+            if(empty($name) && empty($phoneNumber) && empty($status)){
+                $orders = Order::where('user_id' , $user->id)->latest()->paginate($itemsPerPage);
+            }else{
+                $orders = Order::when($status, function ($query) use ($status){
+                    $query->where('status', $status);
+                })->when($name, function ($query) use ($name){
+                    $query->whereHas('client', function ($subquery) use ($name) {
+                        $subquery->where('name', 'like', '%' . $name . '%');
+                    });
+                })->when($name , function ($query) use ($name){
+                    $query->where('id' , $name);
+                })->when($phoneNumber, function ($query) use ($phoneNumber){
+                    $query->whereHas('client', function ($subquery) use ($phoneNumber) {
+                        $subquery->where('phone_number', 'like', '%' . $phoneNumber . '%');
+                    });
+                })->latest()->paginate($itemsPerPage);
+            }
         }
         return new OrderCollection($orders);
     }
