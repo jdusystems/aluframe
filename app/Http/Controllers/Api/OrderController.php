@@ -221,11 +221,13 @@ class OrderController extends Controller
                     }
                     $price += $profileNumber*$profilePeremetr*$profileType->price;
                 }
+                $windowColorId = null;
                 if($detail['window_color_id']){
                     $windowColor = WindowColor::find($detail['window_color_id']);
                     if($windowColor){
                         $price += $surface * $windowColor->price;
                         $windowPrice = $windowColor->price;
+                        $windowColorId = $windowColor->id;
                     }
                 }
                 if(array_key_exists('additional_service_id' ,$detail)){
@@ -254,7 +256,7 @@ class OrderController extends Controller
                 $orderDetail = OrderDetail::create([
                     'order_id' => $order->id ,
                     'profile_type_id' => $detail['profile_type_id'] ,
-                    'window_color_id' => $detail['window_color_id'] ,
+                    'window_color_id' => $windowColorId ,
                     'profile_color_id' => $detail['profile_color_id'] ,
                     'opening_type_id' => $detail['opening_type_id'] ,
                     'handler_position_id' => $detail['handler_position_id'] ,

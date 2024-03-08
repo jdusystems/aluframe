@@ -32,16 +32,14 @@ class StoreOrderRequest extends FormRequest
             'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
-            'orders.*.window_color_id' => ['required' ,'integer', Rule::exists('window_colors' , 'id')->where(function($query){
-                $query->whereNull('deleted_at');
-            })] ,
+            'orders.*.window_color_id' => ['required' ,'integer'] ,
             'orders.*.profile_color_id' => ['required' ,'integer', Rule::exists('profile_colors' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
             'orders.*.opening_type_id' => ['required' ,'integer', 'exists:opening_types,id'] ,
             'orders.*.handler_position_id' => ['required' ,'integer', 'exists:handler_positions,id'] ,
             'orders.*.additional_service_id' => ['required' , 'array'] ,
-            'orders.*.additional_service_id.*' => [ Rule::exists('additional_services' , 'id')->where(function($query){
+            'orders.*.additional_service_id.*' => [Rule::exists('additional_services' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
             'orders.*.assembly_service_id' => ['integer', 'exists:assembly_services,id'] ,
