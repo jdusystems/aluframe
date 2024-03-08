@@ -444,12 +444,12 @@ class PdfController extends Controller
                 'profile_type_name_uz' => $profileType->uz_name ,
                 'profile_type_price' => round($profileType->price*$currency->rate  , 2),
                 'profile_quantity' => round($profilePeremetr*$profileNumber , 2) ,
-                'window_color_id' => $windowColor1->id ,
-                'window_vendor_code' => $windowColor1->vendor_code ,
-                'window_color_name' => $windowColor1->name ,
-                'window_color_name_uz' => $windowColor1->uz_name ,
-                'window_color_price' => $windowColor1->price*$currency->rate ,
-                'window_color_surface' => round((($width - $thickness)*($height - $thickness))*($quantity_left + $quantity_right) , 2 ),
+                'window_color_id' => ($windowColor1) ? $windowColor1->id :0,
+                'window_vendor_code' => ($windowColor1) ? $windowColor1->vendor_code : "" ,
+                'window_color_name' => ($windowColor1) ? $windowColor1->name:"" ,
+                'window_color_name_uz' => ($windowColor1) ? $windowColor1->uz_name : "" ,
+                'window_color_price' => ($windowColor1) ? $windowColor1->price*$currency->rate :0.00 ,
+                'window_color_surface' => ($windowColor1)?round((($width - $thickness)*($height - $thickness))*($quantity_left + $quantity_right) , 2 ):0,
                 'profile_color_id' =>  $profileColor1->id,
                 'profile_color_name' =>  $profileColor1->name,
                 'profile_color_name_uz' =>  $profileColor1->uz_name,
@@ -519,26 +519,30 @@ class PdfController extends Controller
             ];
         });
         $summedProfiles = collect($summedProfiles)->values()->toArray();
+        if($windowColor1){
+            $summedWindows = $data->mapToGroups(function ($item) {
+                return ["{$item['window_color_id']}"=> [
+                    'window_vendor_code' => $item['window_vendor_code'] ,
+                    'window_color_name' => $item['window_color_name'] ,
+                    'window_color_name_uz' => $item['window_color_name_uz'] ,
+                    'window_color_price' => $item['window_color_price'] ,
+                    'window_color_surface' => $item['window_color_surface'],
+                ]
+                ];
+            })->map(function ($group){
+                return [
+                    'window_vendor_code' => $group[0]['window_vendor_code'] ,
+                    'window_color_name' => $group[0]['window_color_name'] ,
+                    'window_color_name_uz' =>$group[0]['window_color_name_uz'] ,
+                    'window_color_price' => $group[0]['window_color_price'] ,
+                    'total_quantity' => $group->sum('window_color_surface'),
+                ];
+            });
+            $summedWindows = collect($summedWindows)->values()->toArray();
+        }else{
+            $summedWindows = [];
+        }
 
-        $summedWindows = $data->mapToGroups(function ($item) {
-            return ["{$item['window_color_id']}"=> [
-                'window_vendor_code' => $item['window_vendor_code'] ,
-                'window_color_name' => $item['window_color_name'] ,
-                'window_color_name_uz' => $item['window_color_name_uz'] ,
-                'window_color_price' => $item['window_color_price'] ,
-                'window_color_surface' => $item['window_color_surface'],
-            ]
-            ];
-        })->map(function ($group){
-            return [
-                'window_vendor_code' => $group[0]['window_vendor_code'] ,
-                'window_color_name' => $group[0]['window_color_name'] ,
-                'window_color_name_uz' =>$group[0]['window_color_name_uz'] ,
-                'window_color_price' => $group[0]['window_color_price'] ,
-                'total_quantity' => $group->sum('window_color_surface'),
-            ];
-        });
-        $summedWindows = collect($summedWindows)->values()->toArray();
         // Additional Services
         $summedAdditionalServices = $servicesData->mapToGroups(function ($item) {
             return ["{$item['additional_service_id']}"=> [

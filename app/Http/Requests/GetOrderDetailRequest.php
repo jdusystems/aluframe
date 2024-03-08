@@ -28,9 +28,7 @@ class GetOrderDetailRequest extends FormRequest
             'orders.*.profile_type_id' => ['required' ,'integer', Rule::exists('profile_types' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
-            'orders.*.window_color_id' => ['required' ,'integer', Rule::exists('window_colors' , 'id')->where(function($query){
-                $query->whereNull('deleted_at');
-            })] ,
+            'orders.*.window_color_id' => ['required' ,'integer'] ,
             'orders.*.profile_color_id' => ['required' ,'integer', Rule::exists('profile_colors' , 'id')->where(function($query){
                 $query->whereNull('deleted_at');
             })] ,
