@@ -250,13 +250,11 @@
                     $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
                     ?>
                 <th class="list-text">Ручка:</th>
-                @if($windowHandler->slug=="no_handler")
-                    <th class="list-text">{{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
+                @if($orderDetail->handlerPosition->slug=="no_handler")
+                    <th class="list-text">{{ ($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
                 @else
-                    <th class="list-text">{{($windowHandler) ? $orderDetail->handlerPositionType->handler_type_name .' '. $orderDetail->windowHandler->profileColor->name.' '.$orderDetail->handlerPosition->name:""}}</th>
+                    <th class="list-text">{{($orderDetail->handlerPositionType) ? $orderDetail->handlerPositionType->handler_type_name:"" ." "}} {{($orderDetail->windowHandler) ? $orderDetail->windowHandler->profileColor->name:"" ." "}}  {{($orderDetail->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
                 @endif
-
-
             </tr>
             <tr class="list-item">
                 <th class="list-text">Присака станд.?:</th>
