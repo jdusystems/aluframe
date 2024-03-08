@@ -241,11 +241,11 @@ class PdfController extends Controller
 //            $url = url(Storage::url($filename));
 //            return response()->json(['pdf' => $url]);
 //        }
-        $facades = [];
+        $facadesData = [];
         foreach ($orderDetails as $orderDetail){
             $facades = $orderDetail->quantity_left + $orderDetail->quantity_right;
             for($i = 1;$i <= $facades;$i++){
-                $facades[] = [
+                $facadesData[] = [
                     'order_id' => $order->id,
                     'facade' => $i ,
                     'total_facade' => $facades ,
@@ -263,7 +263,7 @@ class PdfController extends Controller
             'order' => $order ,
             'profiles' => $profiles ,
             'windows' => $windowColors ,
-            'facades' => $facades
+            'facades' => $facadesData
         ]);
 
 //        $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
