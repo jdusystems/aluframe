@@ -220,6 +220,7 @@ class PdfController extends Controller
         }
 
         $orderDetails = $order->orderDetails;
+
         $profiles = OrderDetail::select('profile_type_id' ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
@@ -233,23 +234,29 @@ class PdfController extends Controller
             DB::raw('SUM(surface) as total_surface'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
 
-        $filename = 'invoice3_' . $order->order_id . '.pdf';
+//        $filename = 'invoice3_' . $order->order_id . '.pdf';
 
 //        if (Storage::disk('pdf')->exists($filename)) {
 //            // If the file exists, return its URL
 //            $url = url(Storage::url($filename));
 //            return response()->json(['pdf' => $url]);
 //        }
+        return response()->json([
+            'order' => $order ,
+            'order_details' => $orderDetails ,
+            'profiles' => $profiles ,
+            'windows' => $windowColors
+        ]);
 
-        $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
-        $pdfContents = $pdf->output();
+//        $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
+//        $pdfContents = $pdf->output();
 
-        Storage::disk('pdf')->put($filename , $pdfContents);
-        $url = url(Storage::url($filename));
-        return response()->json(
-            [
-                'pdf' => $url ,
-            ]);
+//        Storage::disk('pdf')->put($filename , $pdfContents);
+//        $url = url(Storage::url($filename));
+//        return response()->json(
+//            [
+//                'pdf' => $url ,
+//            ]);
     }
     public function exportPdf4(string $id){
 
