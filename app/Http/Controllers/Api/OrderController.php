@@ -64,7 +64,9 @@ class OrderController extends Controller
                     });
                 })->latest()->paginate($itemsPerPage);
             }
-        }else{
+            return new OrderCollection($orders);
+
+        } else{
             if(empty($name) && empty($phoneNumber) && empty($status)){
                 $orders = Order::where('user_id' , $user->id)->latest()->paginate($itemsPerPage);
             }else{
@@ -82,8 +84,8 @@ class OrderController extends Controller
                     });
                 })->latest()->paginate($itemsPerPage);
             }
+            return new OrderCollection($orders);
         }
-        return new OrderCollection($orders);
     }
 
     public function sendSms($phone , $parol){
