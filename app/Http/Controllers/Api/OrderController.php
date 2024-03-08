@@ -50,10 +50,8 @@ class OrderController extends Controller
             if(empty($name) && empty($phoneNumber) && empty($status)){
                 $orders = Order::latest()->paginate($itemsPerPage);
             }else{
-                $orders = Order::when($status, function ($query) use ($status) {
+                $orders = Order::when($status, function ($query) use ($status){
                     $query->where('status', $status);
-                })->when($name , function ($query) use ($name){
-                    $query->where('id' , $name);
                 })->when($name, function ($query) use ($name){
                     $query->whereHas('user', function ($subquery) use ($name) {
                         $subquery->where('name', 'like', '%' . $name . '%');
