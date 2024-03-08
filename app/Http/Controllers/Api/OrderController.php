@@ -53,10 +53,8 @@ class OrderController extends Controller
                 $orders = Order::when($status, function ($query) use ($status){
                     $query->where('status_id', $status);
                 })->when($name, function ($query) use ($name){
-                    if(substr($name , 0 , 1)=== '#'){
-                        $number = ltrim($name , '#');
-                        $numericValue = (int)$number;
-                        $query->where('id' , $numericValue);
+                    if(is_numeric($name)){
+                        $query->where('id' ,'LIKE','%'. $name .'%');
                     }else{
                         $query->whereHas('user', function ($subquery) use ($name) {
                             $subquery->where('name', 'like', '%' . $name . '%');
