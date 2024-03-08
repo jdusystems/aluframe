@@ -210,7 +210,7 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Цвет стекла:</th>
-                <th class="list-text">{{($orderDetail->windowColor)? $orderDetail->windowColor->name : ""}}</th>
+                <th class="list-text">{{($orderDetail->windowColor)? $orderDetail->windowColor->name : "Без стекла"}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Дополнительные услуги для стекла:</th>
@@ -338,18 +338,18 @@
 {{--                <?php--}}
 {{--                    $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();--}}
 {{--                ?>--}}
-            <tr class="list-item">
-                <th class="list-text1">{{$additionalService['vendor_code']}}</th>
-                <th class="list-text1">{{$additionalService['name']}}</th>
-                <th class="list-text1">{{$additionalService['price']}}</th>
-                <th class="list-text1">{{round($additionalService['total_quantity'] , 2)}}</th>
-                <th class="list-text1">{{round($additionalService['total_quantity'] * $additionalService['price'] , 2)}}</th>
-            </tr>
+        @if($additionalService['price'] > 0 && $additionalService['total_quantity'] > 0)
+                <tr class="list-item">
+                    <th class="list-text1">{{$additionalService['vendor_code']}}</th>
+                    <th class="list-text1">{{$additionalService['name']}}</th>
+                    <th class="list-text1">{{$additionalService['price']}}</th>
+                    <th class="list-text1">{{round($additionalService['total_quantity'] , 2)}}</th>
+                    <th class="list-text1">{{round($additionalService['total_quantity'] * $additionalService['price'] , 2)}}</th>
+                </tr>
+        @endif
+
         @endforeach
         @foreach($assemblyServices as $assemblyService)
-                <?php
-                    $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
-                ?>
 
         @if($assemblyService->assemblyService)
                 <tr class="list-item">
@@ -364,7 +364,7 @@
 
         @foreach($windowHandlers as $windowHandler)
 
-        @if($windowHandler->windowHandler)
+        @if($windowHandler->windowHandler && $windowHandler->windowHandler->price > 0 && $windowHandler->total_window_handler_quantity > 0)
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
                     <th class="list-text1">{{($windowHandler->handlerPositionType) ? $windowHandler->handlerPositionType->handler_type_name:"" ." "}}{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->profileColor->name:"" . " "}} {{($windowHandler->handlerPosition) ? $windowHandler->handlerPosition->name:""}}</th>

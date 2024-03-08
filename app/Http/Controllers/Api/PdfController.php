@@ -156,6 +156,7 @@ class PdfController extends Controller
                     'additional_service_id' => ($additionalService) ? $additionalService->id  : 0,
                     'vendor_code' => ($additionalService) ? $additionalService->vendor_code  : "",
                     'name' => ($additionalService) ? $additionalService->name  : "",
+                    'price' => ($additionalService) ? $additionalService->price  : 0,
                     'quantity' => ($additionalService) ? round($orderDetail->surface , 2)  : 0.00,
                 ];
             }
@@ -166,16 +167,19 @@ class PdfController extends Controller
                 'vendor_code' => $item['vendor_code'] ,
                 'name' => $item['name'] ,
                 'quantity' => $item['quantity'],
+                'price' => $item['price'] ,
             ]
             ];
         })->map(function ($group){
             return [
                 'vendor_code' => $group[0]['vendor_code'] ,
                 'name' => $group[0]['name'] ,
+                'price' => $group[0]['price'] ,
                 'total_quantity' => $group->sum('quantity'),
             ];
         });
         $summedAdditionalServices = collect($summedAdditionalServices)->values()->toArray();
+
         $assemblyServices = OrderDetail::select('assembly_service_id' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
         )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();

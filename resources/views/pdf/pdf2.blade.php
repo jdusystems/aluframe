@@ -232,7 +232,7 @@
             </tr>
             <tr class="list-item">
                 <th class="list-text">Цвет стекла:</th>
-                <th class="list-text">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name : ""}}</th>
+                <th class="list-text">{{($orderDetail->windowColor) ? $orderDetail->windowColor->name : "Без стекла"}}</th>
             </tr>
             <tr class="list-item">
                 <th class="list-text">Дополнительные услуги для стекла:</th>
@@ -348,28 +348,28 @@
             {{--                <?php--}}
             {{--                    $services = \App\Models\OrderDetail::where('additional_service_id' , $additionalService->additional_service_id)->where('order_id' , $order->id)->get();--}}
             {{--                ?>--}}
-            <tr class="list-item">
-                <th class="list-text1">{{$additionalService['vendor_code']}}</th>
-                <th class="list-text1">{{$additionalService['name']}}</th>
-                <th class="list-text1">{{$additionalService['total_quantity']}}</th>
-            </tr>
+            @if($additionalService['price'] > 0 && $additionalService['total_quantity'] > 0)
+                <tr class="list-item">
+                    <th class="list-text1">{{$additionalService['vendor_code']}}</th>
+                    <th class="list-text1">{{$additionalService['name']}}</th>
+                    <th class="list-text1">{{$additionalService['total_quantity']}}</th>
+                </tr>
+           @endif
+
         @endforeach
 
         @foreach($assemblyServices as $assemblyService)
-                <?php
-                    $services = \App\Models\OrderDetail::where('assembly_service_id' , $assemblyService->assembly_service_id)->where('order_id' , $order->id)->get();
-                ?>
-        @if($assemblyService->assemblyService)
+            @if($assemblyService->assemblyService)
                 <tr class="list-item">
                     <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
-                    <th class="list-text1">{{$services->count()}}</th>
+                    <th class="list-text1">{{round($assemblyService->total_facade_quantity , 2)}}</th>
                 </tr>
-        @endif
+            @endif
         @endforeach
 
         @foreach($windowHandlers as $windowHandler)
-            @if($windowHandler->windowHandler)
+            @if($windowHandler->windowHandler && $windowHandler->windowHandler->price > 0 && $windowHandler->total_window_handler_quantity > 0)
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
                     <th class="list-text1">{{$windowHandler->windowHandler->name}}</th>
