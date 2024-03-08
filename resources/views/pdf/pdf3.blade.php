@@ -32,10 +32,9 @@
           width: 100%;
           max-width: 876px;
           margin: 0 auto;
-          display: block;
+          display: inline-block;
           text-align: left;
       }
-
       .card{
           width: 50%;
           padding: 55px 40px;
@@ -50,7 +49,7 @@
           width: 100%;
           max-width: 876px;
           margin: 0 auto;
-          display: block;
+          display: inline-block;
           text-align: left;
       }
       .card1{
@@ -91,7 +90,7 @@
           margin-bottom: 12px;
       }
       .title{
-          display: block;
+          display: inline-block;
           width: 50%;
           color: #121212;
           font-family: Inter;

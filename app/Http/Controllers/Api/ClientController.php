@@ -20,12 +20,24 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
+        $name = $request->name;
+        $phoneNumber = $request->number;
         if($request->exists('per_page')){
             $itemsPerPage = $request->per_page;
         }else{
             $itemsPerPage = 10;
         }
-        return new ClientCollection(User::latest()->paginate($itemsPerPage));
+        if(empty($name) && empty($phoneNumber)){
+            return new ClientCollection(User::latest()->paginate($itemsPerPage));
+        }else{
+            $clients = User::when($phoneNumber, function ($query) use ($phoneNumber) {
+                $query->where('phone_number','LIKE', '%'. $phoneNumber .'%');
+            })->when($name, function ($query) use ($name) {
+                    $query->where('name', 'LIKE','%'. $name.'%');
+                })->paginate($itemsPerPage);
+            return new ClientCollection($clients);
+        }
+
     }
 
     public function all()
