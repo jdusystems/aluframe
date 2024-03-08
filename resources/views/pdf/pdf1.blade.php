@@ -237,14 +237,33 @@
                 <th class="list-text">Ширина:</th>
                 <th class="list-text">{{$orderDetail->width*1000}}мм</th>
             </tr>
-            <tr class="list-item">
-                <th class="list-text">Кол-во L:</th>
-                <th class="list-text">{{$orderDetail->quantity_left}}</th>
-            </tr>
-            <tr class="list-item">
-                <th class="list-text">Кол-во R:</th>
-                <th class="list-text">{{$orderDetail->quantity_right}}</th>
-            </tr>
+            @if($orderDetail->openingType)
+                @if($orderDetail->openingType->position=="single")
+                    <tr class="list-item">
+                        <th class="list-text">Кол-во фасадов:</th>
+                        <th class="list-text">{{$orderDetail->quantity_left}}</th>
+                    </tr>
+                @elseif($orderDetail->openingType->position=="left/right")
+                    <tr class="list-item">
+                        <th class="list-text">Кол-во L:</th>
+                        <th class="list-text">{{$orderDetail->quantity_left}}</th>
+                    </tr>
+                    <tr class="list-item">
+                        <th class="list-text">Кол-во R:</th>
+                        <th class="list-text">{{$orderDetail->quantity_right}}</th>
+                    </tr>
+                @elseif($orderDetail->openingType->position=="top/bottom")
+                    <tr class="list-item">
+                        <th class="list-text">Кол-во верхних фасадов:</th>
+                        <th class="list-text">{{$orderDetail->quantity_left}}</th>
+                    </tr>
+                    <tr class="list-item">
+                        <th class="list-text">Кол-во нижних фасадов:</th>
+                        <th class="list-text">{{$orderDetail->quantity_right}}</th>
+                    </tr>
+                @endif
+            @endif
+
             <tr class="list-item">
                     <?php
                     $windowHandler = \App\Models\WindowHandler::where('profile_type_id' , $orderDetail->profile_type_id)->where('profile_color_id' , $orderDetail->profile_color_id)->whereNull('deleted_at')->first();
