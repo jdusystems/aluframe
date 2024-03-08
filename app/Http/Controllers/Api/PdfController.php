@@ -97,6 +97,7 @@ class PdfController extends Controller
         )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
 
         $windowHandlers = OrderDetail::select('window_handler_id' ,
+            'handler_position_type_id' , 'handler_position_id' ,
             DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity') ,
         )->groupBy('window_handler_id')->where('order_id' , $order->id)->get();
 

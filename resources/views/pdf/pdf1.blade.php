@@ -388,9 +388,13 @@
         @foreach($windowHandlers as $windowHandler)
 
         @if($windowHandler->windowHandler && $windowHandler->windowHandler->price > 0 && $windowHandler->total_window_handler_quantity > 0)
+                <?php
+                    $handlerPositionType = \App\Models\HandlerPositionType::find($windowHandler->handler_position_type_id);
+
+                    ?>
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    <th class="list-text1">{{($windowHandler->handlerPositionType) ? $windowHandler->handlerPositionType->handler_type_name:"" ." "}}{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->profileColor->name:"" . " "}} {{($windowHandler->handlerPosition) ? $windowHandler->handlerPosition->name:""}}</th>
+                    <th class="list-text1">{{($handlerPositionType) ? $handlerPositionType->handler_type_name:"" ." "}}{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->profileColor->name:"" . " "}} {{($windowHandler->handlerPosition) ? $windowHandler->handlerPosition->name:""}}</th>
                     <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity * $windowHandler->windowHandler->price , 2)}}</th>
