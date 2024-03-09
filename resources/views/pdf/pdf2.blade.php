@@ -391,10 +391,19 @@
         @endforeach
 
         @foreach($windowHandlers as $windowHandler)
+
+
             @if($windowHandler->windowHandler && $windowHandler->windowHandler->price > 0 && $windowHandler->total_window_handler_quantity > 0)
-                <tr class="list-item">
+                        <?php
+                        $orderDetail1 = \App\Models\OrderDetail::find($windowHandler->order_detail_id);
+                        ?>
+                    <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    <th class="list-text1">{{$windowHandler->windowHandler->name}}</th>
+                        @if($orderDetail1->handlerPosition->slug=="no_handler")
+                            <th class="list-text1">{{ ($orderDetail1->handlerPosition) ? $orderDetail1->handlerPosition->name:""}}</th>
+                        @else
+                            <th class="list-text1">{{($orderDetail1->handlerPositionType) ? $orderDetail1->handlerPositionType->handler_type_name:"" ." "}} {{($orderDetail1->windowHandler) ? $orderDetail1->windowHandler->profileColor->name:"" ." "}}  {{($orderDetail1->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
+                        @endif
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
                 </tr>
             @endif
