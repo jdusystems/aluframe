@@ -195,7 +195,7 @@ class PdfController extends Controller
 
             $windowHandlersData [] = [
                 'vendor_code' => $handler->vendor_code ,
-                'name' =>($orderDetail1->handlerPosition->slug=="no_handler")? $orderDetail1->handlerPosition->name: $orderDetail1->handlerPositionType->handler_type_name . $orderDetail->windowHandler->profileColor->name .$orderDetail->handlerPosition->name ,
+                'name' =>($orderDetail1->handlerPosition->slug=="no_handler")? $orderDetail1->handlerPosition->name: $orderDetail1->handlerPositionType->handler_type_name . $orderDetail1->windowHandler->profileColor->name .$orderDetail1->handlerPosition->name ,
                 'total_quantity' => $windowHandler->total_window_handler_quantity
             ];
         }
