@@ -188,6 +188,10 @@ class PdfController extends Controller
             DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity') ,
         )->groupBy('window_handler_id')->where('order_id' , $order->id)->get();
 
+        return response()->json([
+           'data' =>  $windowHandlers,
+        ]);
+
         $user = User::find($order->user_id);
 
         $filename = 'invoice2_' . $order->order_id . '.pdf';
