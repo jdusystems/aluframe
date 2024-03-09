@@ -78,8 +78,7 @@
            width: 100%;
            padding-bottom: 27px;
            border-bottom: 1px dotted rgb(18, 18, 18,.2);
-           margin-bottom: 30px;
-
+           margin-top: 30px;
        }
        .list-item{
            width: 100%;
