@@ -240,8 +240,33 @@ class PdfController extends Controller
 //            // If the file exists, return its URL
 //            $url = url(Storage::url($filename));
 //            return response()->json(['pdf' => $url]);
+//
 //        }
+         $orderData[] = [
+             'order_id' => $order->id ,
+             'ordered_date' => $order->created_at->setTimezone('Asia/Tashkent')->format('Y-m-d H:i')
+         ];
+
+
         $orderDetailsData = [];
+        foreach ($orderDetails as $orderDetail){
+            $orderDetailsData[] = [
+                'profile_type_name' => ($orderDetail->profileType) ? $orderDetail->profileType->name: "",
+                'profile_color_name' => ($orderDetail->profileColor) ? $orderDetail->profileColor->name : "" ,
+                'window_color_name' => ($orderDetail->windowColor) ? $orderDetail->windowColor->name :"",
+                'opening_type' => ($orderDetail->openingType) ? $orderDetail->openingType->name : "" ,
+                'additionalServices' => ($orderDetail->additionalServices) ? $orderDetail->additionalServices:[],
+                'position' => ($orderDetail->openingType) ? $orderDetail->openingType->position:"" ,
+                'quantity_left' => $orderDetail->quantity_left ,
+                'quantity_right' => $orderDetail->quantity_right ,
+                'number_of_loops' => $orderDetail->number_of_loops ,
+                'window_handler' => ($orderDetail->handlerPosition->slug=="no_handler") ?$orderDetail->handlerPosition->name : $orderDetail->handlerPositionType->handler_type_name ." ".$orderDetail->windowHandler->profileColor->name ." ".$orderDetail->handlerPosition->name ,
+                'height' => $orderDetail->height*1000 ,
+                'width' => $orderDetail->width*1000 ,
+                'additive_sizes' => ($orderDetail->additive_sizes) ? $orderDetail->additive_sizes : "" ,
+                'comment' =>  ($orderDetail->comment) ? $orderDetail->comment : "" ,
+            ];
+        }
 
         $facadesData = [];
         foreach ($orderDetails as $orderDetail){
@@ -262,7 +287,8 @@ class PdfController extends Controller
         }
 
         return response()->json([
-            'order' => $order ,
+            'order' => $orderData ,
+            'order_details' => $orderDetailsData ,
             'profiles' => $profiles ,
             'windows' => $windowColors ,
             'facades' => $facadesData
