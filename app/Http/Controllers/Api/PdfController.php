@@ -258,6 +258,7 @@ class PdfController extends Controller
             }
             $orderDetailsData[] = [
                 'profile_type_name' => ($orderDetail->profileType) ? $orderDetail->profileType->name: "",
+                'profile_type_siz' => ($orderDetail->profileType) ? $orderDetail->profileType->size_name: "",
                 'profile_color_name' => ($orderDetail->profileColor) ? $orderDetail->profileColor->name : "" ,
                 'window_color_name' => ($orderDetail->windowColor) ? $orderDetail->windowColor->name :"",
                 'opening_type' => ($orderDetail->openingType) ? $orderDetail->openingType->name : "" ,
