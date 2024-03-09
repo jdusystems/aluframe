@@ -192,10 +192,9 @@ class PdfController extends Controller
         foreach($windowHandlers as $windowHandler){
             $handler = WindowHandler::find($windowHandler->window_handler_id);
             $orderDetail1 = OrderDetail::find($windowHandler->id);
-
             $windowHandlersData [] = [
                 'vendor_code' => $handler->vendor_code ,
-                'name' =>($orderDetail1->handlerPosition->slug=="no_handler")? $orderDetail1->handlerPosition->name: $orderDetail1->handlerPositionType->handler_type_name . $orderDetail1->windowHandler->profileColor->name .$orderDetail1->handlerPosition->name ,
+                'name' =>($orderDetail1->handlerPosition->slug=="no_handler")? $orderDetail1->handlerPosition->name: $orderDetail1->handlerPositionType->handler_type_name ." ". $handler->profileColor->name." ".$orderDetail1->handlerPosition->name ,
                 'total_quantity' => $windowHandler->total_window_handler_quantity
             ];
         }
