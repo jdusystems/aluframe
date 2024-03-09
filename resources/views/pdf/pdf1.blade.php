@@ -389,7 +389,7 @@
         @if($windowHandler->windowHandler && $windowHandler->windowHandler->price > 0 && $windowHandler->total_window_handler_quantity > 0)
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    <th class="list-text1">{{($windowHandler->handlerPositionType) ? $windowHandler->handlerPositionType->handler_type_name:"" ." "}}{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->name:"" . " "}} {{($windowHandler->handlerPosition) ? $windowHandler->handlerPosition->name:""}}</th>
+                    <th class="list-text1">{{$windowHandler->windowHandler->orderDetail->handlerPositionType->handler_type_name." "}}{{($windowHandler->windowHandler) ? $windowHandler->windowHandler->name:"" . " "}} {{$windowHandler->windowHandler->orderDetail->handlerPosition->name}}</th>
                     <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity * $windowHandler->windowHandler->price , 2)}}</th>
