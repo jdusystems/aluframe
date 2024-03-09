@@ -392,10 +392,12 @@
                     ?>
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    @if($orderDetail1->handlerPosition->slug=="no_handler")
-                        <th class="list-text1">{{ ($orderDetail1->handlerPosition) ? $orderDetail1->handlerPosition->name:""}}</th>
-                    @else
-                        <th class="list-text1">{{($orderDetail1->handlerPositionType) ? $orderDetail1->handlerPositionType->handler_type_name:"" ." "}} {{($orderDetail1->windowHandler) ? $orderDetail1->windowHandler->profileColor->name:"" ." "}}  {{($orderDetail1->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
+                    @if($orderDetail1->handlerPosition)
+                        @if($orderDetail1->handlerPosition->slug=="no_handler")
+                            <th class="list-text1">{{ ($orderDetail1->handlerPosition) ? $orderDetail1->handlerPosition->name:""}}</th>
+                        @else
+                            <th class="list-text1">{{($orderDetail1->handlerPositionType) ? $orderDetail1->handlerPositionType->handler_type_name:"" ." "}} {{($orderDetail1->windowHandler) ? $orderDetail1->windowHandler->profileColor->name:"" ." "}}  {{($orderDetail1->handlerPosition) ? $orderDetail->handlerPosition->name:""}}</th>
+                        @endif
                     @endif
                     <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
                     <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
