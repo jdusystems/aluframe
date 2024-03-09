@@ -184,9 +184,22 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
         )->groupBy('assembly_service_id')->where('order_id' , $order->id)->get();
 
-        $windowHandlers = OrderDetail::select('window_handler_id' ,
+        $windowHandlers = OrderDetail::select('window_handler_id' ,'id' ,
             DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity') ,
-        )->groupBy('window_handler_id')->where('order_id' , $order->id)->get();
+        )->groupBy('window_handler_id' , 'id')->where('order_id' , $order->id)->get();
+
+        $windowHandlersData = [];
+        foreach($windowHandlers as $windowHandler){
+            $handler = WindowHandler::find($windowHandler->window_handler_id);
+            $orderDetail1 = OrderDetail::find($windowHandler->id);
+
+            $windowHandlersData [] = [
+               'vendor_code' => $handler->vendor_code ,
+               'name' => $orderDetail1->handlerPositionType->handler_type_name ,
+                'total_quantity' => $windowHandler->total_window_handler_quantity
+            ];
+        }
+
 
         $user = User::find($order->user_id);
 
@@ -200,7 +213,7 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.pdf2' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices ,
-            'windowHandlers' => $windowHandlers
+            'windowHandlers' => $windowHandlersData
         ]);
         $pdfContents = $pdf->output();
         Storage::disk('pdf')->put($filename , $pdfContents);
