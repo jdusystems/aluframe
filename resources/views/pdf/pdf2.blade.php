@@ -390,7 +390,7 @@
         @endforeach
 
         @foreach($windowHandlers as $windowHandler)
-            @if($windowHandler->total_quantity > 0)
+            @if($windowHandler['total_quantity'] > 0)
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler['vendor_code']}}</th>
                     <th class="list-text1">{{$windowHandler['name']}}</th>
