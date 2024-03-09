@@ -250,12 +250,18 @@ class PdfController extends Controller
 
         $orderDetailsData = [];
         foreach ($orderDetails as $orderDetail){
+            $additionalServicesData = [];
+            foreach ($orderDetail->additionalServices as $additionalService){
+                $additionalServicesData[] = [
+                    'additional_service_name' => $additionalService->name ,
+                ];
+            }
             $orderDetailsData[] = [
                 'profile_type_name' => ($orderDetail->profileType) ? $orderDetail->profileType->name: "",
                 'profile_color_name' => ($orderDetail->profileColor) ? $orderDetail->profileColor->name : "" ,
                 'window_color_name' => ($orderDetail->windowColor) ? $orderDetail->windowColor->name :"",
                 'opening_type' => ($orderDetail->openingType) ? $orderDetail->openingType->name : "" ,
-                'additionalServices' => ($orderDetail->additionalServices) ? $orderDetail->additionalServices:[],
+                'additionalServices' => ($additionalServicesData) ?  $additionalServicesData:[],
                 'position' => ($orderDetail->openingType) ? $orderDetail->openingType->position:"" ,
                 'quantity_left' => $orderDetail->quantity_left ,
                 'quantity_right' => $orderDetail->quantity_right ,
