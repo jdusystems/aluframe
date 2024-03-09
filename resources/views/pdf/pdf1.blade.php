@@ -34,7 +34,6 @@
            width: 100%;
            height: 24px;
            /*padding-top: 34px;*/
-           padding-bottom: 20px;
            /*border-bottom: 1px dotted rgb(18, 18, 18,.2);*/
        }
 

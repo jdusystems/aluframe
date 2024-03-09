@@ -33,7 +33,6 @@
         .header{
             display: inline-block;
             width: 100%;
-            padding-bottom: 30px;
             border-bottom: 1px dotted rgb(18, 18, 18,.2);
         }
         .header-left{
