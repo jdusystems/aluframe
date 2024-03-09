@@ -385,13 +385,13 @@
 
         @foreach($windowHandlers as $windowHandler)
 
-        @if($windowHandler->windowHandler && $windowHandler->windowHandler->price > 0 && $windowHandler->total_window_handler_quantity > 0)
+        @if($windowHandler['total_quantity'])
                 <tr class="list-item">
-                    <th class="list-text1">{{$windowHandler->windowHandler->vendor_code}}</th>
-                    <th class="list-text1">{{ $windowHandler->windowHandler->name}}</th>
-                    <th class="list-text1">{{$windowHandler->windowHandler->price}}</th>
-                    <th class="list-text1">{{round($windowHandler->total_window_handler_quantity , 2)}}</th>
-                    <th class="list-text1">{{round($windowHandler->total_window_handler_quantity * $windowHandler->windowHandler->price , 2)}}</th>
+                    <th class="list-text1">{{$windowHandler['vendor_code']}}</th>
+                    <th class="list-text1">{{ $windowHandler['name']}}</th>
+                    <th class="list-text1">{{$windowHandler['price']}}</th>
+                    <th class="list-text1">{{round($windowHandler['total_quantity'] , 2)}}</th>
+                    <th class="list-text1">{{round($windowHandler['total_quantity'] * $windowHandler['price'] , 2)}}</th>
                 </tr>
         @endif
         @endforeach

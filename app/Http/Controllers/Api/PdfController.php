@@ -99,7 +99,17 @@ class PdfController extends Controller
         $windowHandlers = OrderDetail::select('window_handler_id' ,
             DB::raw('SUM(window_handler_quantity) as total_window_handler_quantity') ,
         )->groupBy('window_handler_id')->where('order_id' , $order->id)->get();
-
+        $windowHandlersData = [];
+        foreach($windowHandlers as $windowHandler){
+            $handler = WindowHandler::find($windowHandler->window_handler_id);
+            $orderDetail1 = OrderDetail::find($windowHandler->id);
+            $windowHandlersData [] = [
+                'vendor_code' => $handler->vendor_code ,
+                'price' => $handler->price,
+                'name' =>($orderDetail1->handlerPosition->slug=="no_handler")? $orderDetail1->handlerPosition->name: $orderDetail1->handlerPositionType->handler_type_name ." ". $handler->profileColor->name." ".$orderDetail1->handlerPosition->name ,
+                'total_quantity' => $windowHandler->total_window_handler_quantity
+            ];
+        }
         $user = User::find($order->user_id);
 
         $filename = 'invoice1_' . $order->order_id . '.pdf';
@@ -112,7 +122,7 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.pdf1' , ['order' => $order, 'orderDetails' => $orderDetails ,
             'profiles' => $profiles , 'windowColors' => $windowColors , 'user' => $user ,
             'additionalServices' => $summedAdditionalServices , 'assemblyServices' => $assemblyServices ,
-            'windowHandlers' => $windowHandlers ,
+            'windowHandlers' => $windowHandlersData ,
         ]);
         $pdfContents = $pdf->output();
 
