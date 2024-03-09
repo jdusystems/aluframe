@@ -227,13 +227,34 @@ class PdfController extends Controller
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
 
+        $profilesData = [];
+        foreach ($profiles as $profile){
+            $profileType = ProfileType::find($profile->profile_type_id);
+            $profilesData [] = [
+                'vendor_code' => $profileType->vendor_code ,
+                'total_length' => ($profile->total_height + $profile->total_width )*1000 ,
+                'total_facade_quantity' => $profile->total_facade_quantity
+            ];
+        }
+
+
+
         $windowColors = OrderDetail::select('window_color_id' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
             DB::raw('SUM(height) as total_height') ,
             DB::raw('SUM(width) as total_width') ,
             DB::raw('SUM(surface) as total_surface'),
         )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
-
+        $windowsData = [];
+        foreach($windowColors as $windowColor){
+            $window = WindowColor::find($windowColor->window_color_id);
+            $windowsData [] = [
+                'vendor_code' => $window->vendor_code ,
+                'total_height' => $windowColor->total_height*1000 ,
+                'total_width' => $windowColor->total_width*1000 ,
+                'total_facade_quantity' => $windowColor->total_facade_quantity
+            ];
+        }
 //        $filename = 'invoice3_' . $order->order_id . '.pdf';
 
 //        if (Storage::disk('pdf')->exists($filename)) {
@@ -286,6 +307,7 @@ class PdfController extends Controller
                     'height' => $orderDetail->height*1000 ,
                     'width' => $orderDetail->width*1000 ,
                     'profile_name' => $orderDetail->profileType->name ,
+                    'profile_size_name' => $orderDetail->profileType->size_name ,
                     'profile_color_name' => $orderDetail->profileColor->name ,
                     'window_color_name' =>$orderDetail->windowColor->name ,
                     'ordered_time' => $order->created_at->setTimezone('Asia/Tashkent')->format('Y-m-d H:i')
@@ -296,8 +318,8 @@ class PdfController extends Controller
         return response()->json([
             'order' => $orderData ,
             'order_details' => $orderDetailsData ,
-            'profiles' => $profiles ,
-            'windows' => $windowColors ,
+            'profiles' => $profilesData ,
+            'windows' => $windowsData ,
             'facades' => $facadesData
         ]);
 
