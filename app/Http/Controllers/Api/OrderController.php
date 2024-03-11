@@ -423,7 +423,7 @@ class OrderController extends Controller
             'additional_service_id' => ['array'],
         ]);
         $currency = Currency::find($request->currency_id);
-        $totalPrice = 0;
+        $totalPrice = 0.00;
         $profilePrice = 0;
         $windowPrice = 0;
         $cornerPrice = 0;
