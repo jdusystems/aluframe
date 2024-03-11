@@ -243,19 +243,50 @@ class PdfController extends Controller
 
         $orderDetails = $order->orderDetails;
 
-        $profiles = OrderDetail::select('profile_type_id' ,'height' ,
+        $profiles1 = OrderDetail::select('profile_type_id' ,'height' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('profile_type_id','height')->where('order_id' , $order->id)->get();
 
         $profilesData = [];
-        foreach ($profiles as $profile){
+        foreach ($profiles1 as $profile){
             $profileType = ProfileType::find($profile->profile_type_id);
             $profilesData [] = [
+                'profile_id' => $profileType->id ,
                 'vendor_code' => $profileType->vendor_code ,
-                'height' => $profile->height*1000 ,
+                'length' => $profile->height*1000 ,
                 'total_facade_quantity' => $profile->total_facade_quantity*2
             ];
         }
+        $profiles2 = OrderDetail::select('profile_type_id' ,'width' ,
+            DB::raw('SUM(facade_quantity) as total_facade_quantity'),
+        )->groupBy('profile_type_id','width')->where('order_id' , $order->id)->get();
+
+        foreach ($profiles2 as $profile){
+            $profileType = ProfileType::find($profile->profile_type_id);
+            $profilesData [] = [
+                'profile_id' => $profileType->id ,
+                'vendor_code' => $profileType->vendor_code ,
+                'length' => $profile->width*1000 ,
+                'total_facade_quantity' => $profile->total_facade_quantity*2
+            ];
+        }
+        $profilesData = collect($profilesData);
+        $summedProfiles = $profilesData->mapToGroups(function ($item) {
+            return [
+                "{$item['profile_id']}"."-"."{$item['length']}"=> [
+                'vendor_code' => $item['vendor_code'] ,
+                'length' => $item['length'],
+                'quantity' => $item['total_facade_quantity'],
+            ]
+            ];
+        })->map(function ($group){
+            return [
+                'vendor_code' => $group[0]['vendor_code'] ,
+                'length' => $group[0]['length'],
+                'total_quantity' => $group->sum('quantity'),
+            ];
+        });
+        $summedProfiles = collect($summedProfiles)->values()->toArray();
 
 
 
@@ -337,7 +368,7 @@ class PdfController extends Controller
         return response()->json([
             'order' => $orderData ,
             'order_details' => $orderDetailsData ,
-            'profiles' => $profilesData ,
+            'profiles' => $summedProfiles ,
             'windows' => $windowsData ,
             'facades' => $facadesData ,
         ]);
