@@ -439,24 +439,6 @@ class OrderController extends Controller
         if($request->has('width')  && $request->has('height') ){
             $width = $request->width/1000;
             $height = $request->height/1000;
-        }elseif($request->width==0 || $request->height == 0){
-            $price = 0;
-            if($request->has('profile_type_id')){
-                $profileType = ProfileType::find($request->profile_type_id);
-                if($profileType){
-                $price += $profileType->price;
-                }
-            }
-            if($request->has('window_color_id')){
-                $price += 10;
-                $windowColor = WindowColor::find($request->window_color_id);
-                if($windowColor){
-                    $price += $windowColor->price;
-                }
-            }
-            return response()->json([
-                'total_price' => $price
-            ]);
         }
 
         $profileNumber = 1;
