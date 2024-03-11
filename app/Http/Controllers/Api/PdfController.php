@@ -288,24 +288,40 @@ class PdfController extends Controller
         });
         $summedProfiles = collect($summedProfiles)->values()->toArray();
 
-
-
-        $windowColors = OrderDetail::select('window_color_id' ,
+        $windowColors = OrderDetail::select('window_color_id' , 'width' ,'height' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity') ,
-            DB::raw('SUM(height) as total_height') ,
-            DB::raw('SUM(width) as total_width') ,
-            DB::raw('SUM(surface) as total_surface'),
-        )->groupBy('window_color_id')->where('order_id' , $order->id)->get();
+        )->groupBy('window_color_id' ,'width' ,'height')->where('order_id' , $order->id)->get();
         $windowsData = [];
         foreach($windowColors as $windowColor){
             $window = WindowColor::find($windowColor->window_color_id);
             $windowsData [] = [
                 'vendor_code' => $window->vendor_code ,
-                'total_height' => $windowColor->total_height*1000 ,
-                'total_width' => $windowColor->total_width*1000 ,
-                'total_facade_quantity' => $windowColor->total_facade_quantity
+                'width' => $windowColor->width*1000 ,
+                'height' => $windowColor->height*1000 ,
+                'total_facade_quantity' => $windowColor->total_facade_quantity ,
             ];
         }
+        $windowsData = collect($windowsData);
+        $summedWindows = $windowsData->mapToGroups(function ($item) {
+            return [
+                "{$item['profile_id']}"."-"."{$item['width']}"."-"."{$item['height']}"=> [
+                    'vendor_code' => $item['vendor_code'] ,
+                    'width' => $item['width'],
+                    'height' => $item['height'],
+                    'quantity' => $item['total_facade_quantity'],
+                ]
+            ];
+        })->map(function ($group){
+            return [
+                'vendor_code' => $group[0]['vendor_code'] ,
+                'width' => $group[0]['width'],
+                'height' => $group[0]['height'],
+                'total_quantity' => $group->sum('quantity'),
+            ];
+        });
+        $summedWindows = collect($summedWindows)->values()->toArray();
+
+
 //        $filename = 'invoice3_' . $order->order_id . '.pdf';
 
 //        if (Storage::disk('pdf')->exists($filename)) {
@@ -369,7 +385,7 @@ class PdfController extends Controller
             'order' => $orderData ,
             'order_details' => $orderDetailsData ,
             'profiles' => $summedProfiles ,
-            'windows' => $windowsData ,
+            'windows' => $summedWindows ,
             'facades' => $facadesData ,
         ]);
 
