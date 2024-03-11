@@ -282,8 +282,8 @@ class PdfController extends Controller
         })->map(function ($group){
             return [
                 'vendor_code' => $group[0]['vendor_code'] ,
-                'length' => $group[0]['length'],
-                'total_quantity' => $group->sum('quantity'),
+                'total_length' => $group[0]['length'],
+                'total_facade_quantity' => $group->sum('quantity'),
             ];
         });
         $summedProfiles = collect($summedProfiles)->values()->toArray();
@@ -315,8 +315,8 @@ class PdfController extends Controller
         })->map(function ($group){
             return [
                 'vendor_code' => $group[0]['vendor_code'] ,
-                'width' => $group[0]['width'],
-                'height' => $group[0]['height'],
+                'total_width' => $group[0]['width'],
+                'total_height' => $group[0]['height'],
                 'total_quantity' => $group->sum('quantity'),
             ];
         });
