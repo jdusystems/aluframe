@@ -243,29 +243,29 @@ class PdfController extends Controller
 
         $orderDetails = $order->orderDetails;
 
-        $profiles1 = OrderDetail::select('profile_type_id' ,'height' ,
+        $profiles1 = OrderDetail::select('profile_color_id' ,'height' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
-        )->groupBy('profile_type_id','height')->where('order_id' , $order->id)->get();
+        )->groupBy('profile_color_id','height')->where('order_id' , $order->id)->get();
 
         $profilesData = [];
         foreach ($profiles1 as $profile){
-            $profileType = ProfileType::find($profile->profile_type_id);
+            $profileColor = ProfileColor::find($profile->profile_type_id);
             $profilesData [] = [
-                'profile_id' => $profileType->id ,
-                'vendor_code' => $profileType->vendor_code ,
+                'profile_id' => $profileColor->id ,
+                'vendor_code' => $profileColor->vendor_code ,
                 'length' => $profile->height*1000 ,
-                'total_facade_quantity' => $profile->total_facade_quantity*2
+                'total_facade_quantity' => $profile->total_facade_quantity*2 ,
             ];
         }
         $profiles2 = OrderDetail::select('profile_color_id' ,'width' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
-        )->groupBy('profile_type_id','width')->where('order_id' , $order->id)->get();
+        )->groupBy('profile_color_id','width')->where('order_id' , $order->id)->get();
 
         foreach ($profiles2 as $profile){
-            $profileType = ProfileType::find($profile->profile_type_id);
+            $profileColor = ProfileColor::find($profile->profile_color_id);
             $profilesData [] = [
-                'profile_id' => $profileType->id ,
-                'vendor_code' => $profileType->vendor_code ,
+                'profile_id' => $profileColor->id ,
+                'vendor_code' => $profileColor->vendor_code ,
                 'length' => $profile->width*1000 ,
                 'total_facade_quantity' => $profile->total_facade_quantity*2
             ];
@@ -273,7 +273,7 @@ class PdfController extends Controller
         $profilesData = collect($profilesData);
         $summedProfiles = $profilesData->mapToGroups(function ($item) {
             return [
-                "{$item['profile_id']}"."-"."{$item['length']}"=> [
+                "{$item['profile_color_id']}"."-"."{$item['length']}"=> [
                 'vendor_code' => $item['vendor_code'] ,
                 'length' => $item['length'],
                 'quantity' => $item['total_facade_quantity'],
