@@ -470,7 +470,9 @@ class OrderController extends Controller
                 if($profileType->corner){
                     $corner = Corner::where('profile_type_id' , $profileType->id)->whereNull('deleted_at')->first();
                     if($corner){
-                        $cornerPrice += $corner->price*4*$profileNumber;
+                        if($height>0 && $width>0){
+                            $cornerPrice += $corner->price*4*$profileNumber;
+                        }
                     }
                 }
                 if($request->has('handler_position_id')){
@@ -543,7 +545,7 @@ class OrderController extends Controller
             }
         }
 
-        if($height < 1.8 ){
+        if($height < 1.8 && $height > 0 ){
             $assemblyService = AssemblyService::where('facade_height' , 1800)->where('condition_operator' , '<')->first();
             if($assemblyService){
                 $assemblyServicePrice += $assemblyService->price*$profileNumber;
