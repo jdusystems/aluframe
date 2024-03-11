@@ -251,7 +251,7 @@ class PdfController extends Controller
         foreach ($profiles1 as $profile){
             $profileColor = ProfileColor::find($profile->profile_type_id);
             $profilesData [] = [
-                'profile_id' => $profileColor->id ,
+                'profile_color_id' => $profileColor->id ,
                 'vendor_code' => $profileColor->vendor_code ,
                 'length' => $profile->height*1000 ,
                 'total_facade_quantity' => $profile->total_facade_quantity*2 ,
@@ -264,7 +264,7 @@ class PdfController extends Controller
         foreach ($profiles2 as $profile){
             $profileColor = ProfileColor::find($profile->profile_color_id);
             $profilesData [] = [
-                'profile_id' => $profileColor->id ,
+                'profile_color_id' => $profileColor->id ,
                 'vendor_code' => $profileColor->vendor_code ,
                 'length' => $profile->width*1000 ,
                 'total_facade_quantity' => $profile->total_facade_quantity*2
