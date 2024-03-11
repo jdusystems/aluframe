@@ -243,19 +243,17 @@ class PdfController extends Controller
 
         $orderDetails = $order->orderDetails;
 
-        $profiles = OrderDetail::select('profile_type_id' ,
-            DB::raw('SUM(height) as total_height') ,
-            DB::raw('SUM(width) as total_width') ,
+        $profiles = OrderDetail::select('profile_type_id' ,'height' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
-        )->groupBy('profile_type_id')->where('order_id' , $order->id)->get();
+        )->groupBy('profile_type_id','height')->where('order_id' , $order->id)->get();
 
         $profilesData = [];
         foreach ($profiles as $profile){
             $profileType = ProfileType::find($profile->profile_type_id);
             $profilesData [] = [
                 'vendor_code' => $profileType->vendor_code ,
-                'total_length' => ($profile->total_height + $profile->total_width )*1000 ,
-                'total_facade_quantity' => $profile->total_facade_quantity
+                'height' => $profile->height*1000 ,
+                'total_facade_quantity' => $profile->total_facade_quantity*2
             ];
         }
 
