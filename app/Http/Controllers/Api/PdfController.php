@@ -317,7 +317,7 @@ class PdfController extends Controller
                 'vendor_code' => $group[0]['vendor_code'] ,
                 'total_width' => $group[0]['width'],
                 'total_height' => $group[0]['height'],
-                'total_quantity' => $group->sum('quantity'),
+                'total_facade_quantity' => $group->sum('quantity'),
             ];
         });
         $summedWindows = collect($summedWindows)->values()->toArray();
