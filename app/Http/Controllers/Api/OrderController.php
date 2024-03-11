@@ -528,8 +528,6 @@ class OrderController extends Controller
             if($windowColor){
                 if($width > 0 && $height > 0){
                 $windowPrice = $windowPrice + $profileNumber*($width - $thickness)*($height - $thickness)*$windowColor->price;
-                }else{
-                   $windowPrice +=  $windowColor->price;
                 }
             }
         }
@@ -540,8 +538,6 @@ class OrderController extends Controller
                 foreach ($additionalServices as $additionalService){
                     if($height && $width){
                         $additionalServicePrice += $additionalService['price']*($width - $thickness)*($height - $thickness)*$profileNumber;
-                    }else{
-                        $additionalServicePrice += $additionalService['price'];
                     }
                 }
             }
