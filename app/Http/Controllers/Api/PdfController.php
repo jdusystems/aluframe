@@ -295,6 +295,7 @@ class PdfController extends Controller
         foreach($windowColors as $windowColor){
             $window = WindowColor::find($windowColor->window_color_id);
             $windowsData [] = [
+                'window_color_id' => $window->id ,
                 'vendor_code' => $window->vendor_code ,
                 'width' => $windowColor->width*1000 ,
                 'height' => $windowColor->height*1000 ,
@@ -304,7 +305,7 @@ class PdfController extends Controller
         $windowsData = collect($windowsData);
         $summedWindows = $windowsData->mapToGroups(function ($item) {
             return [
-                "{$item['profile_id']}"."-"."{$item['width']}"."-"."{$item['height']}"=> [
+                "{$item['window_color_id']}"."-"."{$item['width']}"."-"."{$item['height']}"=> [
                     'vendor_code' => $item['vendor_code'] ,
                     'width' => $item['width'],
                     'height' => $item['height'],
