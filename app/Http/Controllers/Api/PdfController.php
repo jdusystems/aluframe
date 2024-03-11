@@ -290,7 +290,6 @@ class PdfController extends Controller
              'ordered_date' => $order->created_at->setTimezone('Asia/Tashkent')->format('Y-m-d H:i')
          ];
 
-
         $orderDetailsData = [];
         foreach ($orderDetails as $orderDetail){
             $additionalServicesData = [];
@@ -342,7 +341,7 @@ class PdfController extends Controller
             'order_details' => $orderDetailsData ,
             'profiles' => $profilesData ,
             'windows' => $windowsData ,
-            'facades' => $facadesData
+            'facades' => $facadesData ,
         ]);
 
 //        $pdf = PDF::loadView('pdf.pdf3' , ['order' => $order,'orderDetails' => $orderDetails , 'profiles' => $profiles , 'windowColors' => $windowColors]);
