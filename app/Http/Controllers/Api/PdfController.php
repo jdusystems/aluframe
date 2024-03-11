@@ -249,7 +249,7 @@ class PdfController extends Controller
 
         $profilesData = [];
         foreach ($profiles1 as $profile){
-            $profileColor = ProfileColor::find($profile->profile_type_id);
+            $profileColor = ProfileColor::find($profile->profile_color_id);
             $profilesData [] = [
                 'profile_color_id' => $profileColor->id ,
                 'vendor_code' => $profileColor->vendor_code ,
