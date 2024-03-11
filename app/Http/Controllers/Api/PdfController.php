@@ -257,7 +257,7 @@ class PdfController extends Controller
                 'total_facade_quantity' => $profile->total_facade_quantity*2
             ];
         }
-        $profiles2 = OrderDetail::select('profile_type_id' ,'width' ,
+        $profiles2 = OrderDetail::select('profile_color_id' ,'width' ,
             DB::raw('SUM(facade_quantity) as total_facade_quantity'),
         )->groupBy('profile_type_id','width')->where('order_id' , $order->id)->get();
 

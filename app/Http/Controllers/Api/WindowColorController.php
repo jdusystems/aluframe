@@ -11,6 +11,7 @@ use App\Http\Resources\ShowWindowColorResource;
 use App\Http\Resources\WindowColorCollection;
 use App\Models\ProfileColor;
 use App\Models\WindowColor;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
@@ -86,11 +87,21 @@ class WindowColorController extends Controller
     public function update(UpdateWindowColorRequest $request, string $id)
     {
         $windowColor = WindowColor::find($id);
-
+        if(!$windowColor){
+            return new ReturnResponseResource([
+                'code' => 404 ,
+                'message' => 'Record not found!'
+            ] , 404);
+        }
 //        $request->validate([
 //            'vendor_code' => Rule::unique('window_colors')->ignore($windowColor->id),
 //        ]);
+        $vendor_code = $windowColor->vendor_code;
 
+        DB::table('window_colors')->where('vendor_code' , $vendor_code)->update([
+            'vendor_code' => $request->vendor_code ,
+            'price' => $request->price ,
+        ]);
         $windowColor->update([
             'name' => $request->name,
             'uz_name' => $request->uz_name ,
