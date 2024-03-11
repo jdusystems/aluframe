@@ -305,7 +305,7 @@ class PdfController extends Controller
         $windowsData = collect($windowsData);
         $summedWindows = $windowsData->mapToGroups(function ($item) {
             return [
-                "{$item['window_color_id']}"."-"."{$item['width']}"."-"."{$item['height']}"=> [
+                "{$item['vendor_code']}"."-"."{$item['width']}"."-"."{$item['height']}"=> [
                     'vendor_code' => $item['vendor_code'] ,
                     'width' => $item['width'],
                     'height' => $item['height'],
