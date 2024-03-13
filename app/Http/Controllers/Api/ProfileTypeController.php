@@ -99,7 +99,7 @@ class ProfileTypeController extends Controller
     public function deleteMultiple(Request $request){
 
         $request->validate([
-            'ids' => 'required|array|min:1|exists:users,id' ,
+            'ids' => 'required|array|min:1|exists:profile_types,id' ,
         ]);
         $ids = $request->json('ids');
 

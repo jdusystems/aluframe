@@ -11,7 +11,7 @@ class ProfileColor extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ["name" , 'uz_name' , "sort_index", "color_from", "color_to",'image_name' ,'image_url' , 'profile_type_id','vendor_code'];
+    protected $fillable = ["name" ,'active', 'uz_name' , "sort_index", "color_from", "color_to",'image_name' ,'image_url' , 'profile_type_id','vendor_code'];
 
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);

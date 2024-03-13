@@ -118,7 +118,7 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        $client = Client::find($id);
+        $client = User::find($id);
         if(!$client){
             return new ReturnResponseResource([
                 'code' =>  404,

@@ -10,6 +10,7 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowProfileColorResource;
 use App\Models\ProfileColor;
 use App\Models\ProfileType;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 class ProfileColorController extends Controller
@@ -24,11 +25,11 @@ class ProfileColorController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new ProfileColorCollection(ProfileColor::orderBy('sort_index')->paginate($itemsPerPage));
+        return new ProfileColorCollection(ProfileColor::where('active' ,1)->orderBy('sort_index')->paginate($itemsPerPage));
     }
     public function all()
     {
-        return new ProfileColorCollection(ProfileColor::all());
+        return new ProfileColorCollection(ProfileColor::where('active',1)->latest()->get);
     }
 
     /**
@@ -74,7 +75,7 @@ class ProfileColorController extends Controller
                 'message' => 'Record not found!'
             ] , 404);
         }
-        $profileColors = ProfileColor::where('profile_type_id' , $profile->id)->get();
+        $profileColors = ProfileColor::where('profile_type_id' , $profile->id)->where('active',1)->get();
         return new ProfileColorCollection($profileColors);
     }
 
@@ -107,10 +108,12 @@ class ProfileColorController extends Controller
 
 
     public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:profile_colors,id' ,
+        ]);
         $ids = $request->json('ids');
         if (!empty($ids) && is_array($ids)) {
-            ProfileColor::whereIn('id', $ids)->delete();
-
+            DB::table('profile_colors')->whereIn('id' , $ids)->update(['active'=>0]);
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
             return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
@@ -129,14 +132,7 @@ class ProfileColorController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        if($profile_color->windowHandlers()->count() > 0 || $profile_color->orderDetails()->count() > 0 ){
-            return new ReturnResponseResource([
-                'code' => 422 ,
-                'message' => "You can not delete this Item!"
-            ]);
-        }
-        Storage::disk('uploads')->delete($profile_color->image_name);
-        $profile_color->delete();
+        $profile_color->update(['active'=>0]);
 
         return new ReturnResponseResource([
             'code' => 200,
