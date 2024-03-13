@@ -11,6 +11,7 @@ use App\Http\Resources\ShowClientResource;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ClientController extends Controller
@@ -101,17 +102,12 @@ class ClientController extends Controller
         return new ShowClientResource($client);
     }
     public function deleteMultiple(Request $request){
-
         $request->validate([
             'ids' => 'required|array|min:1' ,
         ]);
-
         $ids = $request->json('ids');
-        return response()->json([
-            'ids' => $ids
-        ]);
         if (!empty($ids) && is_array($ids)) {
-            Client::whereIn('id', $ids)->delete();
+            DB::table('users')->whereIn($ids)->update(['active' => 0]);
 
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
