@@ -11,6 +11,7 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowCornerResource;
 use App\Models\Corner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CornerController extends Controller
 {
@@ -24,12 +25,12 @@ class CornerController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new CornerCollection(Corner::paginate($itemsPerPage));
+        return new CornerCollection(Corner::where('active' , 1)->paginate($itemsPerPage));
     }
 
     public function all()
     {
-        return new CornerCollection(Corner::all());
+        return new CornerCollection(Corner::where('active' ,1)->get());
     }
 
     /**
@@ -83,11 +84,13 @@ class CornerController extends Controller
         return new ShowCornerResource($corner);
     }
     public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:corners,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            Corner::whereIn('id', $ids)->delete();
-
+            DB::table('corners')->whereIn('id',$ids)->update(['active' => 0]);
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
             return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
@@ -105,7 +108,7 @@ class CornerController extends Controller
                 'message' => "Record not found"
             ]);
         }
-        $corner->delete();
+        $corner->update(['active'=>0]);
         return new ReturnResponseResource([
             'code' => 200 ,
             'message' => 'Corner deleted successfully'

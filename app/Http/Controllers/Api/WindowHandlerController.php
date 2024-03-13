@@ -12,6 +12,7 @@ use App\Models\ProfileColor;
 use App\Models\ProfileType;
 use App\Models\WindowHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WindowHandlerController extends Controller
 {
@@ -25,11 +26,11 @@ class WindowHandlerController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new WindowHandlerCollection(WindowHandler::paginate($itemsPerPage));
+        return new WindowHandlerCollection(WindowHandler::where('active',1)->paginate($itemsPerPage));
     }
         public function all()
         {
-            return new WindowHandlerCollection(WindowHandler::all());
+            return new WindowHandlerCollection(WindowHandler::where('active',1)->get());
         }
 
     /**
@@ -95,11 +96,13 @@ class WindowHandlerController extends Controller
         return new ShowWindowHandlerResource($windowHandler);
     }
     public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:window_handlers,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            WindowHandler::whereIn('id', $ids)->delete();
-
+            DB::table('window_handlers')->whereIn('id',$ids)->update(['active' => 0]);
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
             return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
@@ -117,7 +120,7 @@ class WindowHandlerController extends Controller
                 'message' => 'Record not found!'
             ]);
         }
-        $windowHandler->delete();
+        $windowHandler->update(['active'=>0]);
         return new ReturnResponseResource([
             'code' => 200 ,
             'message' => "Window Handler has been deleted successfully!"

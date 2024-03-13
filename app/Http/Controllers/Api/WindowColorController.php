@@ -27,11 +27,11 @@ class WindowColorController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new WindowColorCollection(WindowColor::orderBy('sort_index')->paginate($itemsPerPage));
+        return new WindowColorCollection(WindowColor::where('active',1)->orderBy('sort_index')->paginate($itemsPerPage));
     }
     public function all()
     {
-        return new WindowColorCollection(WindowColor::all());
+        return new WindowColorCollection(WindowColor::where('active' ,1)->latest()->get());
     }
 
     /**
@@ -78,7 +78,7 @@ class WindowColorController extends Controller
                 'message' => 'Record not found!'
             ] , 404);
         }
-        $windowColors = WindowColor::where('profile_color_id' , $profileColor->id)->get();
+        $windowColors = WindowColor::where('profile_color_id' , $profileColor->id)->where('active' ,1)->get();
         return new WindowColorCollection($windowColors);
     }
     /**
@@ -118,10 +118,13 @@ class WindowColorController extends Controller
         return new ShowWindowColorResource($windowColor);
     }
     public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:window_colors,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            WindowColor::whereIn('id', $ids)->delete();
+            DB::table('window_colors')->whereIn('id',$ids)->update(['active' => 0]);
 
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
@@ -141,8 +144,8 @@ class WindowColorController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        Storage::disk('uploads')->delete($windowColor->image_name);
-        $windowColor->delete();
+        $windowColor->update(['active'=>0]);
+
         return new ReturnResponseResource([
             'code' => 200,
             'message' => 'Window color deleted successfully'

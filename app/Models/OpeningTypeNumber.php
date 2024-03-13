@@ -9,7 +9,7 @@ class OpeningTypeNumber extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'opening_type_id'
+        'opening_type_id' , 'active'
     ];
 
     public function images(){

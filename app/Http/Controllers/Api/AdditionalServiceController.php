@@ -10,6 +10,7 @@ use App\Http\Resources\AdditionalServiceResource;
 use App\Http\Resources\ReturnResponseResource;
 use App\Models\AdditionalService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -27,11 +28,11 @@ class AdditionalServiceController extends Controller
            $itemsPerPage = 10;
        }
 
-        return new AdditionalServiceCollection(AdditionalService::orderBy('sort_index')->paginate($itemsPerPage));
+        return new AdditionalServiceCollection(AdditionalService::where('active' , 1)->orderBy('sort_index')->paginate($itemsPerPage));
     }
     public function all()
     {
-        return new AdditionalServiceCollection(AdditionalService::all());
+        return new AdditionalServiceCollection(AdditionalService::where('active',1)->get());
     }
 
     /**
@@ -39,7 +40,6 @@ class AdditionalServiceController extends Controller
      */
     public function store(StoreAdditionalServiceRequest $request)
     {
-
         return new AdditionalServiceResource(AdditionalService::create([
             'name' => $request->name,
             'uz_name' => $request->uz_name,
@@ -99,10 +99,14 @@ class AdditionalServiceController extends Controller
     }
 
     public function deleteMultiple(Request $request){
+
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:additional_services,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            AdditionalService::whereIn('id', $ids)->delete();
+            DB::table('additional_services')->whereIn('id',$ids)->update(['active' => 0]);
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
             return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
@@ -122,13 +126,8 @@ class AdditionalServiceController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        if($additionalService->orderDetails()->count() > 0){
-            return new ReturnResponseResource([
-                'code' => 422 ,
-                'message' => "You can not delete this Item!"
-            ]);
-        }
-        $additionalService->delete();
+
+        $additionalService->update(['active'=>0]);
 
         return new ReturnResponseResource([
             'code' => 200,

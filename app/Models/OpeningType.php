@@ -10,7 +10,7 @@ class OpeningType extends Model
 {
     use HasFactory;
     protected $table = "opening_types";
-    protected $fillable = ['name' ,'position' , 'type_id' , 'sort_index' , "image_url" ,"image_name"];
+    protected $fillable = ['name' ,'position' , 'type_id' , 'sort_index' , "image_url" ,"image_name",'active'];
 
 
     public function type(){

@@ -9,6 +9,7 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowCurrencyResource;
 use App\Models\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CurrencyController extends Controller
 {
@@ -17,11 +18,11 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        return new CurrencyCollection(Currency::paginate(10));
+        return new CurrencyCollection(Currency::where('active',1)->paginate(10));
     }
     public function allData()
     {
-        return new CurrencyCollection(Currency::all());
+        return new CurrencyCollection(Currency::where('active',1)->get());
     }
 
 
@@ -71,7 +72,19 @@ class CurrencyController extends Controller
 
         return new ShowCurrencyResource($currency);
     }
+    public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:currencies,id' ,
+        ]);
+        $ids = $request->json('ids');
 
+        if (!empty($ids) && is_array($ids)) {
+            DB::table('currencies')->whereIn('id',$ids)->update(['active' => 0]);
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -84,13 +97,8 @@ class CurrencyController extends Controller
                 'message' => 'Record not found!'
             ]);
         }
-        if($currency->orders()->count() > 0 ){
-            return new ReturnResponseResource([
-                'code' => 422 ,
-                'message' => "You can not delete this Item!"
-            ]);
-        }
-        $currency->delete();
+
+        $currency->update(['active'=>0]);
         return new ReturnResponseResource([
             'code' => 200,
             'message' => 'Additional service deleted successfully'

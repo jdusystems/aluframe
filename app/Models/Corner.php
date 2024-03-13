@@ -14,7 +14,7 @@ class Corner extends Model
     protected $table="corners";
 
     protected $fillable = [
-        'name' , 'uz_name' ,'vendor_code' , 'price','profile_type_id'
+        'name' , 'uz_name' ,'vendor_code' , 'price','profile_type_id' ,'active'
     ];
     public function profileType(){
         return $this->belongsTo(ProfileType::class);

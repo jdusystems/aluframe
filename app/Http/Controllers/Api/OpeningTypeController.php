@@ -11,6 +11,7 @@ use App\Http\Resources\ShowOpeningTypeResource;
 use App\Models\OpeningType;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use function PHPUnit\Framework\isEmpty;
@@ -27,11 +28,11 @@ class OpeningTypeController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new OpeningTypeCollection(OpeningType::orderBy('sort_index')->paginate($itemsPerPage));
+        return new OpeningTypeCollection(OpeningType::where('active',1)->orderBy('sort_index')->paginate($itemsPerPage));
     }
     public function all()
     {
-        return new OpeningTypeCollection(OpeningType::all());
+        return new OpeningTypeCollection(OpeningType::where('active',1)->get());
     }
 
     public function getByType(string $type_id){
@@ -42,7 +43,7 @@ class OpeningTypeController extends Controller
                 'message' => 'Record not found!'
             ] , 404);
         }
-        $openingTypes = OpeningType::where('type_id' , $type_id)->get();
+        $openingTypes = OpeningType::where('type_id' , $type_id)->where('active',1)->get();
         return new OpeningTypeCollection($openingTypes);
     }
 
@@ -117,11 +118,13 @@ class OpeningTypeController extends Controller
 
 
     public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:opening_types,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            OpeningType::whereIn('id', $ids)->delete();
-
+            DB::table('opening_types')->whereIn('id',$ids)->update(['active' => 0]);
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
             return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
@@ -139,20 +142,11 @@ class OpeningTypeController extends Controller
                 'message' => 'Record not found.',
             ]);
         }
-        Storage::disk('uploads')->delete($openingType->image_name);
-        if($openingType->orderDetails()->count() > 0 || $openingType->openingTypeNumbers()->count() > 0 ){
-            return new ReturnResponseResource([
-                'code' => 422 ,
-                'message' => "You can not delete this Item!"
-            ]);
-        }
-
-        $openingType->handlerPositions()->detach();
-        if($openingType->delete()){
+            $openingType->update(['active'=>0]);
             return new ReturnResponseResource([
                 'code' => 200,
                 'message' => 'Opening type deleted successfully'
             ]);
-        }
+
     }
 }

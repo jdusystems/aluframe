@@ -10,7 +10,7 @@ class HandlerPosition extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name' , 'uz_name' , 'image_name' , 'image_url' , 'sort_index' , 'slug'
+        'name' , 'uz_name' , 'image_name' , 'image_url' , 'sort_index' , 'slug' ,'active'
     ];
 
     public function openingTypes(){

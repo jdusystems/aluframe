@@ -26,11 +26,11 @@ class OpeningTypeNumberController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new OpeningTypeNumberCollection(OpeningTypeNumber::paginate($itemsPerPage));
+        return new OpeningTypeNumberCollection(OpeningTypeNumber::where('active',1)->paginate($itemsPerPage));
     }
     public function all()
     {
-        return new OpeningTypeNumberCollection(OpeningTypeNumber::all());
+        return new OpeningTypeNumberCollection(OpeningTypeNumber::where('active',1)->get());
     }
 
     public function getByOpeningType(string $type_id){
@@ -41,7 +41,7 @@ class OpeningTypeNumberController extends Controller
                 'message' => 'Record not found!'
             ] , 404);
         }
-        $openingTypeNumbers = OpeningTypeNumber::where('opening_type_id' , $openingType->id)->get();
+        $openingTypeNumbers = OpeningTypeNumber::where('opening_type_id' , $openingType->id)->where('active',1)->get();
         return new OpeningTypeNumberCollection($openingTypeNumbers);
     }
     /**
@@ -141,7 +141,19 @@ class OpeningTypeNumberController extends Controller
 
        return new ShowOpeningTypeNumberResource($openingTypeNumber);
     }
+    public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:opening_type_numbers,id' ,
+        ]);
+        $ids = $request->json('ids');
 
+        if (!empty($ids) && is_array($ids)) {
+            DB::table('opening_type_numbers')->whereIn('id',$ids)->update(['active' => 0]);
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -154,8 +166,8 @@ class OpeningTypeNumberController extends Controller
                 'message' => "Record not found!"
             ]);
         }
-       DB::table('images')->where('opening_type_number_id' , $openingTypeNumber->id)->delete();
-        $openingTypeNumber->delete();
+
+        $openingTypeNumber->update(['active'=>0]);
         return new ReturnResponseResource([
             'code' => 200 ,
             'message' => 'Record has been deleted successfully!'

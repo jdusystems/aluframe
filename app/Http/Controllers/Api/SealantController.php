@@ -10,6 +10,7 @@ use App\Http\Resources\SealantCollection;
 use App\Http\Resources\ShowSealantResource;
 use App\Models\Sealant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SealantController extends Controller
 {
@@ -23,11 +24,11 @@ class SealantController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new SealantCollection(Sealant::paginate($itemsPerPage));
+        return new SealantCollection(Sealant::where('active' , 1)->paginate($itemsPerPage));
     }
         public function all()
         {
-            return new SealantCollection(Sealant::all());
+            return new SealantCollection(Sealant::where('active',1)->get());
         }
 
     /**
@@ -94,10 +95,13 @@ class SealantController extends Controller
         return new ShowSealantResource($sealant);
     }
     public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:sealants,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            Sealant::whereIn('id', $ids)->delete();
+            DB::table('sealants')->whereIn('id',$ids)->update(['active' => 0]);
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
             return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
@@ -116,7 +120,7 @@ class SealantController extends Controller
                 'message' => 'Record not found'
             ]);
         }
-        $sealant->delete();
+        $sealant->update(['active'=>0]);
         return new ReturnResponseResource([
             'code' => 200 ,
             'message' => 'Sealant has been deleted successfully!'

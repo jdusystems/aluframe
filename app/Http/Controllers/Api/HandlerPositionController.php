@@ -10,6 +10,7 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowHandlerPositionResource;
 use App\Models\HandlerPosition;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HandlerPositionController extends Controller
 {
@@ -23,11 +24,11 @@ class HandlerPositionController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new HandlerPositionCollection(HandlerPosition::orderBy('sort_index')->paginate($itemsPerPage));
+        return new HandlerPositionCollection(HandlerPosition::where('active',1)->orderBy('sort_index')->paginate($itemsPerPage));
     }
     public function all()
     {
-        $handlerPositions = HandlerPosition::orderBy('sort_index')->get();
+        $handlerPositions = HandlerPosition::where('active',1)->orderBy('sort_index')->get();
         return new HandlerPositionCollection($handlerPositions);
     }
     /**
@@ -95,7 +96,19 @@ class HandlerPositionController extends Controller
 
         return new ShowHandlerPositionResource($handlerPosition);
     }
+    public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:handler_positions,id' ,
+        ]);
+        $ids = $request->json('ids');
 
+        if (!empty($ids) && is_array($ids)) {
+            DB::table('handler_positions')->whereIn('id',$ids)->update(['active' => 0]);
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -108,7 +121,7 @@ class HandlerPositionController extends Controller
                 'message' => 'Record not found!'
             ]);
         }
-        $handlerPosition->delete();
+        $handlerPosition->update(['active'=>0]);
         return new ReturnResponseResource([
             'code' => 200 ,
             'message' => 'Record has been deleted successfully!'

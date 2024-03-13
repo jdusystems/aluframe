@@ -135,13 +135,16 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::post('/additional-services/delete-multiple' , [AdditionalServiceController::class , 'deleteMultiple']);
         Route::post('/assembly-services/delete-multiple' , [AssemblyServiceController::class , 'deleteMultiple']);
         Route::post('/opening-types/delete-multiple' , [OpeningTypeController::class , 'deleteMultiple']);
+        Route::post('/opening-type-numbers/delete-multiple' , [OpeningTypeNumberController::class , 'deleteMultiple']);
         Route::post('/profiles/delete-multiple' , [ProfileTypeController::class , 'deleteMultiple']);
         Route::post('/clients/delete-multiple' , [ClientController::class , 'deleteMultiple']);
         Route::post('/calculation-types/delete-multiple' , [CalculationTypeController::class , 'deleteMultiple']);
         Route::post('/corners/delete-multiple' , [CornerController::class , 'deleteMultiple']);
+        Route::post('/currencies/delete-multiple' , [CurrencyController::class , 'deleteMultiple']);
         Route::post('/window-handlers/delete-multiple' , [WindowHandlerController::class , 'deleteMultiple']);
         Route::post('/sealants/delete-multiple' , [SealantController::class , 'deleteMultiple']);
         Route::post('/orders/delete-multiple' , [OrderController::class , 'deleteMultiple']);
+        Route::post('/handler-positions/delete-multiple' , [HandlerPositionController::class , 'deleteMultiple']);
 
         Route::post('/image-upload', [ImageController::class, 'imageUpload']);
         Route::post('/image-delete', [ImageController::class, 'imageDelete']);

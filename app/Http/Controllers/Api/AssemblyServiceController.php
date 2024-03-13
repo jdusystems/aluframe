@@ -10,6 +10,7 @@ use App\Http\Resources\ReturnResponseResource;
 use App\Http\Resources\ShowAssemblyServiceResource;
 use App\Models\AssemblyService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AssemblyServiceController extends Controller
 {
@@ -23,12 +24,12 @@ class AssemblyServiceController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        return new AssemblyServiceCollection(AssemblyService::paginate($itemsPerPage));
+        return new AssemblyServiceCollection(AssemblyService::where('active',1)->paginate($itemsPerPage));
     }
 
     public function all()
     {
-        return new AssemblyServiceCollection(AssemblyService::all());
+        return new AssemblyServiceCollection(AssemblyService::where('active',1)->get());
     }
 
     /**
@@ -79,10 +80,13 @@ class AssemblyServiceController extends Controller
     }
 
     public function deleteMultiple(Request $request){
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:assembly_services,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            AssemblyService::whereIn('id', $ids)->delete();
+            DB::table('assembly_services')->whereIn('id',$ids)->update(['active' => 0]);
 
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
@@ -104,17 +108,12 @@ class AssemblyServiceController extends Controller
                 'message' => 'Record not found'
             ]);
         }
-        if($assemblyService->orderDetails()->count() > 0){
-            return new ReturnResponseResource([
-                'code' => 422 ,
-                'message' => "You can not delete this Item!"
-            ]);
-        }
-        if ($assemblyService->delete()){
+
+        $assemblyService->update(['active'=>0]);
             return new ReturnResponseResource([
                 'code' => 200 ,
                 'message' => "Assembly Service deleted successfully"
             ]);
-        }
+
     }
 }
