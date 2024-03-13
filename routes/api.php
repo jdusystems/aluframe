@@ -141,6 +141,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::post('/corners/delete-multiple' , [CornerController::class , 'deleteMultiple']);
         Route::post('/window-handlers/delete-multiple' , [WindowHandlerController::class , 'deleteMultiple']);
         Route::post('/sealants/delete-multiple' , [SealantController::class , 'deleteMultiple']);
+        Route::post('/orders/delete-multiple' , [OrderController::class , 'deleteMultiple']);
 
         Route::post('/image-upload', [ImageController::class, 'imageUpload']);
         Route::post('/image-delete', [ImageController::class, 'imageDelete']);
@@ -152,9 +153,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
         Route::apiResource('clients' , ClientController::class);
         Route::get('/all-clients', [ClientController::class , 'all']);
     });
-
     Route::apiResource('orders' , OrderController::class);
-
 });
 //profiles
 Route::get('/all-profiles', [ProfileTypeController::class , 'all']);

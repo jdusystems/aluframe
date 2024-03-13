@@ -30,7 +30,7 @@ class ClientController extends Controller
         if(empty($name) && empty($phoneNumber)){
             return new ClientCollection(User::latest()->paginate($itemsPerPage));
         }else{
-            $clients = User::when($phoneNumber, function ($query) use ($phoneNumber) {
+            $clients = User::where('active' , 1)->when($phoneNumber, function ($query) use ($phoneNumber) {
                 $query->where('phone_number','LIKE', '%'. $phoneNumber .'%');
             })->when($name, function ($query) use ($name) {
                     $query->where('name', 'LIKE','%'. $name.'%');
@@ -101,8 +101,15 @@ class ClientController extends Controller
         return new ShowClientResource($client);
     }
     public function deleteMultiple(Request $request){
-        $ids = $request->json('ids');
 
+        $request->validate([
+            'ids' => 'required|array|min:1' ,
+        ]);
+
+        $ids = $request->json('ids');
+        return response()->json([
+            'ids' => $ids
+        ]);
         if (!empty($ids) && is_array($ids)) {
             Client::whereIn('id', $ids)->delete();
 

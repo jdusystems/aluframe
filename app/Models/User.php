@@ -23,7 +23,8 @@ class User extends Authenticatable
         'phone_number',
         'password',
         'parol',
-        'registered'
+        'registered' ,
+        'active'
     ];
 
     /**
