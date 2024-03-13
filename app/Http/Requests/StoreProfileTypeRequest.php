@@ -30,7 +30,7 @@ class StoreProfileTypeRequest extends FormRequest
             'size_name' => "required" ,
             'calculation_type_id' => "required|exists:calculation_types,id",
             'price' =>  ['required', 'numeric', 'min:0.01'],
-            'thickness' =>  ['required', 'numeric', 'min:1'],
+            'thickness' =>  ['required', 'numeric', 'min:0'],
             'sort_index' => ['required' , 'integer']
         ];
     }

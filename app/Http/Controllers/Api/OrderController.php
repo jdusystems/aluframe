@@ -395,6 +395,16 @@ class OrderController extends Controller
         return new ShowOrderResource($order);
 
     }
+    public function deleteMultiple(Request $request){
+    $ids = $request->json('ids');
+
+    if (!empty($ids) && is_array($ids)) {
+        Order::whereIn('id', $ids)->delete();
+        return response()->json(['message' => 'Records deleted successfully.'], 200);
+    } else {
+        return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+    }
+}
 
     /**
      * Remove the specified resource from storage.
