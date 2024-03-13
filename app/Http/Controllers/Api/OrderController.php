@@ -48,9 +48,9 @@ class OrderController extends Controller
 
         if($user->is_admin == 1 || $user->superadmin == 1){
             if(empty($name) && empty($phoneNumber) && empty($status)){
-                $orders = Order::latest()->paginate($itemsPerPage);
+                $orders = Order::where('active',1)->latest()->paginate($itemsPerPage);
             }else{
-                $orders = Order::when($status, function ($query) use ($status){
+                $orders = Order::where('active',1)->when($status, function ($query) use ($status){
                     $query->where('status_id', $status);
                 })->when($name, function ($query) use ($name){
                     if(is_numeric($name)){
@@ -69,9 +69,9 @@ class OrderController extends Controller
             return new OrderCollection($orders);
         } else{
             if(empty($name) && empty($phoneNumber) && empty($status)){
-                $orders = Order::where('user_id' , $user->id)->latest()->paginate($itemsPerPage);
+                $orders = Order::where('user_id' , $user->id)->where('active',1)->latest()->paginate($itemsPerPage);
             }else{
-                $orders = Order::when($status, function ($query) use ($status){
+                $orders = Order::where('active',1)->when($status, function ($query) use ($status){
                     $query->where('status', $status);
                 })->when($name, function ($query) use ($name){
                     $query->whereHas('client', function ($subquery) use ($name) {
@@ -396,14 +396,17 @@ class OrderController extends Controller
 
     }
     public function deleteMultiple(Request $request){
-    $ids = $request->json('ids');
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:orders,id' ,
+        ]);
+        $ids = $request->json('ids');
 
-    if (!empty($ids) && is_array($ids)) {
-        Order::whereIn('id', $ids)->delete();
-        return response()->json(['message' => 'Records deleted successfully.'], 200);
-    } else {
-        return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
-    }
+        if (!empty($ids) && is_array($ids)) {
+            DB::table('orders')->whereIn('id',$ids)->update(['active' => 0]);
+            return response()->json(['message' => 'Records deleted successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid or empty IDs provided.'], 400);
+        }
 }
 
     /**
@@ -418,8 +421,8 @@ class OrderController extends Controller
                 'message' => "Record not found!"
             ]);
         }
-        $order->orderDetails()->delete();
-        $order->delete();
+
+        $order->update(['active',0]);
         return new ReturnResponseResource([
             'code' => 200 ,
             'message' => "Order and associated details deleted successfully."
