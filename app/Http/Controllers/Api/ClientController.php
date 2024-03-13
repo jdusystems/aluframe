@@ -29,7 +29,7 @@ class ClientController extends Controller
             $itemsPerPage = 10;
         }
         if(empty($name) && empty($phoneNumber)){
-            return new ClientCollection(User::latest()->paginate($itemsPerPage));
+            return new ClientCollection(User::where('active',1)->latest()->paginate($itemsPerPage));
         }else{
             $clients = User::where('active' , 1)->when($phoneNumber, function ($query) use ($phoneNumber) {
                 $query->where('phone_number','LIKE', '%'. $phoneNumber .'%');
@@ -103,7 +103,7 @@ class ClientController extends Controller
     }
     public function deleteMultiple(Request $request){
         $request->validate([
-            'ids' => 'required|array|min:1' ,
+            'ids' => 'required|array|min:1|exists:users,id' ,
         ]);
         $ids = $request->json('ids');
         if (!empty($ids) && is_array($ids)) {
