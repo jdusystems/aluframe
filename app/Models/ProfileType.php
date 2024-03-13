@@ -17,7 +17,7 @@ class ProfileType extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-       'vendor_code' ,'name' , 'calculation_type_id' , 'price' , 'sort_index' ,'image_name' ,'image_url' , 'uz_name' , 'size_name' ,'thickness'
+       'vendor_code' ,'name' ,'active', 'calculation_type_id' , 'price' , 'sort_index' ,'image_name' ,'image_url' , 'uz_name' , 'size_name' ,'thickness'
     ];
     protected $table = "profile_types";
 

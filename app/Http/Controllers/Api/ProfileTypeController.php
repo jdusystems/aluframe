@@ -10,6 +10,7 @@ use App\Http\Resources\ShowProfileTypeResource;
 use App\Models\ProfileType;
 use Illuminate\Http\Request;
 use App\Http\Resources\ReturnResponseResource;
+use Illuminate\Support\Facades\DB;
 
 class ProfileTypeController extends Controller
 {
@@ -23,13 +24,13 @@ class ProfileTypeController extends Controller
         }else{
             $itemsPerPage = 10;
         }
-        $profile_types = ProfileType::orderBy('sort_index')->paginate($itemsPerPage);
+        $profile_types = ProfileType::where('active',1)->orderBy('sort_index')->paginate($itemsPerPage);
         return new ProfileTypeCollection($profile_types);
     }
 
     public function all()
     {
-        $profile_types = ProfileType::all();
+        $profile_types = ProfileType::where('active',1)->get();
         return new ProfileTypeCollection($profile_types);
     }
 
@@ -96,10 +97,14 @@ class ProfileTypeController extends Controller
 
 
     public function deleteMultiple(Request $request){
+
+        $request->validate([
+            'ids' => 'required|array|min:1|exists:users,id' ,
+        ]);
         $ids = $request->json('ids');
 
         if (!empty($ids) && is_array($ids)) {
-            ProfileType::whereIn('id', $ids)->delete();
+            DB::table('profile_types')->whereIn('id' , $ids)->update(['active'=>0]);
 
             return response()->json(['message' => 'Records deleted successfully.'], 200);
         } else {
