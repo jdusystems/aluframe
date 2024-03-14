@@ -328,7 +328,7 @@
                     <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
                     <th class="list-text1">{{number_format($profile->profileType->sealant->price*$order->currency->currency_rate ,2)}}</th>
                     <th class="list-text1">{{round($profile->total_sealant_length , 2)}}</th>
-                    <th class="list-text1">{{number_format(round($profile->total_sealant_length*$profile->profileType->sealant->price*$order->currency->currency_rate ,2) ,2) ,2)}}</th>
+                    <th class="list-text1">{{number_format(round($profile->total_sealant_length*$profile->profileType->sealant->price*$order->currency->currency_rate ,2) ,2)}}</th>
                 </tr>
             @endif
 
