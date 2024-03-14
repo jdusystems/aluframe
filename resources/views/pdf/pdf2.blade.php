@@ -236,9 +236,15 @@
             <tr class="list-item">
                 <th class="list-text">Дополнительные услуги для стекла:</th>
                 <th class="list-text">
-                    @foreach($orderDetail->additionalServices as $additionalService)
-                        {{($additionalService) ? $additionalService->name: "" . " "}}
-                    @endforeach
+                    @if(count($orderDetail->additionalServices)>0)
+                        @foreach($orderDetail->additionalServices as $additionalService)
+                            @if($additionalService->price > 0)
+                                {{($additionalService) ? $additionalService->name: "" ." "}}
+                            @endif
+                        @endforeach
+                    @else
+                        Не требуются
+                    @endif
                 </th>
             </tr>
             <tr class="list-item">

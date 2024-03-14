@@ -214,9 +214,15 @@
                 <th class="list-text">Дополнительные услуги для стекла:</th>
 
                     <th class="list-text">
-                        @foreach($orderDetail->additionalServices as $additionalService)
-                        {{($additionalService) ? $additionalService->name: "" ." "}}
-                        @endforeach
+                        @if(count($orderDetail->additionalServices)>0)
+                            @foreach($orderDetail->additionalServices as $additionalService)
+                                @if($additionalService->price > 0)
+                                {{($additionalService) ? $additionalService->name: "" ." "}}
+                                @endif
+                            @endforeach
+                        @else
+                            Не требуются
+                        @endif
                     </th>
             </tr>
             <tr class="list-item">
@@ -397,7 +403,7 @@
         @endforeach
         <tr class="list-item">
             <th colspan="4" class="list-text1">Итого:</th>
-            <th class="list-text1">{{number_format(round($order->total_price , 2))}}</th>
+            <th class="list-text1">{{number_format(round($order->total_price , 2)) }}</th>
         </tr>
     </table>
     <p class="pdf-text" style="margin-top: 10px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в
