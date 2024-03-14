@@ -422,7 +422,8 @@ class OrderController extends Controller
             ]);
         }
 
-        $order->update(['active',0]);
+        $order->update(['active'=>0]);
+
         return new ReturnResponseResource([
             'code' => 200 ,
             'message' => "Order and associated details deleted successfully."
