@@ -311,10 +311,7 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$profile->profileType->calCulationType->name}}</th>
                     <th class="list-text1">{{$profile->profileType->name}}</th>
-                    <?php
-                        $price =number_format($profile->profileType->price*$order->currency->rate ,2);
-                        ?>
-                    <th class="list-text1">{{round($price)}}</th>
+                    <th class="list-text1">{{number_format(round($profile->profileType->price*$order->currency->rate ,2),2)}}</th>
                     <th class="list-text1">{{round($profile->total_profile_length , 2)}}</th>
                     <th class="list-text1">{{number_format(round($profile->total_profile_length*$profile->profileType->price*$order->currency->rate ,2) , 2)}}</th>
                 </tr>
