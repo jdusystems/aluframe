@@ -20,11 +20,11 @@ class AdditionalServiceResource extends JsonResource
             'uz_name' => $this->uz_name,
             'image_url' => $this->image_url ,
             'image_name' => $this->image_name ,
-            'sort_index' => $this->sort_index,
-            'vendor_code' => $this->vendor_code,
-            'price' => $this->price,
-            'description' => $this->description,
-            'uz_description' => $this->uz_description,
+            'sort_index' => $this->sort_index ,
+            'vendor_code' => $this->vendor_code ,
+            'price' => $this->price ,
+            'description' => $this->description ,
+            'uz_description' => $this->uz_description ,
         ];
     }
 }

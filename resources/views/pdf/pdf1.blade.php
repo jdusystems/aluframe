@@ -411,7 +411,7 @@
     <p class="pdf-text">Логин и пароль для входа в аккаунт: логин:
         <span>{{$user->phone_number}}</span> пароль:
         <span>{{$user->parol}}</span>
-        <a class="pdf-link" style="font-weight: bold" href="https://aluframe.vercel.app/auth/login">Ссылка</a>
+        <a class="pdf-link" style="font-weight: bold" href="https://conf.aluframe.uz/auth/login">Ссылка</a>
     </p>
 
 </div>
