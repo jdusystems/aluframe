@@ -27,6 +27,7 @@ class ShowOrderResource extends JsonResource
             'total_price' => ($user->superadmin==1 || $user->is_admin == 0) ? round($this->total_price , 2) : 0,
             'ordered_time' => $this->created_at->setTimezone('Asia/Tashkent')->format('Y-m-d H:i:s T') ,
             'order_details' => OrderDetailResource::collection($this->orderDetails) ,
+            'currency' => new ShowCurrencyResource($this->currency) ?? []
         ];
     }
 }
