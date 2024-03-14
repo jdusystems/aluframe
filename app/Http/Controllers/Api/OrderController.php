@@ -100,7 +100,7 @@ class OrderController extends Controller
         ];
         $payload = [
             'mobile_phone' => $phone,
-            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ" ."<br>"."Логин:". $phone ."<br></br>". "Пароль:" . $parol,
+            'message' =>"Ваш логин и пароль для входа Aluframe ЭПЗ \n Логин:" .$phone. "\nПароль:" . $parol,
         ];
         $url = 'notify.eskiz.uz/api/message/sms/send';
         try {
