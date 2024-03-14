@@ -316,7 +316,7 @@
                         ?>
                     <th class="list-text1">{{round($price)}}</th>
                     <th class="list-text1">{{round($profile->total_profile_length , 2)}}</th>
-                    <th class="list-text1">{{number_format(round($profile->total_profile_length*$profile->profileType->price*$order->currency->currency_rate ,2) , 2) , 2)}}</th>
+                    <th class="list-text1">{{number_format(round($profile->total_profile_length*$profile->profileType->price*$order->currency->currency_rate ,2) , 2)}}</th>
                 </tr>
             @endif
 
