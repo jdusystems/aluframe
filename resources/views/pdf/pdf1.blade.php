@@ -311,9 +311,12 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$profile->profileType->calCulationType->name}}</th>
                     <th class="list-text1">{{$profile->profileType->name}}</th>
-                    <th class="list-text1">{{$profile->profileType->price}}</th>
+                    <?php
+                        $price =number_format($profile->profileType->price*$order->currency->currency_rate ,2);
+                        ?>
+                    <th class="list-text1">{{round($price)}}</th>
                     <th class="list-text1">{{round($profile->total_profile_length , 2)}}</th>
-                    <th class="list-text1">{{round($profile->total_profile_length*$profile->profileType->price , 2)}}</th>
+                    <th class="list-text1">{{number_format(round($profile->total_profile_length*$profile->profileType->price*$order->currency->currency_rate ,2) , 2) , 2)}}</th>
                 </tr>
             @endif
 
@@ -323,9 +326,9 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$profile->profileType->sealant->vendor_code}}</th>
                     <th class="list-text1">{{$profile->profileType->sealant->name}}</th>
-                    <th class="list-text1">{{$profile->profileType->sealant->price}}</th>
+                    <th class="list-text1">{{number_format($profile->profileType->sealant->price*$order->currency->currency_rate ,2)}}</th>
                     <th class="list-text1">{{round($profile->total_sealant_length , 2)}}</th>
-                    <th class="list-text1">{{round($profile->total_sealant_length*$profile->profileType->sealant->price ,2)}}</th>
+                    <th class="list-text1">{{number_format(round($profile->total_sealant_length*$profile->profileType->sealant->price*$order->currency->currency_rate ,2) ,2) ,2)}}</th>
                 </tr>
             @endif
 
@@ -336,9 +339,9 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$profile->profileType->corner->vendor_code}}</th>
                     <th class="list-text1">{{$profile->profileType->corner->name}}</th>
-                    <th class="list-text1">{{$profile->profileType->corner->price}}</th>
+                    <th class="list-text1">{{number_format($profile->profileType->corner->price*$order->currency->currency_rate ,2)}}</th>
                     <th class="list-text1">{{round($profile->total_corner_quantity , 2)}}</th>
-                    <th class="list-text1">{{round($profile->total_corner_quantity*$profile->profileType->corner->price , 2)}}</th>
+                    <th class="list-text1">{{number_format(round($profile->total_corner_quantity*$profile->profileType->corner->price*$order->currency->currency_rate , 2),2)}}</th>
                 </tr>
             @endif
 
@@ -348,9 +351,9 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$windowColor->windowColor->vendor_code}}</th>
                     <th class="list-text1">{{$windowColor->windowColor->name}}</th>
-                    <th class="list-text1">{{$windowColor->windowColor->price}}</th>
+                    <th class="list-text1">{{number_format($windowColor->windowColor->price*$order->currency->currency_rate ,2)}}</th>
                     <th class="list-text1">{{round($windowColor->total_surface , 2)}}</th>
-                    <th class="list-text1">{{round($windowColor->total_surface * $windowColor->windowColor->price , 2)}}</th>
+                    <th class="list-text1">{{number_format(round($windowColor->total_surface * $windowColor->windowColor->price*$order->currency->currency_rate , 2) , 2)}}</th>
                 </tr>
             @endif
 
@@ -363,9 +366,9 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$additionalService['vendor_code']}}</th>
                     <th class="list-text1">{{$additionalService['name']}}</th>
-                    <th class="list-text1">{{$additionalService['price']}}</th>
+                    <th class="list-text1">{{number_format($additionalService['price']*$order->currency->currency_rate,2)}}</th>
                     <th class="list-text1">{{round($additionalService['total_quantity'] , 2)}}</th>
-                    <th class="list-text1">{{round($additionalService['total_quantity'] * $additionalService['price'] , 2)}}</th>
+                    <th class="list-text1">{{number_format(round($additionalService['total_quantity'] * $additionalService['price']*$order->currency->currency_rate , 2),2)}}</th>
                 </tr>
         @endif
 
@@ -376,9 +379,9 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$assemblyService->assemblyService->vendor_code}}</th>
                     <th class="list-text1">{{$assemblyService->assemblyService->name}}</th>
-                    <th class="list-text1">{{$assemblyService->assemblyService->price}}</th>
+                    <th class="list-text1">{{number_format($assemblyService->assemblyService->price*$order->currency->currency_rate ,2)}}</th>
                     <th class="list-text1">{{round($assemblyService->total_facade_quantity , 2)}}</th>
-                    <th class="list-text1">{{$assemblyService->total_facade_quantity * $assemblyService->assemblyService->price}}</th>
+                    <th class="list-text1">{{number_format($assemblyService->total_facade_quantity * $assemblyService->assemblyService->price*$order->currency->currency_rate ,2)}}</th>
                 </tr>
         @endif
         @endforeach
@@ -389,15 +392,15 @@
                 <tr class="list-item">
                     <th class="list-text1">{{$windowHandler['vendor_code']}}</th>
                     <th class="list-text1">{{ $windowHandler['name']}}</th>
-                    <th class="list-text1">{{$windowHandler['price']}}</th>
+                    <th class="list-text1">{{number_format($windowHandler['price']*$order->currency->currency_rate , 2)}}</th>
                     <th class="list-text1">{{round($windowHandler['total_quantity'] , 2)}}</th>
-                    <th class="list-text1">{{round($windowHandler['total_quantity'] * $windowHandler['price'] , 2)}}</th>
+                    <th class="list-text1">{{number_format(round($windowHandler['total_quantity'] * $windowHandler['price']*$order->currency->currency_rate , 2) , 2)}}</th>
                 </tr>
         @endif
         @endforeach
         <tr class="list-item">
             <th colspan="4" class="list-text1">Итого:</th>
-            <th class="list-text1">{{round($order->total_price , 2)}}</th>
+            <th class="list-text1">{{number_format(round($order->total_price , 2))}}</th>
         </tr>
     </table>
     <p class="pdf-text" style="margin-top: 10px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в

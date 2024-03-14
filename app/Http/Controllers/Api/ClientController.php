@@ -29,9 +29,9 @@ class ClientController extends Controller
             $itemsPerPage = 10;
         }
         if(empty($name) && empty($phoneNumber)){
-            return new ClientCollection(User::where('active',1)->latest()->paginate($itemsPerPage));
+            return new ClientCollection(User::where('active',1)->where('is_admin',0)->latest()->paginate($itemsPerPage));
         }else{
-            $clients = User::where('active' , 1)->when($phoneNumber, function ($query) use ($phoneNumber) {
+            $clients = User::where('active' , 1)->where('id_admin' , 0)->when($phoneNumber, function ($query) use ($phoneNumber) {
                 $query->where('phone_number','LIKE', '%'. $phoneNumber .'%');
             })->when($name, function ($query) use ($name) {
                     $query->where('name', 'LIKE','%'. $name.'%');

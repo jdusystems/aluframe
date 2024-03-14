@@ -14,7 +14,7 @@ class Order extends Model
 
     protected $table = 'orders';
     protected $fillable = [
-        'ordered_date' , 'order_id' , 'user_id' , 'status_id' , 'total_price' ,'active',
+        'ordered_date' , 'order_id' , 'user_id' , 'status_id' , 'total_price' ,'active','currency_id'
     ];
 
     public function user(){
