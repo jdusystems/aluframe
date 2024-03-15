@@ -403,7 +403,7 @@
         @endforeach
         <tr class="list-item">
             <th colspan="4" class="list-text1">Итого:</th>
-            <th class="list-text1">{{number_format(round($order->total_price , 2)) }}</th>
+            <th class="list-text1">{{round($order->total_price , 2)}}</th>
         </tr>
     </table>
     <p class="pdf-text" style="margin-top: 10px;">Вы можете проверить, как идет выполнение вашего заказа, зайдя в
